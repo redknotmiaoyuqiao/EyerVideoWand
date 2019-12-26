@@ -7,6 +7,7 @@ add_library(
     EyerVideoProcess.hpp
 
     EyerVPAudioTrack.cpp
+    EyerVPAudioRes.cpp
 )
 
 target_link_libraries (EyerVideoProcess bz2)

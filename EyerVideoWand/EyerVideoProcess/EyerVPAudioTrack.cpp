@@ -12,7 +12,7 @@ namespace Eyer
 
     }
 
-    int EyerVPAudioTrack::AddAudioRes(RedString resPath, int stream)
+    int EyerVPAudioTrack::AddAudioRes(EyerVPAudioRes & audioRes)
     {
         return 0;
     }
