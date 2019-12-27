@@ -1,11 +1,14 @@
 add_executable(
     EyerVideoProcessTest
     Test.cpp
+
+    EyerVPAudioResTest.hpp
     )
 
 include_directories (../)
 
 target_link_libraries (EyerVideoProcessTest EyerVideoProcess)
+target_link_libraries (EyerVideoProcessTest gtest)
 
 INSTALL(
     TARGETS EyerVideoProcessTest

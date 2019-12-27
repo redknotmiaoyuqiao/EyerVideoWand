@@ -1,11 +1,11 @@
+#include <gtest/gtest.h>
+
 #include "EyerVideoProcess/EyerVideoProcess.hpp"
 
-int main()
+#include "EyerVPAudioResTest.hpp"
+
+int main(int argc,char **argv)
 {
-    Eyer::EyerVPAudioTrack audioTrack;
-
-    RedString audioRes1("");
-    // audioTrack.AddAudioRes(audioRes1);
-
-    return 0;
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
