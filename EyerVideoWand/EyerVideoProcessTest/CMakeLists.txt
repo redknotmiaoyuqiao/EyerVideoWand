@@ -3,6 +3,7 @@ add_executable(
     Test.cpp
 
     EyerVPAudioResTest.hpp
+    EyerVPAudioTrackTest.hpp
     )
 
 include_directories (../)

@@ -1,10 +1,12 @@
-#ifndef	EYER_LIB_AV_H
-#define	EYER_LIB_AV_H
+#ifndef	EYER_LIB_AV_WAND_PROCESS_H
+#define	EYER_LIB_AV_WAND_PROCESS_H
 
 #include "EyerCore/EyerCore.hpp"
+#include "EyerAV/EyerAV.hpp"
 
 namespace Eyer
 {
+
     class EyerVPAudioRes;
     class EyerVPTrack;
     class EyerVPVideoTrack;
@@ -24,11 +26,14 @@ namespace Eyer
     {
     private:
         std::vector<EyerVPAudioRes *> audioList;
+        EyerAVEncoder encoder;
     public:
         EyerVPAudioTrack();
         ~EyerVPAudioTrack();
 
         int AddAudioRes(EyerVPAudioRes & audioRes);
+
+        double GetDuration();
     };
 
     class EyerVPAudioRes

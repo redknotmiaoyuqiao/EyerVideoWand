@@ -4,6 +4,8 @@
 
 #include "EyerVPAudioResTest.hpp"
 
+#include "EyerVPAudioTrackTest.hpp"
+
 int main(int argc,char **argv)
 {
     testing::InitGoogleTest(&argc, argv);
