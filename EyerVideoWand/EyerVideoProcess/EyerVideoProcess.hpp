@@ -42,9 +42,9 @@ namespace Eyer
         EyerString resPath;
         int streamIndex = 0;
 
-        long long position = 0;
-        long long cutterStartTime = 0;
-        long long cutterEndTime = 0;
+        double position = 0;
+        double cutterStartTime = 0;
+        double cutterEndTime = 0;
     public:
         EyerVPAudioRes();
         EyerVPAudioRes(EyerVPAudioRes & audioRes);
@@ -56,17 +56,17 @@ namespace Eyer
         int SetPath(EyerString _resPath);
         int SetStream(int streamIndex);
 
-        int SetPosition(long long startTime);
-        int SetCutter(long long startTime, long long endTime);
+        int SetPosition(double startTime);
+        int SetCutter(double startTime, double endTime);
 
-        long long GetDur();
+        double GetDur();
 
 
         EyerString GetRes();
         int GetStreamIndex();
-        long long GetPosition();
-        long long GetCutterStartTime();
-        long long GetCutterEndTime();
+        double GetPosition();
+        double GetCutterStartTime();
+        double GetCutterEndTime();
     };
 }
 

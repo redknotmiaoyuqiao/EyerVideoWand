@@ -6,19 +6,16 @@
 
 TEST(EyerVideoWand, EyerVPAudioTrack_Base){
     Eyer::EyerVPAudioTrack audioTrack;
+    /*
     {
         Eyer::EyerVPAudioRes audioRes;
-        audioRes.SetPath("/Users/yuqiaomiao/Video/A/1403_20_4434.aac");
+        audioRes.SetPath("/home/redknot/Videos/A/1403_20_4431.aac");
         audioTrack.AddAudioRes(audioRes);
     }
-    {
-        Eyer::EyerVPAudioRes audioRes;
-        audioRes.SetPath("/Users/yuqiaomiao/Video/A/1403_20_4433.aac");
-        audioTrack.AddAudioRes(audioRes);
-    }
-
+    
     double duration = audioTrack.GetDuration();
     printf("Duration:%f\n", duration);
+    */
 }
 
 #endif

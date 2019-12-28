@@ -5,7 +5,6 @@ namespace Eyer
     EyerVPAudioTrack::EyerVPAudioTrack()
     {
         EncoderParam param;
-
         param.codecId = CodecId::CODEC_ID_AAC;
         encoder.Init(&param);
     }

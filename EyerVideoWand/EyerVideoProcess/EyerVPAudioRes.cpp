@@ -43,7 +43,7 @@ namespace Eyer
         return 0;
     }
 
-    int EyerVPAudioRes::SetPosition(long long startTime)
+    int EyerVPAudioRes::SetPosition(double startTime)
     {
         if(startTime < 0){
             startTime = 0;
@@ -52,7 +52,7 @@ namespace Eyer
         return 0;
     }
 
-    int EyerVPAudioRes::SetCutter(long long startTime, long long endTime)
+    int EyerVPAudioRes::SetCutter(double startTime, double endTime)
     {
         if(startTime < 0){
             startTime = 0;
@@ -81,17 +81,17 @@ namespace Eyer
         return streamIndex;
     }
 
-    long long EyerVPAudioRes::GetPosition()
+    double EyerVPAudioRes::GetPosition()
     {
         return position;
     }
 
-    long long EyerVPAudioRes::GetCutterStartTime()
+    double EyerVPAudioRes::GetCutterStartTime()
     {
         return cutterStartTime;
     }
 
-    long long EyerVPAudioRes::GetCutterEndTime()
+    double EyerVPAudioRes::GetCutterEndTime()
     {
         return cutterEndTime;
     }

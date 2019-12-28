@@ -1,4 +1,4 @@
-PROJECT(EYE)
+PROJECT(EYE_Video_Wand)
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
@@ -9,7 +9,7 @@ MESSAGE(STATUS "operation system is ${CMAKE_SYSTEM}")
 SET(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/install/)
 
 include_directories (googletest/googletest/include)
-include_directories (../../3rdpart/EyerLib/include)
+include_directories (../../Lib/EyerLib/include)
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
     MESSAGE(STATUS "current platform: Linux ")
