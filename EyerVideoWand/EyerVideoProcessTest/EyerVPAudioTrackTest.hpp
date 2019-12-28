@@ -8,12 +8,12 @@ TEST(EyerVideoWand, EyerVPAudioTrack_Base){
     Eyer::EyerVPAudioTrack audioTrack;
     {
         Eyer::EyerVPAudioRes audioRes;
-        audioRes.SetPath("/Users/yuqiaomiao/Video/A/1403_20_4431.aac");
+        audioRes.SetPath("/Users/yuqiaomiao/Video/A/1403_20_4434.aac");
         audioTrack.AddAudioRes(audioRes);
     }
     {
         Eyer::EyerVPAudioRes audioRes;
-        audioRes.SetPath("/Users/yuqiaomiao/Video/A/1403_20_4432.aac");
+        audioRes.SetPath("/Users/yuqiaomiao/Video/A/1403_20_4433.aac");
         audioTrack.AddAudioRes(audioRes);
     }
 
