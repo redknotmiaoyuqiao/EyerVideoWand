@@ -1,5 +1,7 @@
 #include "EyerVideoProcess.hpp"
 
+#include <math.h>
+
 namespace Eyer
 {
     EyerVPAudioTrack::EyerVPAudioTrack()
@@ -58,5 +60,70 @@ namespace Eyer
             reader.Close();
         }
         return duration;
+    }
+
+    int EyerVPAudioTrack::RenderToFile(EyerString outPath)
+    {
+        Eyer::EyerAVWriter writer(outPath);
+        int streamIndex = writer.AddStream(&encoder);
+        writer.Open();
+
+        // 记录当前写入的长度
+        double wirteTime = 0.0;
+        while(1){
+            if(wirteTime >= GetDuration()){
+                break;
+            }
+
+            int bufferSize = encoder.GetBufferSize();
+            int sampSize = bufferSize / 4 / 2;
+            double dTime = sampSize * 1.0 / 44100;
+
+            std::vector<EyerVPAudioRes *> alternateList;
+            for(int i=0;i<audioList.size();i++){
+                EyerVPAudioRes * res = audioList[i];
+
+                double startTime = res->GetPosition();
+                double endTime = startTime + 10000.0;
+
+                if(wirteTime >= startTime && wirteTime <= endTime){
+                    alternateList.push_back(res);
+                }
+            }
+
+            // Create Frame
+            Eyer::EyerAVFrame avFrame;
+
+            for(int i=0;i<alternateList.size();i++){
+                EyerVPAudioRes * res = alternateList[i];
+                Eyer::EyerAVFrame resAvFrame;
+                int ret = res->GetFrame(&avFrame);
+                if(ret){
+                    continue;
+                }
+            }
+
+            printf("PTS:%lld\n", avFrame.GetPTS());
+            // avFrame.SetData((unsigned char *)data, 8192, 0);
+
+
+            encoder.SendFrame(&avFrame);
+            while(1){
+                Eyer::EyerAVPacket avPacket;
+                int ret = encoder.RecvPacket(&avPacket);
+                if(ret){
+                    break;
+                }
+
+                avPacket.SetStreamId(streamIndex);
+                writer.WritePacket(&avPacket);
+
+                wirteTime += dTime;
+            }
+        }
+
+        writer.Close();
+
+        return 0;
     }
 }

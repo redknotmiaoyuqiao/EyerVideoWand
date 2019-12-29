@@ -14,7 +14,15 @@ namespace Eyer
 
     EyerVPAudioRes::~EyerVPAudioRes()
     {
-
+        if(decoder != nullptr){
+            delete decoder;
+            decoder = nullptr;
+        }
+        if(reader != nullptr){
+            reader->Close();
+            delete reader;
+            reader = nullptr;
+        }
     }
 
     EyerVPAudioRes & EyerVPAudioRes::operator = (EyerVPAudioRes & audioRes)
@@ -24,6 +32,9 @@ namespace Eyer
         position = audioRes.position;
         cutterStartTime = audioRes.cutterStartTime;
         cutterEndTime = audioRes.cutterEndTime;
+
+        reader = nullptr;
+        decoder = nullptr;
 
         return *this;
     }
@@ -66,11 +77,6 @@ namespace Eyer
         return 0;
     }
 
-    long long GetDur()
-    {
-        return 0;
-    }
-
     EyerString EyerVPAudioRes::GetRes()
     {
         return resPath;
@@ -94,5 +100,70 @@ namespace Eyer
     double EyerVPAudioRes::GetCutterEndTime()
     {
         return cutterEndTime;
+    }
+
+
+
+
+
+
+
+
+
+    int EyerVPAudioRes::GetFrame(EyerAVFrame * avFrame)
+    {
+        if(reader == nullptr){
+            reader = new EyerAVReader(GetRes());
+            int ret = reader->Open();
+            if(ret){
+                reader->Close();
+                delete reader;
+                reader = nullptr;
+                return -1;
+            }
+
+            EyerAVStream stream;
+            ret = reader->GetStream(stream, GetStreamIndex());
+            if(ret){
+                reader->Close();
+                delete reader;
+                reader = nullptr;
+                return -1;
+            }
+
+            if(decoder != nullptr){
+                delete decoder;
+                decoder = nullptr;
+            }
+
+            decoder = new EyerAVDecoder();
+            ret = decoder->Init(&stream);
+            if(ret){
+                delete decoder;
+                decoder = nullptr;
+
+                reader->Close();
+                delete reader;
+                reader = nullptr;
+                return -1;
+            }
+        }
+
+        EyerAVPacket packet;
+        int ret = reader->Read(&packet);
+        if(ret){
+            return -2;
+        }
+        decoder->SendPacket(&packet);
+        while(1){
+            ret = decoder->RecvFrame(avFrame);
+            if(ret){
+                break;
+            }
+
+            return 0;
+        }
+
+        return -3;
     }
 }

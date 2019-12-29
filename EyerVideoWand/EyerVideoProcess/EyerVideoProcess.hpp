@@ -34,6 +34,8 @@ namespace Eyer
         int AddAudioRes(EyerVPAudioRes & audioRes);
 
         double GetDuration();
+
+        int RenderToFile(EyerString outPath);
     };
 
     class EyerVPAudioRes
@@ -45,6 +47,10 @@ namespace Eyer
         double position = 0;
         double cutterStartTime = 0;
         double cutterEndTime = 0;
+
+        // 读取器和解码器不可复制
+        EyerAVReader * reader = nullptr;
+        EyerAVDecoder * decoder = nullptr;
     public:
         EyerVPAudioRes();
         EyerVPAudioRes(EyerVPAudioRes & audioRes);
@@ -55,18 +61,16 @@ namespace Eyer
 
         int SetPath(EyerString _resPath);
         int SetStream(int streamIndex);
-
         int SetPosition(double startTime);
         int SetCutter(double startTime, double endTime);
-
-        double GetDur();
-
 
         EyerString GetRes();
         int GetStreamIndex();
         double GetPosition();
         double GetCutterStartTime();
         double GetCutterEndTime();
+
+        int GetFrame(EyerAVFrame * avFrame);
     };
 }
 
