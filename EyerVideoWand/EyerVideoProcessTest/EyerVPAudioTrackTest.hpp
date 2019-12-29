@@ -9,7 +9,7 @@ TEST(EyerVideoWand, EyerVPAudioTrack_Base){
     {
         Eyer::EyerVPAudioRes audioRes;
         audioRes.SetPath("/home/redknot/Videos/A/1403_20_4431.aac");
-        // audioRes.SetPosition(5.0);
+        audioRes.SetPosition(5.0);
         audioTrack.AddAudioRes(audioRes);
     }
     
