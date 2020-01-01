@@ -71,6 +71,8 @@ namespace Eyer
         // 记录当前写入的长度
         double wirteTime = 0.0;
 
+        long long apts = 0;
+
         while(1){
             if(wirteTime >= GetDuration()){
                 break;
@@ -94,7 +96,6 @@ namespace Eyer
 
             // Create Frame
             Eyer::EyerAVFrame avFrame;
-            avFrame.SetZero(&encoder);
 
             for(int i=0;i<alternateList.size();i++){
                 EyerVPAudioRes * res = alternateList[i];
@@ -103,9 +104,9 @@ namespace Eyer
                 if(ret){
                     continue;
                 }
-            }
 
-            // avFrame.SetPTS((long long)(wirteTime * 90000));
+                resAvFrame.GetInfo();
+            }
 
             encoder.SendFrame(&avFrame);
             while(1){
@@ -117,7 +118,7 @@ namespace Eyer
 
                 avPacket.SetStreamId(streamIndex);
 
-                printf("PTS:%lld\n", avPacket.GetPTS());
+                // printf("PTS:%lld\n", avPacket.GetPTS());
 
                 writer.WritePacket(&avPacket);
 
