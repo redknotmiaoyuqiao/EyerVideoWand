@@ -33,31 +33,14 @@ namespace Eyer
         for(int i=0;i<audioList.size();i++){
             EyerVPAudioRes * res = audioList[i];
 
-            Eyer::EyerAVReader reader(res->GetRes());
-            int ret = reader.Open();
-            if(ret){
+            if(res->GetDuration() <= 0){
                 continue;
             }
 
-            int streamCount = reader.GetStreamCount();
-            if(res->GetStreamIndex() < 0 || res->GetStreamIndex() >= streamCount){
-                reader.Close();
-                continue;
-            }
-
-            EyerAVStream stream;
-            ret = reader.GetStream(stream, res->GetStreamIndex());
-            if(ret){
-                reader.Close();
-                continue;
-            }
-
-            long long d = stream.GetDuration() + res->GetPosition();
+            long long d = res->GetDuration() + res->GetPosition();
             if(duration < d){
                 duration = d;
             }
-
-            reader.Close();
         }
         return duration;
     }
@@ -85,7 +68,7 @@ namespace Eyer
                 EyerVPAudioRes * res = audioList[i];
 
                 double startTime = res->GetPosition();
-                double endTime = startTime + 10000.0;
+                double endTime = startTime + res->GetDuration();
 
                 if(wirteTime >= startTime && wirteTime <= endTime){
                     alternateList.push_back(res);
@@ -128,17 +111,6 @@ namespace Eyer
                     d[i] = kkk;
                 }
             }
-
-            /*
-            for(int i=0;i<size / 4;i++){
-                float kkk = 0.0f;
-                for(int j=0;j<mixFrameList.size();j++){
-                    kkk += mixFrameList[j][i];
-                }
-                kkk = kkk / mixFrameList.size();
-                d[i] = kkk;
-            }
-             */
 
             for(int i=0;i<mixFrameList.size();i++){
                 float * f = mixFrameList[i];

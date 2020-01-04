@@ -3,12 +3,12 @@ include_directories (./)
 
 add_library(
     EyerVideoProcess
-
     EyerVideoProcess.hpp
-
     EyerVPAudioTrack.cpp
-    EyerVPAudioRes.cpp
-)
+    EyerVPResource.cpp
+    EyerVPVideoTrack.cpp
+    EyerVPVideoRes.cpp
+        EyerVPVideoImage.cpp)
 
 target_link_libraries (EyerVideoProcess ${CMAKE_SOURCE_DIR}/../../Lib/EyerLib/lib/libEyerAV.a)
 target_link_libraries (EyerVideoProcess ${CMAKE_SOURCE_DIR}/../../Lib/EyerLib/lib/libEyerCore.a)

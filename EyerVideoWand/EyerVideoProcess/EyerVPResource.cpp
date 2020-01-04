@@ -2,17 +2,17 @@
 
 namespace Eyer
 {
-    EyerVPAudioRes::EyerVPAudioRes()
+    EyerVPResource::EyerVPResource()
     {
 
     }
 
-    EyerVPAudioRes::EyerVPAudioRes(EyerVPAudioRes & audioRes)
+    EyerVPResource::EyerVPResource(EyerVPResource & audioRes)
     {
         *this = audioRes;
     }
 
-    EyerVPAudioRes::~EyerVPAudioRes()
+    EyerVPResource::~EyerVPResource()
     {
         if(decoder != nullptr){
             delete decoder;
@@ -25,13 +25,14 @@ namespace Eyer
         }
     }
 
-    EyerVPAudioRes & EyerVPAudioRes::operator = (EyerVPAudioRes & audioRes)
+    EyerVPResource & EyerVPResource::operator = (EyerVPResource & audioRes)
     {
         resPath = audioRes.resPath;
         streamIndex = audioRes.streamIndex;
         position = audioRes.position;
         cutterStartTime = audioRes.cutterStartTime;
         cutterEndTime = audioRes.cutterEndTime;
+        duration = audioRes.duration;
 
         reader = nullptr;
         decoder = nullptr;
@@ -39,13 +40,13 @@ namespace Eyer
         return *this;
     }
 
-    int EyerVPAudioRes::SetPath(EyerString _resPath)
+    int EyerVPResource::SetPath(EyerString _resPath)
     {
         resPath = _resPath;
         return 0;
     }
 
-    int EyerVPAudioRes::SetStream(int _streamIndex)
+    int EyerVPResource::SetStream(int _streamIndex)
     {
         if(_streamIndex < 0){
             _streamIndex = 0;
@@ -54,7 +55,7 @@ namespace Eyer
         return 0;
     }
 
-    int EyerVPAudioRes::SetPosition(double startTime)
+    int EyerVPResource::SetPosition(double startTime)
     {
         if(startTime < 0){
             startTime = 0;
@@ -63,7 +64,7 @@ namespace Eyer
         return 0;
     }
 
-    int EyerVPAudioRes::SetCutter(double startTime, double endTime)
+    int EyerVPResource::SetCutter(double startTime, double endTime)
     {
         if(startTime < 0){
             startTime = 0;
@@ -77,40 +78,78 @@ namespace Eyer
         return 0;
     }
 
-    EyerString EyerVPAudioRes::GetRes()
+    EyerString EyerVPResource::GetRes()
     {
         return resPath;
     }
 
-    int EyerVPAudioRes::GetStreamIndex()
+    int EyerVPResource::GetStreamIndex()
     {
         return streamIndex;
     }
 
-    double EyerVPAudioRes::GetPosition()
+    double EyerVPResource::GetPosition()
     {
         return position;
     }
 
-    double EyerVPAudioRes::GetCutterStartTime()
+    double EyerVPResource::GetCutterStartTime()
     {
         return cutterStartTime;
     }
 
-    double EyerVPAudioRes::GetCutterEndTime()
+    double EyerVPResource::GetCutterEndTime()
     {
         return cutterEndTime;
     }
 
+    double EyerVPResource::GetDuration()
+    {
+        if(duration > 0.0){
+            return duration;
+        }
+
+        Eyer::EyerAVReader reader(GetRes());
+        int ret = reader.Open();
+        if(ret){
+            duration = -1.0;
+            return duration;
+        }
+
+        EyerAVStream audioStream;
+        ret = reader.GetStream(audioStream, streamIndex);
+        if(ret){
+            duration = -1.0;
+            return duration;
+        }
+
+        EyerAVDecoder decoder;
+        decoder.Init(&audioStream);
+
+        int fremeSize = decoder.GetFrameSize();
+        int sampleRate = decoder.GetSampleRate();
+
+        int frameCount = 0;
+        while(1){
+            EyerAVPacket packet;
+            ret = reader.Read(&packet);
+            if(ret){
+                break;
+            }
+
+            frameCount++;
+        }
+
+        duration = frameCount * fremeSize * 1.0 / sampleRate;
+
+        reader.Close();
+
+        return duration;
+    }
 
 
 
-
-
-
-
-
-    int EyerVPAudioRes::GetFrame(EyerAVFrame * avFrame)
+    int EyerVPResource::GetFrame(EyerAVFrame * avFrame)
     {
         if(reader == nullptr){
             reader = new EyerAVReader(GetRes());
@@ -152,6 +191,9 @@ namespace Eyer
         EyerAVPacket packet;
         int ret = reader->Read(&packet);
         if(ret){
+            reader->Close();
+            delete reader;
+            reader = nullptr;
             return -2;
         }
         decoder->SendPacket(&packet);
@@ -163,6 +205,10 @@ namespace Eyer
 
             return 0;
         }
+
+        reader->Close();
+        delete reader;
+        reader = nullptr;
 
         return -3;
     }

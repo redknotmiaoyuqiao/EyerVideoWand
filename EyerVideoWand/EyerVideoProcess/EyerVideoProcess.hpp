@@ -6,11 +6,14 @@
 
 namespace Eyer
 {
-
+    class EyerVPResource;
     class EyerVPAudioRes;
     class EyerVPTrack;
+
     class EyerVPVideoTrack;
     class EyerVPAudioTrack;
+
+    class EyerVPVideoImage;
 
     class EyerVPTrack
     {
@@ -20,6 +23,8 @@ namespace Eyer
     class EyerVPVideoTrack : public EyerVPTrack
     {
     public:
+        EyerVPVideoTrack();
+        ~EyerVPVideoTrack();
     };
 
     class EyerVPAudioTrack : public EyerVPTrack
@@ -38,7 +43,7 @@ namespace Eyer
         int RenderToFile(EyerString outPath);
     };
 
-    class EyerVPAudioRes
+    class EyerVPResource
     {
     private:
         EyerString resPath;
@@ -48,16 +53,18 @@ namespace Eyer
         double cutterStartTime = 0;
         double cutterEndTime = 0;
 
+        double duration = -1.0;
+
         // 读取器和解码器不可复制
         EyerAVReader * reader = nullptr;
         EyerAVDecoder * decoder = nullptr;
     public:
-        EyerVPAudioRes();
-        EyerVPAudioRes(EyerVPAudioRes & audioRes);
+        EyerVPResource();
+        EyerVPResource(EyerVPResource & audioRes);
 
-        ~EyerVPAudioRes();
+        ~EyerVPResource();
 
-        EyerVPAudioRes & operator = (EyerVPAudioRes & audioRes);
+        EyerVPResource & operator = (EyerVPResource & audioRes);
 
         int SetPath(EyerString _resPath);
         int SetStream(int streamIndex);
@@ -70,7 +77,36 @@ namespace Eyer
         double GetCutterStartTime();
         double GetCutterEndTime();
 
+        double GetDuration();
+
         int GetFrame(EyerAVFrame * avFrame);
+    };
+
+
+    class EyerVPAudioRes : public EyerVPResource
+    {
+    public:
+
+    };
+
+    class EyerVPVideoImage
+    {
+    public:
+        EyerVPVideoImage();
+        ~EyerVPVideoImage();
+
+        int GetBitmap(EyerAVBitmap & bitmap);
+
+        int LoadFromImageFile(EyerString path);
+    };
+
+    class EyerVPVideoRes : public EyerVPResource
+    {
+    private:
+
+    public:
+        EyerVPVideoRes();
+        ~EyerVPVideoRes();
     };
 }
 

@@ -4,7 +4,7 @@ add_executable(
 
     EyerVPAudioResTest.hpp
     EyerVPAudioTrackTest.hpp
-    )
+        EyerVPReadImageTest.h)
 
 include_directories (../)
 
