@@ -18,6 +18,15 @@ include_directories (${CMAKE_SOURCE_DIR}/../../Lib/ffmpeg_install/include)
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
     MESSAGE(STATUS "current platform: Linux ")
 
+    target_link_libraries (EyerVideoProcess ${CMAKE_SOURCE_DIR}/../../Lib/ffmpeg_install/lib/libavformat.a)
+    target_link_libraries (EyerVideoProcess ${CMAKE_SOURCE_DIR}/../../Lib/ffmpeg_install/lib/libavdevice.a)
+    target_link_libraries (EyerVideoProcess ${CMAKE_SOURCE_DIR}/../../Lib/ffmpeg_install/lib/libavcodec.a)
+    target_link_libraries (EyerVideoProcess ${CMAKE_SOURCE_DIR}/../../Lib/ffmpeg_install/lib/libavutil.a)
+    target_link_libraries (EyerVideoProcess ${CMAKE_SOURCE_DIR}/../../Lib/ffmpeg_install/lib/libavfilter.a)
+    target_link_libraries (EyerVideoProcess ${CMAKE_SOURCE_DIR}/../../Lib/ffmpeg_install/lib/libswresample.a)
+    target_link_libraries (EyerVideoProcess ${CMAKE_SOURCE_DIR}/../../Lib/ffmpeg_install/lib/libswscale.a)
+    target_link_libraries (EyerVideoProcess ${CMAKE_SOURCE_DIR}/../../Lib/x264_install/lib/libx264.a)
+
     target_link_libraries (EyerVideoProcess dl)
     target_link_libraries (EyerVideoProcess z)
 
