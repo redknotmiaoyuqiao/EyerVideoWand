@@ -3,6 +3,10 @@
 //
 
 #ifndef EYE_VIDEO_WAND_EYERVPVIDEOTEXT_H
+#define EYE_VIDEO_WAND_EYERVPVIDEOTEXT_H
+
+#include <gtest/gtest.h>
+#include "EyerVideoProcess/EyerVideoProcess.hpp"
 
 TEST(EyerVideoWand, Video){
     Eyer::EyerAVWriter writer("/home/redknot/Videos/number.mp4");
@@ -21,6 +25,8 @@ TEST(EyerVideoWand, Video){
     writer.Close();
 }
 
-#define EYE_VIDEO_WAND_EYERVPVIDEOTEXT_H
+TEST(GenVideo, GenVideo){
+
+}
 
 #endif //EYE_VIDEO_WAND_EYERVPVIDEOTEXT_H
