@@ -9,6 +9,7 @@
 #include "EyerVideoProcess/EyerVideoProcess.hpp"
 
 #include "EyerGL/EyerGL.hpp"
+#include "EyerYUV/EyerYUV.hpp"
 
 TEST(EyerVideoWand, Video){
     Eyer::EyerAVWriter writer("/home/redknot/Videos/number.mp4");
@@ -41,13 +42,15 @@ TEST(GenVideo, GenVideo){
     param.height = height;
     encoder.Init(&param);
 
-    int streamId = writer.AddStream(&encoder);
+    writer.WriteHand();
 
+    int streamId = writer.AddStream(&encoder);
 
 
     Eyer::EyerGLWindow windows("GL Canvas", width, height);
     windows.Open();
     windows.SetBGColor(1.0, 1.0, 1.0, 1.0);
+
 
     Eyer::EyerGLFrameBuffer frameBuffer;
 
@@ -61,8 +64,10 @@ TEST(GenVideo, GenVideo){
 
     frameBuffer.AddComponent(&textDraw);
 
-    for(int i=0;i<60 * 25;i++){
-        EyerLog("Frame Id:%d\n", i);
+    // FILE * yuvFile = fopen("/home/redknot/yuvFile.yuv", "wb");
+
+    for(int i=0;i<25 * 60;i++){
+        // EyerLog("Frame Id:%d\n", i);
 
         windows.Clear();
 
@@ -74,10 +79,52 @@ TEST(GenVideo, GenVideo){
 
         unsigned char * rgbData = (unsigned char * )malloc(width * height * 3);
         frameBuffer.ReadPixel(0, 0, width, height, rgbData);
+
+        unsigned char * y = (unsigned char *)malloc(width * height);
+        unsigned char * u = (unsigned char *)malloc(width * height / 4);
+        unsigned char * v = (unsigned char *)malloc(width * height / 4);
+
+        Eyer::EyerYUV yuvCon;
+        yuvCon.RGB2YUV420(width, height, rgbData, y, u, v);
+
+        Eyer::EyerAVFrame frame;
+        frame.SetVideoData420P(y, u, v, width, height);
+
+        int ret = encoder.SendFrame(&frame);
+        if(!ret){
+            while(1){
+                Eyer::EyerAVPacket pkt;
+                ret = encoder.RecvPacket(&pkt);
+                if(ret){
+                    break;
+                }
+
+                pkt.SetStreamId(streamId);
+                writer.WritePacket(&pkt);
+            }
+        }
+        encoder.SendFrame(NULL);
+
+
+
+        /*
+        fwrite(y, 1, width * height, yuvFile);
+        fwrite(u, 1, width * height / 4, yuvFile);
+        fwrite(v, 1, width * height / 4, yuvFile);
+        */
+
+        free(y);
+        free(u);
+        free(v);
+
         free(rgbData);
 
         windows.Loop();
     }
+
+
+    writer.Close();
+    // fclose(yuvFile);
 
 
     windows.Close();

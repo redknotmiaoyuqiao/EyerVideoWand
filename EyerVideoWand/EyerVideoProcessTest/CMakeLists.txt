@@ -14,10 +14,13 @@ target_link_libraries (EyerVideoProcessTest gtest)
 
 target_link_libraries (EyerVideoProcessTest ${CMAKE_SOURCE_DIR}/../../Lib/EyerLib/lib/libEyerGL.a)
 target_link_libraries (EyerVideoProcessTest ${CMAKE_SOURCE_DIR}/../../Lib/EyerLib/lib/libEyerType.a)
+target_link_libraries (EyerVideoProcessTest ${CMAKE_SOURCE_DIR}/../../Lib/EyerLib/lib/libEyerYUV.a)
+
 target_link_libraries (EyerVideoProcessTest ${CMAKE_SOURCE_DIR}/../../Lib/glfw_install/lib/libglfw3.a)
 target_link_libraries (EyerVideoProcessTest ${CMAKE_SOURCE_DIR}/../../Lib/glfw_install/lib/libglfw3.a)
 target_link_libraries (EyerVideoProcessTest ${CMAKE_SOURCE_DIR}/../../Lib/freetype_install/lib/libfreetype.a)
 target_link_libraries (EyerVideoProcessTest ${CMAKE_SOURCE_DIR}/../../Lib/libpng_install/lib/libpng.a)
+target_link_libraries (EyerVideoProcessTest ${CMAKE_SOURCE_DIR}/../../Lib/libyuv_install/lib/libyuv.a)
 target_link_libraries (EyerVideoProcessTest dl)
 target_link_libraries (EyerVideoProcessTest harfbuzz)
 target_link_libraries (EyerVideoProcessTest X11)
