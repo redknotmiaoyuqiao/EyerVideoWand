@@ -32,46 +32,44 @@ TEST(GenVideo, GenVideo){
     int width = 1280;
     int height = 720;
 
-    Eyer::EyerAVWriter writer("/home/redknot/Videos/number_time.mp4");
+    Eyer::EyerAVWriter writer("/home/redknot/Videos/encoder_number_10s_mp4.mp4");
     writer.Open();
 
     Eyer::EyerAVEncoder encoder;
-    Eyer::EncoderParam param;
-    param.codecId = Eyer::CodecId::CODEC_ID_H264;
-    param.width = width;
-    param.height = height;
-    encoder.Init(&param);
+    Eyer::EncoderParam encoderParam;
+    encoderParam.width = width;
+    encoderParam.height = height;
+    encoderParam.codecId = Eyer::CodecId::CODEC_ID_H264;
+    encoder.Init(&encoderParam);
+
+    int videoStreamIndex = writer.AddStream(&encoder);
 
     writer.WriteHand();
-
-    int streamId = writer.AddStream(&encoder);
-
 
     Eyer::EyerGLWindow windows("GL Canvas", width, height);
     windows.Open();
     windows.SetBGColor(1.0, 1.0, 1.0, 1.0);
 
-
     Eyer::EyerGLFrameBuffer frameBuffer;
 
     Eyer::EyerGLTextDraw textDraw;
-    // textDraw.SetText("abcdefghijklmnopqrstuvwxyz");
     textDraw.SetText("Redknot Miaomiao ABC GL gg");
     textDraw.SetColor(0.0, 1.0, 0.0);
     textDraw.SetSize(100);
 
-    textDraw.SetPos(width / 2, height / 2);
+    textDraw.SetPos(0, height / 2);
 
     frameBuffer.AddComponent(&textDraw);
 
-    // FILE * yuvFile = fopen("/home/redknot/yuvFile.yuv", "wb");
+    int m_sec = 0;
 
-    for(int i=0;i<25 * 60;i++){
-        // EyerLog("Frame Id:%d\n", i);
-
+    for(int i=0;i<10 * 25;i++){
         windows.Clear();
 
-        Eyer::EyerString timeStr = Eyer::EyerString::Number(i / 25) + "~~~" + Eyer::EyerString::Number(i % 25);
+        Eyer::EyerString timeStr = Eyer::EyerString::Number(m_sec / 1000 / 60) + ":" + Eyer::EyerString::Number(m_sec / 1000 % 60) + ":" + Eyer::EyerString::Number(m_sec % 1000);
+
+        m_sec += 40;
+
         textDraw.SetText(timeStr);
         textDraw.SetColor(1.0, 0.0, 0.0);
         textDraw.Viewport(width, height);
@@ -88,30 +86,28 @@ TEST(GenVideo, GenVideo){
         yuvCon.RGB2YUV420(width, height, rgbData, y, u, v);
 
         Eyer::EyerAVFrame frame;
+        frame.SetPTS(i);
         frame.SetVideoData420P(y, u, v, width, height);
 
-        int ret = encoder.SendFrame(&frame);
-        if(!ret){
-            while(1){
-                Eyer::EyerAVPacket pkt;
-                ret = encoder.RecvPacket(&pkt);
-                if(ret){
-                    break;
-                }
-
-                pkt.SetStreamId(streamId);
-                writer.WritePacket(&pkt);
+        encoder.SendFrame(&frame);
+        while(1){
+            Eyer::EyerAVPacket pkt;
+            int ret = encoder.RecvPacket(&pkt);
+            if(ret){
+                break;
             }
+
+            Eyer::EyerAVRational encoderTimebase;
+            encoder.GetTimeBase(encoderTimebase);
+
+            Eyer::EyerAVRational streamTimebase;
+            writer.GetStreamTimeBase(streamTimebase, videoStreamIndex);
+
+            pkt.RescaleTs(encoderTimebase, streamTimebase);
+
+            pkt.SetStreamId(videoStreamIndex);
+            writer.WritePacket(&pkt);
         }
-        encoder.SendFrame(NULL);
-
-
-
-        /*
-        fwrite(y, 1, width * height, yuvFile);
-        fwrite(u, 1, width * height / 4, yuvFile);
-        fwrite(v, 1, width * height / 4, yuvFile);
-        */
 
         free(y);
         free(u);
@@ -122,14 +118,29 @@ TEST(GenVideo, GenVideo){
         windows.Loop();
     }
 
+    encoder.SendFrame(nullptr);
+    while(1){
+        Eyer::EyerAVPacket pkt;
+        int ret = encoder.RecvPacket(&pkt);
+        if(ret){
+            break;
+        }
+
+        Eyer::EyerAVRational encoderTimebase;
+        encoder.GetTimeBase(encoderTimebase);
+
+        Eyer::EyerAVRational streamTimebase;
+        writer.GetStreamTimeBase(streamTimebase, videoStreamIndex);
+
+        pkt.RescaleTs(encoderTimebase, streamTimebase);
+
+        pkt.SetStreamId(videoStreamIndex);
+        writer.WritePacket(&pkt);
+    }
 
     writer.Close();
-    // fclose(yuvFile);
-
 
     windows.Close();
-
-    writer.Close();
 }
 
 #endif //EYE_VIDEO_WAND_EYERVPVIDEOTEXT_H
