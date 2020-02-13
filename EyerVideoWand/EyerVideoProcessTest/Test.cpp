@@ -4,10 +4,9 @@
 #include "EyerVideoProcess/EyerVideoProcess.hpp"
 
 
-// #include "EyerVPAudioTrackTest.hpp"
-
-// #include "EyerVPReadImageTest.h"
-// #include "EyerVPAudioResTest.hpp"
+#include "EyerVPAudioTrackTest.hpp"
+#include "EyerVPReadImageTest.h"
+#include "EyerVPAudioResTest.hpp"
 #include "EyerVPVideoText.h"
 
 int main(int argc,char **argv)

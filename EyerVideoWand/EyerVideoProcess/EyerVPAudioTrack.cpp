@@ -50,6 +50,7 @@ namespace Eyer
         Eyer::EyerAVWriter writer(outPath);
         int streamIndex = writer.AddStream(&encoder);
         writer.Open();
+        writer.WriteHand();
 
         // 记录当前写入的长度
         double wirteTime = 0.0;

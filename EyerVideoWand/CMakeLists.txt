@@ -9,7 +9,11 @@ MESSAGE(STATUS "operation system is ${CMAKE_SYSTEM}")
 SET(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/install/)
 
 include_directories (googletest/googletest/include)
-include_directories (../../Lib/EyerLib/include)
+include_directories (${CMAKE_SOURCE_DIR}/../../Lib/EyerLib/include)
+
+link_directories (${CMAKE_SOURCE_DIR}/../../Lib/EyerLib/lib)
+link_directories (${CMAKE_SOURCE_DIR}/../../Lib/ffmpeg_install/lib)
+link_directories (${CMAKE_SOURCE_DIR}/../../Lib/x264_install/lib)
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
     MESSAGE(STATUS "current platform: Linux ")
@@ -29,5 +33,7 @@ ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 
 ADD_SUBDIRECTORY(EyerVideoProcessTest)
 ADD_SUBDIRECTORY(EyerVideoProcess)
+ADD_SUBDIRECTORY(EyerWandTest)
+ADD_SUBDIRECTORY(EyerWand)
 
 ADD_SUBDIRECTORY(googletest)
