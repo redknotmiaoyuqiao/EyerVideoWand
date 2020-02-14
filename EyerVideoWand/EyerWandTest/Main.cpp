@@ -7,9 +7,9 @@ TEST(EyerWand, EyerWandRes_Base){
 }
 
 TEST(EyerBuilder, EyerBuilder){
-    Eyer::EyerWandBuilder builder("/Users/yuqiaomiao/Video/builder_mp4.mp4");
+    Eyer::EyerWandBuilder builder("/home/redknot/Videos/builder_mp4.mp4");
     builder.SetVideoWH(1280, 720);
-
+    builder.SetVideoFPS(25);
     builder.Process();
 }
 

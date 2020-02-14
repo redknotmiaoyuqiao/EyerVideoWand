@@ -14,6 +14,9 @@ add_library(
 
 target_link_libraries (EyerWand EyerAV)
 target_link_libraries (EyerWand EyerCore)
+target_link_libraries (EyerWand EyerGL)
+target_link_libraries (EyerWand EyerYUV)
+target_link_libraries (EyerWand EyerType)
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
     MESSAGE(STATUS "current platform: Linux ")
@@ -26,10 +29,18 @@ IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
     target_link_libraries (EyerWand swresample)
     target_link_libraries (EyerWand swscale)
 
-    target_link_libraries (EyerWand x264)
-
     target_link_libraries (EyerWand dl)
     target_link_libraries (EyerWand z)
+
+    target_link_libraries (EyerWand x264)
+
+    target_link_libraries (EyerWand glfw3)
+    target_link_libraries (EyerWand X11)
+
+    target_link_libraries (EyerWand libyuv.a)
+    target_link_libraries (EyerWand libfreetype.a)
+    target_link_libraries (EyerWand png)
+    target_link_libraries (EyerWand harfbuzz)
 
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
     MESSAGE(STATUS "current platform: Windows")
