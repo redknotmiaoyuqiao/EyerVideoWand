@@ -44,6 +44,24 @@ IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
     MESSAGE(STATUS "current platform: Windows")
+
+    target_link_libraries (EyerWand avformat)
+    target_link_libraries (EyerWand avdevice)
+    target_link_libraries (EyerWand avcodec)
+    target_link_libraries (EyerWand avutil)
+    target_link_libraries (EyerWand avfilter)
+    target_link_libraries (EyerWand swresample)
+    target_link_libraries (EyerWand swscale)
+
+    target_link_libraries (EyerWand libglfw3.a)
+
+    target_link_libraries (EyerWand libEyerCore.a)
+    target_link_libraries (EyerWand libyuv.a)
+    target_link_libraries (EyerWand libfreetype.a)
+
+    target_link_libraries (EyerWand z)
+    target_link_libraries (EyerWand bz2)
+
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Android")
     MESSAGE(STATUS "current platform: Android")
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
