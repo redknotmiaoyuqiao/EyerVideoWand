@@ -64,7 +64,9 @@ namespace Eyer
         windows.Open();
         windows.SetBGColor(1.0, 1.0, 1.0, 1.0);
 
-        Eyer::EyerGLFrameBuffer frameBuffer(videoWidth, videoHeight);
+        Eyer::EyerGLTexture firstRenderTarget;
+
+        Eyer::EyerGLFrameBuffer frameBuffer(videoWidth, videoHeight, &firstRenderTarget);
 
         Eyer::EyerGLTextDraw titleTextDraw;
         titleTextDraw.SetText("Redknot Miaomiao ABC GL gg");
@@ -73,6 +75,15 @@ namespace Eyer
         titleTextDraw.SetPos(0, 50);
 
         frameBuffer.AddComponent(&titleTextDraw);
+
+
+        Eyer::EyerGLTexture canvasRenderTarget;
+        Eyer::EyerGLFrameBuffer canvasFrameBuffer(videoWidth, videoHeight, &canvasRenderTarget);
+
+        Eyer::EyerGLSingleTextureDraw canvasDraw;
+        canvasDraw.SetTexture(&firstRenderTarget);
+
+        canvasFrameBuffer.AddComponent(&canvasDraw);
 
         int msec = 0;
         for(int i=0;i<encoder->GetFPS() * 60 * 1;i++){
@@ -95,8 +106,10 @@ namespace Eyer
 
             msec += 40;
 
+            canvasFrameBuffer.Draw();
+
             unsigned char * rgbData = (unsigned char * )malloc(videoWidth * videoHeight * 3);
-            frameBuffer.ReadPixel(0, 0, videoWidth, videoHeight, rgbData);
+            canvasFrameBuffer.ReadPixel(0, 0, videoWidth, videoHeight, rgbData);
 
             unsigned char * y = (unsigned char *)malloc(videoWidth * videoHeight);
             unsigned char * u = (unsigned char *)malloc(videoWidth * videoHeight / 4);
