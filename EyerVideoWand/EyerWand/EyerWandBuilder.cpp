@@ -68,7 +68,7 @@ namespace Eyer
 
         Eyer::EyerGLFrameBuffer frameBuffer(videoWidth, videoHeight, &firstRenderTarget);
 
-        Eyer::EyerGLTextDraw titleTextDraw;
+        Eyer::EyerGLTextDraw titleTextDraw("./Manjari-Bold.otf");
         titleTextDraw.SetText("Redknot Miaomiao ABC GL gg");
         titleTextDraw.SetColor(0.0, 1.0, 0.0);
         titleTextDraw.SetSize(50);
@@ -86,7 +86,7 @@ namespace Eyer
         canvasFrameBuffer.AddComponent(&canvasDraw);
 
         int msec = 0;
-        for(int i=0;i<encoder->GetFPS() * 60 * 1;i++){
+        for(int i=0;i<encoder->GetFPS() * 60 * 60;i++){
             windows.Clear();
 
             frameBuffer.Clear();
@@ -104,7 +104,7 @@ namespace Eyer
             titleTextDraw.Viewport(videoWidth, videoHeight);
             frameBuffer.Draw();
 
-            msec += 40;
+            msec += 1000 / encoder->GetFPS();
 
             canvasFrameBuffer.Draw();
 

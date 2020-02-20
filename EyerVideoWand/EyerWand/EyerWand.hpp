@@ -66,6 +66,9 @@ namespace Eyer
         int videoHeight = 0;
         int videoFps = 25;
     };
+
+
+
 }
 
 #endif
