@@ -52,7 +52,7 @@ TEST(GenVideo, GenVideo){
 
     Eyer::EyerGLFrameBuffer frameBuffer(width, height);
 
-    Eyer::EyerGLTextDraw textDraw;
+    Eyer::EyerGLTextDraw textDraw("./Manjari-Bold.otf");
     textDraw.SetText("Redknot Miaomiao ABC GL gg");
     textDraw.SetColor(0.0, 1.0, 0.0);
     textDraw.SetSize(100);

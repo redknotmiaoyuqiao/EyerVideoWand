@@ -29,6 +29,12 @@ namespace Eyer
         return 0;
     }
 
+    int EyerWandBuilder::AddVideoTrack(EyerVideoTrack & _videoTrack)
+    {
+        videoTrack = _videoTrack;
+        return 0;
+    }
+
     int EyerWandBuilder::Process()
     {
         Eyer::EyerAVWriter writer(path);
@@ -76,7 +82,6 @@ namespace Eyer
 
         frameBuffer.AddComponent(&titleTextDraw);
 
-
         Eyer::EyerGLTexture canvasRenderTarget;
         Eyer::EyerGLFrameBuffer canvasFrameBuffer(videoWidth, videoHeight, &canvasRenderTarget);
 
@@ -85,11 +90,13 @@ namespace Eyer
 
         canvasFrameBuffer.AddComponent(&canvasDraw);
 
-        int msec = 0;
-        for(int i=0;i<encoder->GetFPS() * 60 * 60;i++){
+        for(int i=0;i<encoder->GetFPS() * 30 * 1;i++){
             windows.Clear();
 
             frameBuffer.Clear();
+
+            // int msec = (int)(1000 * 1.0 / encoder->GetFPS() * i);
+            int msec = (int)(i * 1.0 / encoder->GetFPS() * 1000);
 
             if(debug) {
                 titleTextDraw.SetText(Eyer::EyerString::Number(msec / 1000 / 60 / 60, "%02d") + ":" +
@@ -103,8 +110,6 @@ namespace Eyer
             titleTextDraw.SetColor(1.0, 0.0, 0.0);
             titleTextDraw.Viewport(videoWidth, videoHeight);
             frameBuffer.Draw();
-
-            msec += 1000 / encoder->GetFPS();
 
             canvasFrameBuffer.Draw();
 
