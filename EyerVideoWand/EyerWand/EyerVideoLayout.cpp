@@ -27,13 +27,17 @@ namespace Eyer
         return 0;
     }
 
-    EyerVideoLayout::EyerVideoLayout(EyerVideoLayout & layout)
+    EyerVideoLayout::EyerVideoLayout(const EyerVideoLayout & layout)
     {
         *this = layout;
     }
 
-    EyerVideoLayout & EyerVideoLayout::operator = (EyerVideoLayout & layout)
+    EyerVideoLayout & EyerVideoLayout::operator = (const EyerVideoLayout & layout)
     {
+        if(this == &layout){
+            return *this;
+        }
+
         startFrameIndex = layout.startFrameIndex;
         endFrameIndex = layout.endFrameIndex;
 
@@ -59,7 +63,7 @@ namespace Eyer
         return endFrameIndex;
     }
 
-    int EyerVideoLayout::AddVideoFragment(EyerVideoFragment & fragment)
+    int EyerVideoLayout::AddVideoFragment(const EyerVideoFragment & fragment)
     {
         EyerVideoFragment * f = new EyerVideoFragment(fragment);
 

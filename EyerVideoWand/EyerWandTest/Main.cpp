@@ -30,6 +30,28 @@ TEST(EyerVideoTrack, EyerWandRes_Base){
     builder.AddVideoTrack(videoTrack);
 }
 
+TEST(EyerVideoBuild, EyerVideoBuild_Test){
+    int fps = 30;
+
+    Eyer::EyerWandBuilder builder("./struct_builder_vidoe_mp4.mp4");
+    builder.SetVideoWH(1280, 720);
+    builder.SetVideoFPS(fps);
+
+    Eyer::EyerVideoTrack videoTrack;
+
+    Eyer::EyerVideoLayout layout;
+    layout.SetFrame(0, fps * 60);
+
+    Eyer::EyerVideoFragment videoFragment;
+    videoFragment.LoadVideoFile("./M_1280_720.mp4");
+    videoFragment.SetFrameIndex(0, fps * 60);
+    videoFragment.SetFrameTime(0.0, 36.36);
+
+    videoTrack.AddLayout(layout);
+
+    builder.AddVideoTrack(videoTrack);
+}
+
 TEST(EyerBuilder, EyerBuilder){
     Eyer::EyerWandBuilder builder("./builder_mp4.mp4");
     builder.SetVideoWH(1280, 720);

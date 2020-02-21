@@ -31,7 +31,7 @@ namespace Eyer {
     };
 
     class EyerWandResource {
-    private:
+    public:
         EyerString resPath;
     public:
         EyerWandResource();
@@ -44,8 +44,9 @@ namespace Eyer {
     class EyerWandVideoResource : public EyerWandResource {
     public:
         EyerWandVideoResource();
-
         ~EyerWandVideoResource();
+
+        int GetVideoDuration(double & duration);
     };
 
     class EyerWandAudioResource : public EyerWandResource {
@@ -69,11 +70,10 @@ namespace Eyer {
 
         ~EyerVideoTrack();
 
-        EyerVideoTrack(EyerVideoTrack &track);
+        EyerVideoTrack(const EyerVideoTrack &track);
+        EyerVideoTrack & operator = (const EyerVideoTrack &track);
 
-        EyerVideoTrack &operator=(EyerVideoTrack &track);
-
-        int AddLayout(EyerVideoLayout &layout);
+        int AddLayout(const EyerVideoLayout &layout);
 
         int GetFrameCount();
 
@@ -87,12 +87,12 @@ namespace Eyer {
 
         ~EyerVideoLayout();
 
-        EyerVideoLayout(EyerVideoLayout &layout);
+        EyerVideoLayout(const EyerVideoLayout &layout);
 
-        EyerVideoLayout &operator=(EyerVideoLayout &layout);
+        EyerVideoLayout & operator = (const EyerVideoLayout &layout);
 
 
-        int AddVideoFragment(EyerVideoFragment & fragment);
+        int AddVideoFragment(const EyerVideoFragment & fragment);
 
         int SetFrame(int startFrameIndex, int endFrameIndex);
         int GetStartFrameIndex();
@@ -111,9 +111,8 @@ namespace Eyer {
         EyerVideoFragment();
         ~EyerVideoFragment();
 
-        EyerVideoFragment(EyerVideoFragment & fragment);
-
-        EyerVideoFragment & operator = (EyerVideoFragment & fragment);
+        EyerVideoFragment(const EyerVideoFragment & fragment);
+        EyerVideoFragment & operator = (const EyerVideoFragment & fragment);
 
         int LoadVideoFile(EyerString path);
 
@@ -127,6 +126,9 @@ namespace Eyer {
         int endIndex = 0;
         double startTime = 0.0;
         double endTime = 0.0;
+
+        Eyer::EyerWandVideoResource videoResource;
+        double duration = 0.0;
     };
 
 
@@ -140,7 +142,7 @@ namespace Eyer {
         int SetVideoWH(int w, int h);
         int SetVideoFPS(int fps);
 
-        int AddVideoTrack(EyerVideoTrack & videoTrack);
+        int AddVideoTrack(const EyerVideoTrack & videoTrack);
 
         int Process();
 

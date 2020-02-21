@@ -20,13 +20,17 @@ namespace Eyer
         layoutList.clear();
     }
 
-    EyerVideoTrack::EyerVideoTrack(EyerVideoTrack & track)
+    EyerVideoTrack::EyerVideoTrack(const EyerVideoTrack & track)
     {
         *this = track;
     }
 
-    EyerVideoTrack & EyerVideoTrack::operator = (EyerVideoTrack & track)
+    EyerVideoTrack & EyerVideoTrack::operator = (const EyerVideoTrack & track)
     {
+        if(this == &track){
+            return *this;
+        }
+
         for(int i=0;i<layoutList.getLength();i++){
             EyerVideoLayout * l = nullptr;
             layoutList.find(i, l);
@@ -35,10 +39,11 @@ namespace Eyer
                 layoutList.insertBack(_l);
             }
         }
+
         return *this;
     }
 
-    int EyerVideoTrack::AddLayout(EyerVideoLayout & layout)
+    int EyerVideoTrack::AddLayout(const EyerVideoLayout & layout)
     {
         EyerVideoLayout * l = new EyerVideoLayout(layout);
         layoutList.insertBack(l);

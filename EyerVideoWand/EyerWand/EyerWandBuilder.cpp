@@ -29,7 +29,7 @@ namespace Eyer
         return 0;
     }
 
-    int EyerWandBuilder::AddVideoTrack(EyerVideoTrack & _videoTrack)
+    int EyerWandBuilder::AddVideoTrack(const EyerVideoTrack & _videoTrack)
     {
         videoTrack = _videoTrack;
         return 0;

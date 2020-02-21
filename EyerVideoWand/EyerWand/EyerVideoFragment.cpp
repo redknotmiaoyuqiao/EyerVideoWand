@@ -7,7 +7,7 @@ namespace Eyer
 
     }
 
-    EyerVideoFragment::EyerVideoFragment(EyerVideoFragment & fragment)
+    EyerVideoFragment::EyerVideoFragment(const EyerVideoFragment & fragment)
     {
         *this = fragment;
     }
@@ -16,18 +16,31 @@ namespace Eyer
     {
     }
 
-    EyerVideoFragment & EyerVideoFragment::operator = (EyerVideoFragment & fragment)
+    EyerVideoFragment & EyerVideoFragment::operator = (const EyerVideoFragment & fragment)
     {
+        if(this == &fragment){
+            return *this;
+        }
+
         startIndex = fragment.startIndex;
         endIndex = fragment.endIndex;
         startTime = fragment.startTime;
         endTime = fragment.endTime;
+
         return *this;
     }
 
     int EyerVideoFragment::LoadVideoFile(EyerString _path)
     {
         path = _path;
+        videoResource.SetPath(path);
+
+        int ret = videoResource.GetVideoDuration(duration);
+        if(ret){
+            RedLog("GetVideoDuration Error\n");
+        }
+        RedLog("Video Duration:%f\n", duration);
+
         return 0;
     }
 
