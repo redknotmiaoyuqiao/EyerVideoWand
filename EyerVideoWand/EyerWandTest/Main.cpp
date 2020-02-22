@@ -2,11 +2,13 @@
 #include <gtest/gtest.h>
 #include <EyerWand/EyerWand.hpp>
 
+
 TEST(EyerWand, EyerWandRes_Base){
 
 }
 
 TEST(EyerVideoTrack, EyerWandRes_Base){
+    /*
     Eyer::EyerWandBuilder builder("./struct_builder_mp4.mp4");
 
     Eyer::EyerVideoTrack videoTrack;
@@ -28,6 +30,7 @@ TEST(EyerVideoTrack, EyerWandRes_Base){
     ASSERT_EQ(frameCount, 999 + 1000) << "Get Frame Count Error!!!!";
 
     builder.AddVideoTrack(videoTrack);
+     */
 }
 
 TEST(EyerVideoBuild, EyerVideoBuild_Test){
@@ -44,18 +47,24 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
 
     Eyer::EyerVideoFragment videoFragment;
     videoFragment.LoadVideoFile("./M_1280_720.mp4");
-    videoFragment.SetFrameIndex(0, fps * 60);
-    videoFragment.SetFrameTime(0.0, 36.36);
+    videoFragment.SetFrameIndex(0, fps * 30);
+    videoFragment.SetFrameTime(0.0, videoFragment.GetDuration());
+    videoFragment.Print();
+
+    layout.AddVideoFragment(videoFragment);
 
     videoTrack.AddLayout(layout);
 
     builder.AddVideoTrack(videoTrack);
+    builder.Process();
 }
 
 TEST(EyerBuilder, EyerBuilder){
+    /*
     Eyer::EyerWandBuilder builder("./builder_mp4.mp4");
     builder.SetVideoWH(1280, 720);
     builder.SetVideoFPS(60);
+    */
     // builder.Process();
 }
 

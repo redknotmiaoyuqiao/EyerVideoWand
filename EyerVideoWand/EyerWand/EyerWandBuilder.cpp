@@ -56,10 +56,142 @@ namespace Eyer
         writer.WriteHand();
 
         // Video
-        VideoProcess(&writer, &encoder, videoStreamIndex, 1);
+        VideoTrackProcess(&writer, &encoder, videoStreamIndex);
+        // VideoProcess(&writer, &encoder, videoStreamIndex);
         // Audio
 
         writer.Close();
+
+        return 0;
+    }
+
+    int EyerWandBuilder::VideoTrackProcess(EyerAVWriter * writer, EyerAVEncoder * encoder, int streamIndex, int debug)
+    {
+        // 获取 VideoTrack
+        // 从layout中获取总帧数
+        int frameCount = videoTrack.GetFrameCount();
+        EyerLog("Frame Count: %d\n", frameCount);
+
+        int width = videoWidth;
+        int height = videoHeight;
+
+        Eyer::EyerGLWindow windows("miaowu", width, height);
+        windows.Open();
+        windows.SetBGColor(1.0, 1.0, 1.0, 1.0);
+
+
+
+
+
+        EyerGLTexture canvasRenderTarget;
+        Eyer::EyerGLFrameBuffer frameBuffer(width, height, &canvasRenderTarget);
+
+        Eyer::EyerGLTextDraw textDraw("./Manjari-Bold.otf");
+        textDraw.SetText("Redknot Miaomiao ABC GL gg");
+        textDraw.SetColor(0.0, 1.0, 0.0);
+        textDraw.SetSize(50);
+        textDraw.SetPos(0, 0 + 50);
+
+        frameBuffer.AddComponent(&textDraw);
+
+
+
+
+        EyerGLTexture outRenderTarget;
+        Eyer::EyerGLFrameBuffer outFrameBuffer(width, height, &outRenderTarget);
+
+        Eyer::EyerGLSingleTextureDraw canvasDraw;
+        canvasDraw.SetTexture(&canvasRenderTarget);
+
+        outFrameBuffer.AddComponent(&canvasDraw);
+
+
+        for(int frameIndex = 0; frameIndex < frameCount; frameIndex++){
+            windows.Clear();
+
+            int msec = (int)(frameIndex * 1.0 / encoder->GetFPS() * 1000);
+            textDraw.SetText(Eyer::EyerString::Number(msec / 1000 / 60 / 60, "%02d") + ":" +
+                                  Eyer::EyerString::Number(msec / 1000 / 60 % 60, "%02d") + ":" +
+                                  Eyer::EyerString::Number(msec / 1000 % 60, "%02d") + ":" +
+                                  Eyer::EyerString::Number(msec % 1000, "%03d"));
+            textDraw.SetPos(0, 0 + 50);
+            textDraw.SetColor(1.0, 0.0, 0.0);
+            textDraw.Viewport(width, height);
+
+            EyerVideoTrackRenderParams params;
+            params.videoW = width;
+            params.videoH = height;
+            params.frameBuffer = &frameBuffer;
+            params.titleTextDraw = &textDraw;
+
+            videoTrack.RenderFrame(frameIndex, &params, videoFps);
+
+            outFrameBuffer.Draw();
+
+            unsigned char * rgbData = (unsigned char * )malloc(videoWidth * videoHeight * 3);
+            outFrameBuffer.ReadPixel(0, 0, videoWidth, videoHeight, rgbData);
+
+            unsigned char * y = (unsigned char *)malloc(videoWidth * videoHeight);
+            unsigned char * u = (unsigned char *)malloc(videoWidth * videoHeight / 4);
+            unsigned char * v = (unsigned char *)malloc(videoWidth * videoHeight / 4);
+
+            Eyer::EyerYUV yuvCon;
+            yuvCon.RGB2YUV420(videoWidth, videoHeight, rgbData, y, u, v);
+
+            Eyer::EyerAVFrame frame;
+            frame.SetPTS(frameIndex);
+            frame.SetVideoData420P(y, u, v, videoWidth, videoHeight);
+
+            encoder->SendFrame(&frame);
+            while(1){
+                Eyer::EyerAVPacket pkt;
+                int ret = encoder->RecvPacket(&pkt);
+                if(ret){
+                    break;
+                }
+
+                Eyer::EyerAVRational encoderTimebase;
+                encoder->GetTimeBase(encoderTimebase);
+
+                Eyer::EyerAVRational streamTimebase;
+                writer->GetStreamTimeBase(streamTimebase, streamIndex);
+
+                pkt.RescaleTs(encoderTimebase, streamTimebase);
+
+                pkt.SetStreamId(streamIndex);
+                writer->WritePacket(&pkt);
+            }
+
+            free(y);
+            free(u);
+            free(v);
+
+            free(rgbData);
+
+            windows.Loop();
+        }
+
+        encoder->SendFrame(nullptr);
+        while(1){
+            Eyer::EyerAVPacket pkt;
+            int ret = encoder->RecvPacket(&pkt);
+            if(ret){
+                break;
+            }
+
+            Eyer::EyerAVRational encoderTimebase;
+            encoder->GetTimeBase(encoderTimebase);
+
+            Eyer::EyerAVRational streamTimebase;
+            writer->GetStreamTimeBase(streamTimebase, streamIndex);
+
+            pkt.RescaleTs(encoderTimebase, streamTimebase);
+
+            pkt.SetStreamId(streamIndex);
+            writer->WritePacket(&pkt);
+        }
+
+        windows.Close();
 
         return 0;
     }
@@ -74,7 +206,7 @@ namespace Eyer
 
         Eyer::EyerGLFrameBuffer frameBuffer(videoWidth, videoHeight, &firstRenderTarget);
 
-        Eyer::EyerGLTextDraw titleTextDraw("./Manjari-Bold.otf");
+        Eyer::EyerGLTextDraw titleTextDraw("/home/redknot/Manjari-Bold.otf");
         titleTextDraw.SetText("Redknot Miaomiao ABC GL gg");
         titleTextDraw.SetColor(0.0, 1.0, 0.0);
         titleTextDraw.SetSize(50);

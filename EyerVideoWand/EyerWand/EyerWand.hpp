@@ -1,6 +1,7 @@
 #ifndef	EYER_LIB_AV_WAND_H
 #define	EYER_LIB_AV_WAND_H
 
+#include <EyerGL/EyerGL.hpp>
 #include "EyerCore/EyerCore.hpp"
 #include "EyerAV/EyerAV.hpp"
 
@@ -47,6 +48,7 @@ namespace Eyer {
         ~EyerWandVideoResource();
 
         int GetVideoDuration(double & duration);
+        int GetVideoFrame(EyerAVFrame & avFrame, double ts);
     };
 
     class EyerWandAudioResource : public EyerWandResource {
@@ -57,13 +59,50 @@ namespace Eyer {
     };
 
 
-    class EyerTrack {
+    class EyerVideoPanel
+    {
+    public:
+        EyerVideoPanel();
+        ~EyerVideoPanel();
 
+        EyerVideoPanel(const EyerVideoPanel & panel);
+        EyerVideoPanel & operator = (const EyerVideoPanel & panel);
+
+        int GetYDate(unsigned char * yData);
+        int GetUDate(unsigned char * uData);
+        int GetVDate(unsigned char * vData);
+
+        int SetData(EyerAVFrame & frame);
+
+        int GetW();
+        int GetH();
+    private:
+        EyerMat4x4 mvp;
+        EyerAVFrame frame;
+    };
+
+
+    class EyerTrack {
+    public:
+        virtual ~EyerTrack()
+        {
+
+        }
     };
 
     /**
      * 视频轨
      */
+
+    class EyerVideoTrackRenderParams
+    {
+    public:
+        int videoW = 0;
+        int videoH = 0;
+        Eyer::EyerGLFrameBuffer * frameBuffer = nullptr;
+        Eyer::EyerGLTextDraw * titleTextDraw = nullptr;
+    };
+
     class EyerVideoTrack : public EyerTrack {
     public:
         EyerVideoTrack();
@@ -77,6 +116,7 @@ namespace Eyer {
 
         int GetFrameCount();
 
+        int RenderFrame(int frameIndex, EyerVideoTrackRenderParams * params, int fps);
     private:
         EyerLinkedList<EyerVideoLayout *> layoutList;
     };
@@ -98,6 +138,9 @@ namespace Eyer {
         int GetStartFrameIndex();
         int GetEndFrameIndex();
 
+
+        int GetVideoFragmentCount();
+        int GetVideoPanel(EyerVideoPanel & panel, int videoFragmentIndex, int layoutFrameIndex, int fps);
     private:
         int startFrameIndex = 0;
         int endFrameIndex = 0;
@@ -119,6 +162,11 @@ namespace Eyer {
         int SetFrameIndex(int startIndex, int endIndex);
         int SetFrameTime(double startTime, double endTime);
 
+        double GetDuration();
+
+        int Print();
+
+        EyerString GetPath();
     private:
         EyerString path;
 
@@ -148,7 +196,7 @@ namespace Eyer {
 
     private:
         int VideoProcess(EyerAVWriter * writer, EyerAVEncoder * encoder, int streamIndex, int debug = 0);
-
+        int VideoTrackProcess(EyerAVWriter * writer, EyerAVEncoder * encoder, int streamIndex, int debug = 0);
     private:
         EyerString path;
 

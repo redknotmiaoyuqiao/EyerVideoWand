@@ -12,7 +12,8 @@ add_library(
         EyerWandBuilder.cpp
         EyerVideoTrack.cpp
         EyerVideoLayout.cpp
-        EyerVideoFragment.cpp)
+        EyerVideoFragment.cpp
+        EyerVideoPanel.cpp)
 
 target_link_libraries (EyerWand EyerAV)
 target_link_libraries (EyerWand EyerCore)
