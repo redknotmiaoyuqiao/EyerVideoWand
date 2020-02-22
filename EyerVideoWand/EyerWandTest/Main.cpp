@@ -43,7 +43,7 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     Eyer::EyerVideoTrack videoTrack;
 
     Eyer::EyerVideoLayout layout;
-    layout.SetFrame(0, fps * 60);
+    layout.SetFrame(0, fps * 40);
 
     Eyer::EyerVideoFragment videoFragment;
     videoFragment.LoadVideoFile("./M_1280_720.mp4");
