@@ -115,6 +115,7 @@ namespace Eyer {
         EyerVideoTrack & operator = (const EyerVideoTrack &track);
 
         int AddLayout(const EyerVideoLayout &layout);
+        int AddLayer(const EyerVideoLayout &layout);
 
         int GetFrameCount();
 
@@ -208,6 +209,9 @@ namespace Eyer {
 
         EyerVideoTrack videoTrack;
     };
+
+
+    typedef EyerVideoLayout EyerVideoLayer;
 }
 
 #endif

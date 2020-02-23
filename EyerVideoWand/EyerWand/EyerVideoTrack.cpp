@@ -51,6 +51,11 @@ namespace Eyer
         return 0;
     }
 
+    int EyerVideoTrack::AddLayer(const EyerVideoLayout &layout)
+    {
+        return AddLayout(layout);
+    }
+
     int EyerVideoTrack::GetFrameCount()
     {
         int frameCount = 0;
