@@ -5,6 +5,8 @@
 #include "EyerCore/EyerCore.hpp"
 #include "EyerAV/EyerAV.hpp"
 
+#define EYER_WAND_VERSION "1.0.0"
+
 namespace Eyer {
     class EyerWand;
 
