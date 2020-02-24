@@ -13,7 +13,10 @@ add_library(
         EyerVideoTrack.cpp
         EyerVideoLayout.cpp
         EyerVideoFragment.cpp
-        EyerVideoPanel.cpp)
+        EyerVideoPanel.cpp
+        InterfaceC.cpp
+        InterfaceCSharp.cpp
+        )
 
 target_link_libraries (EyerWand EyerAV)
 target_link_libraries (EyerWand EyerCore)

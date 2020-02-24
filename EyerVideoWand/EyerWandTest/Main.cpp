@@ -42,19 +42,24 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
 
     Eyer::EyerVideoTrack videoTrack;
 
+<<<<<<< HEAD
     Eyer::EyerVideoLayout layout;
     layout.SetFrame(0, fps * 40
     -);
+=======
+    Eyer::EyerVideoLayer layer;
+    layer.SetFrame(0, fps * 40);
+>>>>>>> deda4b27f920ec63d67a1900456c4cd4d39b226b
 
     Eyer::EyerVideoFragment videoFragment;
     videoFragment.LoadVideoFile("./M_1280_720.mp4");
-    videoFragment.SetFrameIndex(0, fps * 30);
-    videoFragment.SetFrameTime(0.0, videoFragment.GetDuration());
+    // videoFragment.SetFrameIndex(0, fps * 30);
+    // videoFragment.SetFrameTime(0.0, videoFragment.GetDuration());
     videoFragment.Print();
 
-    layout.AddVideoFragment(videoFragment);
+    layer.AddVideoFragment(videoFragment);
 
-    videoTrack.AddLayout(layout);
+    videoTrack.AddLayer(layer);
 
     builder.AddVideoTrack(videoTrack);
     builder.Process();

@@ -5,6 +5,8 @@
 #include "EyerCore/EyerCore.hpp"
 #include "EyerAV/EyerAV.hpp"
 
+#define EYER_WAND_VERSION "1.0.0"
+
 namespace Eyer {
     class EyerWand;
 
@@ -113,6 +115,7 @@ namespace Eyer {
         EyerVideoTrack & operator = (const EyerVideoTrack &track);
 
         int AddLayout(const EyerVideoLayout &layout);
+        int AddLayer(const EyerVideoLayout &layout);
 
         int GetFrameCount();
 
@@ -206,6 +209,9 @@ namespace Eyer {
 
         EyerVideoTrack videoTrack;
     };
+
+
+    typedef EyerVideoLayout EyerVideoLayer;
 }
 
 #endif
