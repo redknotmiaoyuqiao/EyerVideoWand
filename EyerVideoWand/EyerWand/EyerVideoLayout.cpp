@@ -93,7 +93,7 @@ namespace Eyer
 
         EyerAVFrame avFrame;
         // double ts = 0.0;
-        double ts = 1000 * 1.0 / fps * layoutFrameIndex;
+        double ts = 1000 * 1.0 / fps * (layoutFrameIndex);
         ts = ts / 1000.0;
         // EyerLog("Ts:%f\n", ts);
         int ret = videoResource.GetVideoFrame(avFrame, ts);

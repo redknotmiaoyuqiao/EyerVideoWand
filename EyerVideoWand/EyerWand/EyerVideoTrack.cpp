@@ -101,13 +101,13 @@ namespace Eyer
                 continue;
             }
 
-            EyerLog("Layout Frame Index: %d\n", frameIndex);
+            // EyerLog("Layout Frame Index: %d====Layer: %d\n", frameIndex, i);
 
             int videoFragmentCount = layout->GetVideoFragmentCount();
 
             for(int fragmentIndex=0;fragmentIndex<videoFragmentCount;fragmentIndex++){
                 EyerVideoPanel panel;
-                int ret = layout->GetVideoPanel(panel, fragmentIndex, frameIndex, fps);
+                int ret = layout->GetVideoPanel(panel, fragmentIndex, frameIndex - layout->GetStartFrameIndex(), fps);
                 if(ret){
                     continue;
                 }
