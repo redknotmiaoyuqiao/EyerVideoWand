@@ -80,7 +80,12 @@ namespace Eyer
         windows.SetBGColor(1.0, 1.0, 1.0, 1.0);
 
 
-
+        Eyer::EyerGLFrameBuffer windowsFrameBuffer(width, height);
+        Eyer::EyerGLTextDraw textProgressDraw("./Manjari-Bold.otf");
+        textProgressDraw.SetText("Redknot Miaomiao ABC GL gg");
+        textProgressDraw.SetColor(0.0, 0.0, 0.0);
+        textProgressDraw.SetSize(50);
+        textProgressDraw.SetPos(0, height / 2);
 
 
         EyerGLTexture canvasRenderTarget;
@@ -109,6 +114,13 @@ namespace Eyer
         for(int frameIndex = 0; frameIndex < frameCount; frameIndex++){
             windows.Clear();
 
+            textProgressDraw.SetText(EyerString::Number((int)(frameIndex * 1.0 / frameCount * 100)) + "%");
+            windowsFrameBuffer.Clear();
+            windowsFrameBuffer.AddComponent(&textProgressDraw);
+            windowsFrameBuffer.Draw();
+            windowsFrameBuffer.ClearAllComponent();
+
+
             int msec = (int)(frameIndex * 1.0 / encoder->GetFPS() * 1000);
             textDraw.SetText(Eyer::EyerString::Number(msec / 1000 / 60 / 60, "%02d") + ":" +
                                   Eyer::EyerString::Number(msec / 1000 / 60 % 60, "%02d") + ":" +
@@ -123,6 +135,7 @@ namespace Eyer
             params.videoH = height;
             params.frameBuffer = &frameBuffer;
             params.titleTextDraw = &textDraw;
+
 
             videoTrack.RenderFrame(frameIndex, &params, videoFps);
 
