@@ -13,18 +13,16 @@ namespace Eyer {
     class EyerWandResourse;
 
     class EyerWandVideoResource;
-
     class EyerWandAudioResource;
 
     class EyerTrack;
-
     class EyerVideoTrack;
-
     class EyerVideoLayout;
-
     class EyerWandBuilder;
 
     class EyerVideoFragment;
+
+    class EyerVideoDecoderLine;
 
     class EyerWand {
     public:
@@ -44,6 +42,23 @@ namespace Eyer {
         int SetPath(EyerString resPath);
     };
 
+    class EyerVideoDecoderLine
+    {
+    public:
+        EyerVideoDecoderLine(EyerString resPath, double initStart);
+        ~EyerVideoDecoderLine();
+
+    private:
+        double initStart = 0.0;
+        EyerString resPath;
+
+        EyerAVReader * reader = nullptr;
+        EyerAVDecoder * decoder = nullptr;
+        int videoStreamIndex = -1;
+
+        EyerQueue<EyerAVFrame *> frameQueue;
+    };
+
     class EyerWandVideoResource : public EyerWandResource {
     public:
         EyerWandVideoResource();
@@ -51,6 +66,20 @@ namespace Eyer {
 
         int GetVideoDuration(double & duration);
         int GetVideoFrame(EyerAVFrame & avFrame, double ts);
+
+    private:
+        Eyer::EyerAVReader * reader = nullptr;
+        int videoStreamIndex = -1;
+        Eyer::EyerAVDecoder * decoder = nullptr;
+
+        int initFlag = 0;
+
+        int InitReader();
+        int FreeReader();
+
+        int Init();
+
+        int LoadFrame2List();
     };
 
     class EyerWandAudioResource : public EyerWandResource {

@@ -16,6 +16,7 @@ add_library(
         EyerVideoPanel.cpp
         InterfaceC.cpp
         InterfaceCSharp.cpp
+        EyerVideoDecoderLine.cpp
         )
 
 target_link_libraries (EyerWand EyerAV)
