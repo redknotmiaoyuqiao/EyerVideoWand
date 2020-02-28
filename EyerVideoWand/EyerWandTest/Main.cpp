@@ -2,6 +2,14 @@
 #include <gtest/gtest.h>
 #include <EyerWand/EyerWand.hpp>
 
+TEST(EyerWand, Eyer_Decoder_Line){
+    Eyer::EyerVideoDecoderLine decoderLine("./M_1280_720.mp4", 20.0);
+
+    for(double ts = 20.0; ts < 40.0; ts += 0.01){
+        Eyer::EyerAVFrame frame;
+        decoderLine.GetFrame(frame, ts);
+    }
+}
 
 TEST(EyerWand, EyerWandRes_Base){
 
@@ -43,10 +51,10 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     Eyer::EyerVideoTrack videoTrack;
 
     Eyer::EyerVideoLayout layer;
-    layer.SetFrame(0, fps * 5);
+    layer.SetFrame(0, fps * 2);
 
     Eyer::EyerVideoLayout layer2;
-    layer2.SetFrame(fps * 5, fps * 5 * 2);
+    layer2.SetFrame(fps * 5, fps * 5 + fps * 5);
 
     Eyer::EyerVideoFragment videoFragment;
     videoFragment.LoadVideoFile("./M_1280_720.mp4");
