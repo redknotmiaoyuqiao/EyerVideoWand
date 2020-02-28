@@ -75,13 +75,14 @@ namespace Eyer
         int width = videoWidth;
         int height = videoHeight;
 
-        Eyer::EyerGLWindow windows("miaowu", width, height);
+        Eyer::EyerGLWindow windows("Eyer Wand", width, height);
         windows.Open();
         windows.SetBGColor(1.0, 1.0, 1.0, 1.0);
 
 
         Eyer::EyerGLFrameBuffer windowsFrameBuffer(width, height);
-        Eyer::EyerGLTextDraw textProgressDraw("./Manjari-Bold.otf");
+        // Eyer::EyerGLTextDraw textProgressDraw("./han_yi_xing_kai_jian.ttf");
+        Eyer::EyerGLTextDraw textProgressDraw("./xiao_xiao_yuan_pin_ying.ttf");
         textProgressDraw.SetText("Redknot Miaomiao ABC GL gg");
         textProgressDraw.SetColor(0.0, 0.0, 0.0);
         textProgressDraw.SetSize(50);
@@ -91,14 +92,13 @@ namespace Eyer
         EyerGLTexture canvasRenderTarget;
         Eyer::EyerGLFrameBuffer frameBuffer(width, height, &canvasRenderTarget);
 
-        Eyer::EyerGLTextDraw textDraw("./Manjari-Bold.otf");
+        Eyer::EyerGLTextDraw textDraw("./xiao_xiao_yuan_pin_ying.ttf");
         textDraw.SetText("Redknot Miaomiao ABC GL gg");
         textDraw.SetColor(0.0, 1.0, 0.0);
         textDraw.SetSize(50);
         textDraw.SetPos(0, 0 + 50);
 
         frameBuffer.AddComponent(&textDraw);
-
 
 
 
@@ -114,7 +114,10 @@ namespace Eyer
         for(int frameIndex = 0; frameIndex < frameCount; frameIndex++){
             windows.Clear();
 
-            textProgressDraw.SetText(EyerString::Number((int)(frameIndex * 1.0 / frameCount * 100)) + "%");
+            textProgressDraw.SetText(EyerString("Eyer Wand 正 在 生 成 视 频 ： ") + EyerString::Number((int)(frameIndex * 1.0 / frameCount * 100)) + " %");
+            int progressWidth = textProgressDraw.GetTextWidth();
+            textProgressDraw.SetPos((width - progressWidth) / 2, height / 2);
+
             windowsFrameBuffer.Clear();
             windowsFrameBuffer.AddComponent(&textProgressDraw);
             windowsFrameBuffer.Draw();
@@ -122,7 +125,7 @@ namespace Eyer
 
 
             int msec = (int)(frameIndex * 1.0 / encoder->GetFPS() * 1000);
-            textDraw.SetText(Eyer::EyerString::Number(msec / 1000 / 60 / 60, "%02d") + ":" +
+            textDraw.SetText(Eyer::EyerString("Eyer Wand 基情支持") + Eyer::EyerString::Number(msec / 1000 / 60 / 60, "%02d") + ":" +
                                   Eyer::EyerString::Number(msec / 1000 / 60 % 60, "%02d") + ":" +
                                   Eyer::EyerString::Number(msec / 1000 % 60, "%02d") + ":" +
                                   Eyer::EyerString::Number(msec % 1000, "%03d"));
