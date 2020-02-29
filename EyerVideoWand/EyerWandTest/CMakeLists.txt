@@ -19,6 +19,16 @@ file(COPY
         DESTINATION
         ${CMAKE_CURRENT_BINARY_DIR}/
         )
+file(COPY
+        ${CMAKE_CURRENT_SOURCE_DIR}/xiao_xiao_yuan_pin_ying.ttf
+        DESTINATION
+        ${CMAKE_CURRENT_BINARY_DIR}/
+        )
+file(COPY
+        ${CMAKE_CURRENT_SOURCE_DIR}/han_yi_xing_kai_jian.ttf
+        DESTINATION
+        ${CMAKE_CURRENT_BINARY_DIR}/
+        )
 
 INSTALL(
         TARGETS EyerWandTest
