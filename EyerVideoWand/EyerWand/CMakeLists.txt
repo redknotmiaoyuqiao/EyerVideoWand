@@ -17,7 +17,8 @@ add_library(
         InterfaceC.cpp
         InterfaceCSharp.cpp
         EyerVideoDecoderLine.cpp
-        )
+        EyerAudioTrack.cpp
+        EyerAudioLayer.cpp EyerAudioFragment.cpp)
 
 target_link_libraries (EyerWand EyerAV)
 target_link_libraries (EyerWand EyerCore)

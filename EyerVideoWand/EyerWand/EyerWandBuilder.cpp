@@ -1,6 +1,7 @@
 #include <EyerGL/EyerGL.hpp>
-#include "EyerWand.hpp"
+#include <math.h>
 
+#include "EyerWand.hpp"
 #include "EyerAV/EyerAV.hpp"
 #include "EyerYUV/EyerYUV.hpp"
 
@@ -35,6 +36,12 @@ namespace Eyer
         return 0;
     }
 
+    int EyerWandBuilder::AddAudioTrack(const EyerAudioTrack & _audioTrack)
+    {
+        audioTrack = _audioTrack;
+        return 0;
+    }
+
     int EyerWandBuilder::Process()
     {
         Eyer::EyerAVWriter writer(path);
@@ -52,13 +59,20 @@ namespace Eyer
         int videoStreamIndex = writer.AddStream(&encoder);
 
         // AddAudioStream
+        Eyer::EyerAVEncoder audioEncoder;
+        EncoderParam audioEncoderParam;
+        audioEncoderParam.codecId = CodecId::CODEC_ID_AAC;
+        audioEncoder.Init(&audioEncoderParam);
+
+        int audioStreamIndex = writer.AddStream(&audioEncoder);
 
         writer.WriteHand();
 
         // Video
         VideoTrackProcess(&writer, &encoder, videoStreamIndex);
-        // VideoProcess(&writer, &encoder, videoStreamIndex);
+
         // Audio
+        AudioTrackProcess(&writer, &audioEncoder, audioStreamIndex);
 
         writer.Close();
 
@@ -214,68 +228,31 @@ namespace Eyer
 
     int EyerWandBuilder::VideoProcess(EyerAVWriter * writer, EyerAVEncoder * encoder, int streamIndex, int debug)
     {
-        Eyer::EyerGLWindow windows("WandBuilder", videoWidth, videoHeight);
-        windows.Open();
-        windows.SetBGColor(1.0, 1.0, 1.0, 1.0);
+        return 0;
+    }
 
-        Eyer::EyerGLTexture firstRenderTarget;
+    int EyerWandBuilder::AudioTrackProcess(EyerAVWriter * writer, EyerAVEncoder * encoder, int streamIndex, int debug)
+    {
+        // 记录当前写入的长度
+        double wirteTime = 0.0;
+        while(1){
+            int bufferSize = encoder->GetBufferSize();
+            int sampSize = bufferSize / 4 / 2;
+            double dTime = sampSize * 1.0 / 44100;
 
-        Eyer::EyerGLFrameBuffer frameBuffer(videoWidth, videoHeight, &firstRenderTarget);
+            Eyer::EyerAVFrame avFrame;
 
-        Eyer::EyerGLTextDraw titleTextDraw("/home/redknot/Manjari-Bold.otf");
-        titleTextDraw.SetText("Redknot Miaomiao ABC GL gg");
-        titleTextDraw.SetColor(0.0, 1.0, 0.0);
-        titleTextDraw.SetSize(50);
-        titleTextDraw.SetPos(0, 50);
+            int frameSize = encoder->GetFrameSize();
+            int size = encoder->GetBufferSize();
 
-        frameBuffer.AddComponent(&titleTextDraw);
-
-        Eyer::EyerGLTexture canvasRenderTarget;
-        Eyer::EyerGLFrameBuffer canvasFrameBuffer(videoWidth, videoHeight, &canvasRenderTarget);
-
-        Eyer::EyerGLSingleTextureDraw canvasDraw;
-        canvasDraw.SetTexture(&firstRenderTarget);
-
-        canvasFrameBuffer.AddComponent(&canvasDraw);
-
-        for(int i=0;i<encoder->GetFPS() * 30 * 1;i++){
-            windows.Clear();
-
-            frameBuffer.Clear();
-
-            // int msec = (int)(1000 * 1.0 / encoder->GetFPS() * i);
-            int msec = (int)(i * 1.0 / encoder->GetFPS() * 1000);
-
-            if(debug) {
-                titleTextDraw.SetText(Eyer::EyerString::Number(msec / 1000 / 60 / 60, "%02d") + ":" +
-                                      Eyer::EyerString::Number(msec / 1000 / 60 % 60, "%02d") + ":" +
-                                      Eyer::EyerString::Number(msec / 1000 % 60, "%02d") + ":" +
-                                      Eyer::EyerString::Number(msec % 1000, "%03d"));
+            float * d = (float *)malloc(size);
+            for(int i=0;i<size / 4;i++){
+                d[i] = 0.2f;
             }
-            else{
-                titleTextDraw.SetText("");
-            }
-            titleTextDraw.SetColor(1.0, 0.0, 0.0);
-            titleTextDraw.Viewport(videoWidth, videoHeight);
-            frameBuffer.Draw();
 
-            canvasFrameBuffer.Draw();
+            avFrame.SetAudioData((unsigned char *)d, size, frameSize, 2, Eyer::EyerAVFormat::EYER_AV_SAMPLE_FMT_FLTP);
 
-            unsigned char * rgbData = (unsigned char * )malloc(videoWidth * videoHeight * 3);
-            canvasFrameBuffer.ReadPixel(0, 0, videoWidth, videoHeight, rgbData);
-
-            unsigned char * y = (unsigned char *)malloc(videoWidth * videoHeight);
-            unsigned char * u = (unsigned char *)malloc(videoWidth * videoHeight / 4);
-            unsigned char * v = (unsigned char *)malloc(videoWidth * videoHeight / 4);
-
-            Eyer::EyerYUV yuvCon;
-            yuvCon.RGB2YUV420(videoWidth, videoHeight, rgbData, y, u, v);
-
-            Eyer::EyerAVFrame frame;
-            frame.SetPTS(i);
-            frame.SetVideoData420P(y, u, v, videoWidth, videoHeight);
-
-            encoder->SendFrame(&frame);
+            encoder->SendFrame(&avFrame);
             while(1){
                 Eyer::EyerAVPacket pkt;
                 int ret = encoder->RecvPacket(&pkt);
@@ -293,15 +270,19 @@ namespace Eyer
 
                 pkt.SetStreamId(streamIndex);
                 writer->WritePacket(&pkt);
+
+                wirteTime += dTime;
             }
 
-            free(y);
-            free(u);
-            free(v);
+            if(d != nullptr){
+                free(d);
+            }
 
-            free(rgbData);
+            EyerLog("Time: %f\n", wirteTime);
 
-            windows.Loop();
+            if(wirteTime >= audioTrack.GetCountTime()){
+                break;
+            }
         }
 
         encoder->SendFrame(nullptr);
@@ -323,8 +304,6 @@ namespace Eyer
             pkt.SetStreamId(streamIndex);
             writer->WritePacket(&pkt);
         }
-
-        windows.Close();
 
         return 0;
     }

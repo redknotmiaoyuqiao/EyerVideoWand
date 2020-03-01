@@ -30,6 +30,18 @@ file(COPY
         ${CMAKE_CURRENT_BINARY_DIR}/
         )
 
+file(COPY
+        ${CMAKE_CURRENT_SOURCE_DIR}/mulan.jpg
+        DESTINATION
+        ${CMAKE_CURRENT_BINARY_DIR}/
+        )
+
+file(COPY
+        ${CMAKE_CURRENT_SOURCE_DIR}/wei.mp3
+        DESTINATION
+        ${CMAKE_CURRENT_BINARY_DIR}/
+        )
+
 INSTALL(
         TARGETS EyerWandTest
         RUNTIME DESTINATION bin

@@ -48,25 +48,45 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     builder.SetVideoWH(1280, 720);
     builder.SetVideoFPS(fps);
 
+    // 视频
     Eyer::EyerVideoTrack videoTrack;
 
     Eyer::EyerVideoLayout layer;
     layer.SetFrame(0, fps * 5);
 
     Eyer::EyerVideoLayout layer2;
-    layer2.SetFrame(fps * 5, fps * 5 + fps * 40);
+    layer2.SetFrame(fps * 5, fps * 5 + fps * 5);
 
     Eyer::EyerVideoFragment videoFragment;
     videoFragment.LoadVideoFile("./M_1280_720.mp4");
     videoFragment.Print();
 
+    Eyer::EyerVideoFragment videoFragment2;
+    videoFragment2.LoadVideoFile("./M_1280_720.mp4");
+    videoFragment2.Print();
+
     layer.AddVideoFragment(videoFragment);
-    layer2.AddVideoFragment(videoFragment);
+    layer2.AddVideoFragment(videoFragment2);
 
     videoTrack.AddLayer(layer);
     videoTrack.AddLayer(layer2);
 
+    // 音频
+    Eyer::EyerAudioTrack audioTrack;
+
+    Eyer::EyerAudioLayer audioLayer;
+    audioLayer.SetTime(0.0, 10.0);
+
+    Eyer::EyerAudioFragment audioFragment;
+    audioFragment.LoadAudioFile("./wei.mp3");
+
+    audioLayer.AddAudioFragment(audioFragment);
+
+    audioTrack.AddLayer(audioLayer);
+
+
     builder.AddVideoTrack(videoTrack);
+    builder.AddAudioTrack(audioTrack);
     builder.Process();
 }
 
