@@ -64,4 +64,12 @@ namespace Eyer
     {
         return endTime;
     }
+
+    int EyerAudioLayer::RenderLayerFrame(double ts, float * frameData, int frameDataSize)
+    {
+        for(int i=0;i<frameDataSize / 4;i++){
+            frameData[i] = 0.5;
+        }
+        return 0;
+    }
 }

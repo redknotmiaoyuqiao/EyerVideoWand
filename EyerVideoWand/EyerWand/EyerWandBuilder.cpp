@@ -250,6 +250,8 @@ namespace Eyer
                 d[i] = 0.2f;
             }
 
+            audioTrack.RenderFrame(wirteTime, d, size);
+
             avFrame.SetAudioData((unsigned char *)d, size, frameSize, 2, Eyer::EyerAVFormat::EYER_AV_SAMPLE_FMT_FLTP);
 
             encoder->SendFrame(&avFrame);
