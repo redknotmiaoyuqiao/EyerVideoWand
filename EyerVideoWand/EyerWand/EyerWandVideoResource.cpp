@@ -21,6 +21,7 @@ namespace Eyer
 
     int EyerWandVideoResource::GetVideoFrame(EyerAVFrame & avFrame, double ts)
     {
+        // EyerLog("Deocde Line: %d\n", decoderLineList.getLength());
         EyerVideoDecoderLine * decoderLine = nullptr;
         for(int i=0;i<decoderLineList.getLength();i++) {
             EyerVideoDecoderLine * dl = nullptr;

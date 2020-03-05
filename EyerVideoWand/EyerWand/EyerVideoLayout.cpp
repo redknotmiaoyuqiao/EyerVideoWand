@@ -86,17 +86,12 @@ namespace Eyer
             return -1;
         }
 
-        EyerString path = fragment->GetPath();
-
-        EyerWandVideoResource videoResource;
-        videoResource.SetPath(path);
-
         EyerAVFrame avFrame;
         // double ts = 0.0;
         double ts = 1000 * 1.0 / fps * (layoutFrameIndex);
         ts = ts / 1000.0;
         // EyerLog("Ts:%f\n", ts);
-        int ret = videoResource.GetVideoFrame(avFrame, ts);
+        int ret = fragment->GetVideoFrame(avFrame, ts);
         if(ret){
             return -1;
         }

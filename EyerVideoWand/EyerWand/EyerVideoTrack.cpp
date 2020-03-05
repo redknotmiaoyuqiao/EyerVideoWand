@@ -106,12 +106,22 @@ namespace Eyer
             int videoFragmentCount = layout->GetVideoFragmentCount();
 
             for(int fragmentIndex=0;fragmentIndex<videoFragmentCount;fragmentIndex++){
+#ifdef EYER_DEBUG
+                long long TIME_START_GetVideoPanel = EyerTime::GetTime();
+#endif
                 EyerVideoPanel panel;
                 int ret = layout->GetVideoPanel(panel, fragmentIndex, frameIndex - layout->GetStartFrameIndex(), fps);
                 if(ret){
                     continue;
                 }
 
+#ifdef EYER_DEBUG
+                long long TIME_END_GetVideoPanel = EyerTime::GetTime();
+#endif
+
+#ifdef EYER_DEBUG
+                EyerWandDebug::DecoderTime += (TIME_END_GetVideoPanel - TIME_START_GetVideoPanel);
+#endif
                 // EyerLog("Get Panel Success, Width: %d, Height: %d\n", panel.GetW(), panel.GetH());
 
                 unsigned char * yData = (unsigned char *)malloc(panel.GetW() * panel.GetH());

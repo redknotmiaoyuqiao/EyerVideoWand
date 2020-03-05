@@ -18,13 +18,17 @@ add_library(
         InterfaceCSharp.cpp
         EyerVideoDecoderLine.cpp
         EyerAudioTrack.cpp
-        EyerAudioLayer.cpp EyerAudioFragment.cpp)
+        EyerAudioLayer.cpp
+        EyerAudioFragment.cpp
+        EyerWandDebug.cpp)
 
 target_link_libraries (EyerWand EyerAV)
 target_link_libraries (EyerWand EyerCore)
 target_link_libraries (EyerWand EyerGL)
 target_link_libraries (EyerWand EyerYUV)
 target_link_libraries (EyerWand EyerType)
+
+# ADD_DEFINITIONS(-D EYER_DEBUG)
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
     MESSAGE(STATUS "current platform: Linux ")
