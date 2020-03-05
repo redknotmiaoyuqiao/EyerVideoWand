@@ -28,7 +28,7 @@ target_link_libraries (EyerWand EyerGL)
 target_link_libraries (EyerWand EyerYUV)
 target_link_libraries (EyerWand EyerType)
 
-# ADD_DEFINITIONS(-D EYER_DEBUG)
+ADD_DEFINITIONS(-D EYER_DEBUG)
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
     MESSAGE(STATUS "current platform: Linux ")
