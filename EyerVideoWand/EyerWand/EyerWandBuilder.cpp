@@ -10,6 +10,7 @@ namespace Eyer
     EyerWandBuilder::EyerWandBuilder(EyerString _path)
     {
         path = _path;
+        EyerLog("EyerWandBuilder Init, Path: %s\n", path.str);
     }
 
     EyerWandBuilder::~EyerWandBuilder()
@@ -21,12 +22,14 @@ namespace Eyer
     {
         videoWidth = w;
         videoHeight = h;
+        EyerLog("EyerWandBuilder Init, W: %d, H:%d\n", videoWidth, videoHeight);
         return 0;
     }
 
     int EyerWandBuilder::SetVideoFPS(int fps)
     {
         videoFps = fps;
+        EyerLog("EyerWandBuilder Init, FPS: %d\n", videoFps);
         return 0;
     }
 
