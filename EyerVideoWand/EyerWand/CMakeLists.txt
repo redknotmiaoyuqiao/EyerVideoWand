@@ -53,6 +53,8 @@ IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
     target_link_libraries (EyerWand libfreetype.a)
     target_link_libraries (EyerWand png)
     target_link_libraries (EyerWand harfbuzz)
+    target_link_libraries (EyerWand bz2)
+    target_link_libraries (EyerWand lzma)
 
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
     MESSAGE(STATUS "current platform: Windows")
