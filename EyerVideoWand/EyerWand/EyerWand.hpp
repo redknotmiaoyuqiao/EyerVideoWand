@@ -21,8 +21,11 @@ namespace Eyer {
     class EyerWandBuilder;
 
     class EyerVideoFragment;
+    class EyerAudioFragment;
 
     class EyerVideoDecoderLine;
+
+    class EyerAudioLayer;
 
     class EyerWand {
     public:
@@ -82,7 +85,6 @@ namespace Eyer {
     class EyerWandAudioResource : public EyerWandResource {
     public:
         EyerWandAudioResource();
-
         ~EyerWandAudioResource();
     };
 
@@ -131,6 +133,9 @@ namespace Eyer {
         Eyer::EyerGLTextDraw * titleTextDraw = nullptr;
     };
 
+    /**
+     * 视频轨
+     */
     class EyerVideoTrack : public EyerTrack {
     public:
         EyerVideoTrack();
@@ -148,6 +153,49 @@ namespace Eyer {
         int RenderFrame(int frameIndex, EyerVideoTrackRenderParams * params, int fps);
     private:
         EyerLinkedList<EyerVideoLayout *> layoutList;
+    };
+
+    /**
+     * 音频轨
+     */
+    class EyerAudioTrack : public EyerTrack {
+    public:
+        EyerAudioTrack();
+        ~EyerAudioTrack();
+
+        EyerAudioTrack(const EyerAudioTrack & track);
+        EyerAudioTrack & operator = (const EyerAudioTrack &track);
+
+        int AddLayer(const EyerAudioLayer & layer);
+
+        double GetCountTime();
+
+        int RenderFrame(double ts, float * frameData, int frameDataSize);
+    private:
+        EyerLinkedList<EyerAudioLayer *> layoutList;
+    };
+
+    class EyerAudioLayer {
+    public:
+        EyerAudioLayer();
+        ~EyerAudioLayer();
+
+        EyerAudioLayer(const EyerAudioLayer & layer);
+        EyerAudioLayer & operator = (const EyerAudioLayer & layer);
+
+        int RenderLayerFrame(double ts, float * frameData, int frameDataSize);
+
+        int SetTime(double startTime, double endTime);
+
+        int AddAudioFragment(const EyerAudioFragment & audio);
+
+        double GetStartTime();
+        double GetEndTime();
+    private:
+        double startTime = 0.0;
+        double endTime = 0.0;
+
+        EyerLinkedList<EyerAudioFragment *> audioFragmentList;
     };
 
     class EyerVideoLayout {
@@ -175,6 +223,21 @@ namespace Eyer {
         int endFrameIndex = 0;
 
         EyerLinkedList<EyerVideoFragment *> videoFragmentList;
+    };
+
+    class EyerAudioFragment
+    {
+    public:
+        EyerAudioFragment();
+        ~EyerAudioFragment();
+
+        EyerAudioFragment(const EyerAudioFragment & fragment);
+        EyerAudioFragment & operator = (const EyerAudioFragment & fragment);
+
+        int LoadAudioFile(EyerString path);
+
+    private:
+        EyerString path;
     };
 
     class EyerVideoFragment
@@ -220,12 +283,14 @@ namespace Eyer {
         int SetVideoFPS(int fps);
 
         int AddVideoTrack(const EyerVideoTrack & videoTrack);
+        int AddAudioTrack(const EyerAudioTrack & audioTrack);
 
         int Process();
 
     private:
         int VideoProcess(EyerAVWriter * writer, EyerAVEncoder * encoder, int streamIndex, int debug = 0);
         int VideoTrackProcess(EyerAVWriter * writer, EyerAVEncoder * encoder, int streamIndex, int debug = 0);
+        int AudioTrackProcess(EyerAVWriter * writer, EyerAVEncoder * encoder, int streamIndex, int debug = 0);
     private:
         EyerString path;
 
@@ -234,6 +299,7 @@ namespace Eyer {
         int videoFps = 25;
 
         EyerVideoTrack videoTrack;
+        EyerAudioTrack audioTrack;
     };
 
 
