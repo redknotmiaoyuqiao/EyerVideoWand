@@ -124,7 +124,6 @@ namespace Eyer
 
         outFrameBuffer.AddComponent(&canvasDraw);
 
-
         for(int frameIndex = 0; frameIndex < frameCount; frameIndex++){
             windows.Clear();
 
@@ -152,7 +151,6 @@ namespace Eyer
             params.videoH = height;
             params.frameBuffer = &frameBuffer;
             params.titleTextDraw = &textDraw;
-
 
             videoTrack.RenderFrame(frameIndex, &params, videoFps);
 
@@ -223,6 +221,10 @@ namespace Eyer
 
         windows.Close();
 
+#ifdef EYER_DEBUG
+        EyerLog("Decode Time Count : %lld\n", EyerWandDebug::DecoderTime);
+#endif
+
         return 0;
     }
 
@@ -280,7 +282,7 @@ namespace Eyer
                 free(d);
             }
 
-            EyerLog("Time: %f\n", wirteTime);
+            // EyerLog("Time: %f\n", wirteTime);
 
             if(wirteTime >= audioTrack.GetCountTime()){
                 break;

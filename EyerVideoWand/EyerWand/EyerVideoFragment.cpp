@@ -14,6 +14,10 @@ namespace Eyer
 
     EyerVideoFragment::~EyerVideoFragment()
     {
+        if(videoResource != nullptr){
+            delete videoResource;
+            videoResource = nullptr;
+        }
     }
 
     EyerVideoFragment & EyerVideoFragment::operator = (const EyerVideoFragment & fragment)
@@ -28,15 +32,32 @@ namespace Eyer
         startTime = fragment.startTime;
         endTime = fragment.endTime;
 
+        videoResource = nullptr;
+
         return *this;
+    }
+
+    int EyerVideoFragment::GetVideoFrame(EyerAVFrame & avFrame, double ts)
+    {
+        if(videoResource == nullptr){
+            videoResource = new EyerWandVideoResource();
+            videoResource->SetPath(path);
+        }
+
+        return videoResource->GetVideoFrame(avFrame, ts);
     }
 
     int EyerVideoFragment::LoadVideoFile(EyerString _path)
     {
         path = _path;
-        videoResource.SetPath(path);
 
-        int ret = videoResource.GetVideoDuration(duration);
+        if(videoResource == nullptr){
+            videoResource = new EyerWandVideoResource();
+        }
+
+        videoResource->SetPath(path);
+
+        int ret = videoResource->GetVideoDuration(duration);
         if(ret){
             // RedLog("GetVideoDuration Error\n");
         }

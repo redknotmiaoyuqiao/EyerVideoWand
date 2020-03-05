@@ -9,6 +9,7 @@
 
 namespace Eyer {
     class EyerWand;
+    class EyerWandDebug;
 
     class EyerWandResourse;
 
@@ -259,6 +260,9 @@ namespace Eyer {
         int Print();
 
         EyerString GetPath();
+
+        int GetVideoFrame(EyerAVFrame & avFrame, double ts);
+
     private:
         EyerString path;
 
@@ -267,8 +271,10 @@ namespace Eyer {
         double startTime = 0.0;
         double endTime = 0.0;
 
-        Eyer::EyerWandVideoResource videoResource;
+
         double duration = 0.0;
+
+        Eyer::EyerWandVideoResource * videoResource = nullptr;
     };
 
 
@@ -304,6 +310,13 @@ namespace Eyer {
 
 
     typedef EyerVideoLayout EyerVideoLayer;
+
+    class EyerWandDebug
+    {
+    public:
+        static long long DecoderTime;
+        static long long RenderTime;
+    };
 }
 
 #endif
