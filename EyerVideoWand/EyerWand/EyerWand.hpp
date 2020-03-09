@@ -252,6 +252,12 @@ namespace Eyer {
         float x = 0.0f;
         float y = 0.0f;
         float z = 0.0f;
+    public:
+        bool operator < (const EyerTransKey &key2)
+        {
+            return t < key2.t;
+        }
+
     };
 
     class EyerVideoFragment
