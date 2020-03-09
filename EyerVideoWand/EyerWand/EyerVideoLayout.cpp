@@ -46,7 +46,7 @@ namespace Eyer
             EyerVideoFragment * vf = nullptr;
             layout.videoFragmentList.find(i, vf);
             if(vf != nullptr){
-                EyerVideoFragment * f = new EyerVideoFragment(*vf);
+                EyerVideoFragment * f = EyerVideoFragment::CopyFragment(vf);
                 videoFragmentList.insertBack(f);
             }
         }
@@ -64,10 +64,9 @@ namespace Eyer
         return endFrameIndex;
     }
 
-    int EyerVideoLayout::AddVideoFragment(const EyerVideoFragment & fragment)
+    int EyerVideoLayout::AddVideoFragment(const EyerVideoFragment * fragment)
     {
-        EyerVideoFragment * f = new EyerVideoFragment(fragment);
-
+        EyerVideoFragment * f = EyerVideoFragment::CopyFragment(fragment);
         videoFragmentList.insertBack(f);
 
         return 0;
@@ -78,7 +77,7 @@ namespace Eyer
         return videoFragmentList.getLength();
     }
 
-    int EyerVideoLayout::GetVideoPanel(EyerVideoPanel & panel, int videoFragmentIndex, int layoutFrameIndex, int fps)
+    int EyerVideoLayout::GetVideoPanel(EyerVideoPanel * panel, int videoFragmentIndex, int layoutFrameIndex, int fps)
     {
         EyerVideoFragment * fragment = nullptr;
         videoFragmentList.find(videoFragmentIndex, fragment);
@@ -87,38 +86,101 @@ namespace Eyer
             return -1;
         }
 
-        EyerAVFrame avFrame;
-        // double ts = 0.0;
-        double ts = 1000 * 1.0 / fps * (layoutFrameIndex);
-        ts = ts / 1000.0;
-        // EyerLog("Ts:%f\n", ts);
-        int ret = fragment->GetVideoFrame(avFrame, ts);
-        if(ret){
-            return -1;
-        }
-
-        // avFrame.GetInfo();
-        panel.SetData(avFrame);
 
         EyerMat4x4 ortho;
         int width = 1920;
         int height = 1080;
         ortho.SetOrtho(- width / 2.0, width / 2.0, height / 2.0, - height / 2.0, 0.0f, 1000.0f);
-        // ortho.SetOrtho(0.0, width, 0.0, - height, 0.0f, 1000.0f);
 
         EyerMat4x4 scale;
-        scale.SetScale(width / 2.0, height / 2.0, 0.0);
+        // scale.SetScale(width / 2.0, height / 2.0, 0.0);
+        scale.SetScale(200, 200, 1.0);
 
         EyerMat4x4 trans;
 
-        float x = 0.0;
-        float y = 0.0;
-        float z = 0.0;
-        fragment->GetTrans(ts, x, y, z);
-        trans.SetTrans(x, y, z);
 
-        panel.mvp = ortho * trans * scale ;
-        // panel.mvp.SetTrans(0.03 * sinf(layoutFrameIndex * 1.0f), 0.0, 0.0);
+        if(fragment->GetType() == EyerVideoFragmentType::VIDEO_FRAGMENT_VIDEO){
+            EyerVideoFragmentVideo * vfv = (EyerVideoFragmentVideo *)fragment;
+
+            EyerAVFrame avFrame;
+            // double ts = 0.0;
+            double ts = 1000 * 1.0 / fps * (layoutFrameIndex);
+            ts = ts / 1000.0;
+            // EyerLog("Ts:%f\n", ts);
+            int ret = vfv->GetVideoFrame(avFrame, ts);
+            if(ret){
+                return -1;
+            }
+
+            int width = avFrame.GetWidth();
+            int height = avFrame.GetHeight();
+
+
+            EyerGLFrameBuffer * frameBuffer = new EyerGLFrameBuffer(width, height, &panel->targetTexture);
+
+            EyerGLYUV2TextureComponent * yuv2texture = new EyerGLYUV2TextureComponent();
+
+
+            unsigned char * yData = (unsigned char *)malloc(width * height);
+            avFrame.GetYData(yData);
+            unsigned char * uData = (unsigned char *)malloc(width / 2 * height / 2);
+            avFrame.GetUData(uData);
+            unsigned char * vData = (unsigned char *)malloc(width / 2 * height / 2);
+            avFrame.GetVData(vData);
+
+            EyerGLTexture * y = new EyerGLTexture();
+            y->SetDataRedChannel(yData, width, height);
+
+            EyerGLTexture * u = new EyerGLTexture();
+            u->SetDataRedChannel(uData, width / 2, height / 2);
+
+            EyerGLTexture * v = new EyerGLTexture();
+            v->SetDataRedChannel(vData, width / 2, height / 2);
+
+            yuv2texture->SetYTexture(y);
+            yuv2texture->SetUTexture(u);
+            yuv2texture->SetVTexture(v);
+
+
+
+            frameBuffer->Clear();
+
+            frameBuffer->AddComponent(yuv2texture);
+
+            frameBuffer->Draw();
+
+            frameBuffer->ClearAllComponent();
+
+
+            free(yData);
+            free(uData);
+            free(vData);
+
+            delete y;
+            delete u;
+            delete v;
+
+            delete frameBuffer;
+            delete yuv2texture;
+
+            {
+                float x = 0.0;
+                float y = 0.0;
+                float z = 0.0;
+
+                vfv->GetTrans(ts, x, y, z);
+                trans.SetTrans(x, y, z);
+
+                panel->mvp = ortho * trans * scale ;
+            }
+        }
+
+        if(fragment->GetType() == EyerVideoFragmentType::VIDEO_FRAGMENT_TEXT){
+
+
+            scale.SetScale(100, 100, 1.0);
+            panel->mvp = ortho * trans * scale;
+        }
 
         return 0;
     }

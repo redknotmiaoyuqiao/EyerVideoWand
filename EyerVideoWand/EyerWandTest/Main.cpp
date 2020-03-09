@@ -57,11 +57,11 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     Eyer::EyerVideoLayout layer2;
     layer2.SetFrame(fps * 5, fps * 5 + fps * 25);
 
-    Eyer::EyerVideoFragment videoFragment;
+    Eyer::EyerVideoFragmentVideo videoFragment;
     videoFragment.LoadVideoFile("./M_1280_720.mp4");
     videoFragment.Print();
 
-    Eyer::EyerVideoFragment videoFragment2;
+    Eyer::EyerVideoFragmentVideo videoFragment2;
     videoFragment2.LoadVideoFile("./M_1280_720.mp4");
 
     videoFragment2.AddTransKey(0.0, 0.0, 0.0, 0.0);
@@ -69,8 +69,15 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
 
     videoFragment2.Print();
 
-    layer.AddVideoFragment(videoFragment);
-    layer2.AddVideoFragment(videoFragment2);
+
+    Eyer::EyerVideoFragmentText videoFragmentText;
+    videoFragmentText.SetFontPath("./xiao_xiao_yuan_pin_ying.ttf");
+    videoFragmentText.SetText("这里是测试字幕");
+
+    layer.AddVideoFragment(&videoFragment);
+
+    layer2.AddVideoFragment(&videoFragment2);
+    // layer2.AddVideoFragment(&videoFragmentText);
 
     videoTrack.AddLayer(layer);
     videoTrack.AddLayer(layer2);

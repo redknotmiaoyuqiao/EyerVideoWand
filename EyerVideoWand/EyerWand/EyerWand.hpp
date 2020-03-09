@@ -90,6 +90,11 @@ namespace Eyer {
         ~EyerWandAudioResource();
     };
 
+    enum EyerVideoPanelType
+    {
+        YUV_DATA_PLANE,
+        SINGLE_CHANNEL_PLANE
+    };
 
     class EyerVideoPanel
     {
@@ -108,6 +113,10 @@ namespace Eyer {
 
         int GetW();
         int GetH();
+
+
+        EyerGLTexture targetTexture;
+
 
         EyerMat4x4 GetMVPMat();
 
@@ -214,7 +223,7 @@ namespace Eyer {
         EyerVideoLayout & operator = (const EyerVideoLayout &layout);
 
 
-        int AddVideoFragment(const EyerVideoFragment & fragment);
+        int AddVideoFragment(const EyerVideoFragment * fragment);
 
         int SetFrame(int startFrameIndex, int endFrameIndex);
         int GetStartFrameIndex();
@@ -222,7 +231,7 @@ namespace Eyer {
 
 
         int GetVideoFragmentCount();
-        int GetVideoPanel(EyerVideoPanel & panel, int videoFragmentIndex, int layoutFrameIndex, int fps);
+        int GetVideoPanel(EyerVideoPanel * panel, int videoFragmentIndex, int layoutFrameIndex, int fps);
     private:
         int startFrameIndex = 0;
         int endFrameIndex = 0;
@@ -260,14 +269,29 @@ namespace Eyer {
 
     };
 
+    enum EyerVideoFragmentType
+    {
+        VIDEO_FRAGMENT_VIDEO,
+        VIDEO_FRAGMENT_TEXT
+    };
+
     class EyerVideoFragment
     {
     public:
-        EyerVideoFragment();
-        ~EyerVideoFragment();
+        virtual ~EyerVideoFragment();
+        virtual EyerVideoFragmentType GetType() const = 0;
 
-        EyerVideoFragment(const EyerVideoFragment & fragment);
-        EyerVideoFragment & operator = (const EyerVideoFragment & fragment);
+        static EyerVideoFragment * CopyFragment(const EyerVideoFragment * fragment);
+    };
+
+    class EyerVideoFragmentVideo : public EyerVideoFragment
+    {
+    public:
+        EyerVideoFragmentVideo();
+        ~EyerVideoFragmentVideo();
+
+        EyerVideoFragmentVideo(const EyerVideoFragmentVideo & fragment);
+        EyerVideoFragmentVideo & operator = (const EyerVideoFragmentVideo & fragment);
 
         int LoadVideoFile(EyerString path);
 
@@ -277,7 +301,6 @@ namespace Eyer {
         int AddTransKey(double t, float x, float y, float z);
         int GetTrans(double t, float & x, float & y, float & z);
 
-
         double GetDuration();
 
         int Print();
@@ -286,6 +309,7 @@ namespace Eyer {
 
         int GetVideoFrame(EyerAVFrame & avFrame, double ts);
 
+        virtual EyerVideoFragmentType GetType() const;
     private:
         EyerString path;
 
@@ -302,6 +326,17 @@ namespace Eyer {
         Eyer::EyerLinkedList<EyerTransKey *> transKeyList;
     };
 
+    class EyerVideoFragmentText : public EyerVideoFragment
+    {
+    public:
+        EyerVideoFragmentText();
+        ~EyerVideoFragmentText();
+
+        int SetFontPath(EyerString path);
+        int SetText(EyerString text);
+
+        virtual EyerVideoFragmentType GetType() const;
+    };
 
 
     class EyerWandBuilder

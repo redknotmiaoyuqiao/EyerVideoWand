@@ -81,8 +81,9 @@ namespace Eyer
 
     int EyerVideoTrack::RenderFrame(int frameIndex, EyerVideoTrackRenderParams * params, int fps)
     {
-        EyerLinkedList<EyerGLFrameDraw *> frameDrawList;
+        EyerLinkedList<EyerGLComponent *> frameDrawList;
         EyerLinkedList<EyerGLTexture *> textureList;
+        EyerLinkedList<EyerVideoPanel *> panelList;
 
         params->frameBuffer->Clear();
 
@@ -109,13 +110,15 @@ namespace Eyer
 #ifdef EYER_DEBUG
                 long long TIME_START_GetVideoPanel = EyerTime::GetTime();
 #endif
-                EyerVideoPanel panel;
+                EyerVideoPanel * panel = new EyerVideoPanel();
                 int ret = layout->GetVideoPanel(panel, fragmentIndex, frameIndex - layout->GetStartFrameIndex(), fps);
                 if(ret){
                     continue;
                 }
+                panelList.insertBack(panel);
 
-                EyerMat4x4 panelMvp = panel.GetMVPMat();
+
+                EyerMat4x4 panelMvp = panel->GetMVPMat();
 
 #ifdef EYER_DEBUG
                 long long TIME_END_GetVideoPanel = EyerTime::GetTime();
@@ -126,37 +129,11 @@ namespace Eyer
 #endif
                 // EyerLog("Get Panel Success, Width: %d, Height: %d\n", panel.GetW(), panel.GetH());
 
-                unsigned char * yData = (unsigned char *)malloc(panel.GetW() * panel.GetH());
-                panel.GetYDate(yData);
-                unsigned char * uData = (unsigned char *)malloc(panel.GetW() / 2 * panel.GetH() / 2);
-                panel.GetUDate(uData);
-                unsigned char * vData = (unsigned char *)malloc(panel.GetW() / 2 * panel.GetH() / 2);
-                panel.GetVDate(vData);
-
-                EyerGLTexture * y = new EyerGLTexture();
-                y->SetDataRedChannel(yData, panel.GetW(), panel.GetH());
-                textureList.insertBack(y);
-
-                EyerGLTexture * u = new EyerGLTexture();
-                u->SetDataRedChannel(uData, panel.GetW() / 2, panel.GetH() / 2);
-                textureList.insertBack(u);
-
-                EyerGLTexture * v = new EyerGLTexture();
-                v->SetDataRedChannel(vData, panel.GetW() / 2, panel.GetH() / 2);
-                textureList.insertBack(v);
-
-                EyerGLFrameDraw * frameDraw = new EyerGLFrameDraw();
-                frameDraw->SetYTexture(y);
-                frameDraw->SetUTexture(u);
-                frameDraw->SetVTexture(v);
-                frameDraw->SetMVP(panelMvp);
-                frameDrawList.insertBack(frameDraw);
-
-                params->frameBuffer->AddComponent(frameDraw);
-
-                free(yData);
-                free(uData);
-                free(vData);
+                EyerGLMVPTextureDraw * mvpTextureDraw = new EyerGLMVPTextureDraw();
+                mvpTextureDraw->SetTexture(&panel->targetTexture);
+                mvpTextureDraw->SetMVP(panelMvp);
+                frameDrawList.insertBack(mvpTextureDraw);
+                params->frameBuffer->AddComponent(mvpTextureDraw);
             }
         }
         params->frameBuffer->AddComponent(params->titleTextDraw);
@@ -165,7 +142,7 @@ namespace Eyer
         params->frameBuffer->ClearAllComponent();
 
         for(int i=0;i<frameDrawList.getLength();i++){
-            EyerGLFrameDraw * frameDraw = nullptr;
+            EyerGLComponent * frameDraw = nullptr;
             frameDrawList.find(i, frameDraw);
             delete frameDraw;
         }
@@ -177,6 +154,14 @@ namespace Eyer
             delete texture;
         }
         textureList.clear();
+
+        for(int i=0;i<panelList.getLength();i++){
+            EyerVideoPanel * panel = nullptr;
+            panelList.find(i, panel);
+            delete panel;
+        }
+
+        panelList.clear();
 
         return 0;
     }
