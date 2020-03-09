@@ -115,6 +115,8 @@ namespace Eyer
                     continue;
                 }
 
+                EyerMat4x4 panelMvp = panel.GetMVPMat();
+
 #ifdef EYER_DEBUG
                 long long TIME_END_GetVideoPanel = EyerTime::GetTime();
 #endif
@@ -147,6 +149,7 @@ namespace Eyer
                 frameDraw->SetYTexture(y);
                 frameDraw->SetUTexture(u);
                 frameDraw->SetVTexture(v);
+                frameDraw->SetMVP(panelMvp);
                 frameDrawList.insertBack(frameDraw);
 
                 params->frameBuffer->AddComponent(frameDraw);

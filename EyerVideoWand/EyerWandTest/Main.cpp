@@ -45,7 +45,7 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     int fps = 30;
 
     Eyer::EyerWandBuilder builder("./struct_builder_vidoe_mp4.mp4");
-    builder.SetVideoWH(1280, 720);
+    builder.SetVideoWH(1920, 1080);
     builder.SetVideoFPS(fps);
 
     // 视频
@@ -55,7 +55,7 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     layer.SetFrame(0, fps * 5);
 
     Eyer::EyerVideoLayout layer2;
-    layer2.SetFrame(fps * 5, fps * 5 + fps * 5);
+    layer2.SetFrame(fps * 5, fps * 5 + fps * 25);
 
     Eyer::EyerVideoFragment videoFragment;
     videoFragment.LoadVideoFile("./M_1280_720.mp4");
@@ -63,6 +63,10 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
 
     Eyer::EyerVideoFragment videoFragment2;
     videoFragment2.LoadVideoFile("./M_1280_720.mp4");
+
+    videoFragment2.AddTransKey(0.0, 0.0, 0.0, 0.0);
+    videoFragment2.AddTransKey(40.0, -200.0, 0.0, 0.0);
+
     videoFragment2.Print();
 
     layer.AddVideoFragment(videoFragment);

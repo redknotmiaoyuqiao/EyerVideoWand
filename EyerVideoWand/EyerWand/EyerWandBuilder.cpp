@@ -91,7 +91,8 @@ namespace Eyer
 
         Eyer::EyerGLWindow windows("Eyer Wand", width, height);
         windows.Open();
-        windows.SetBGColor(1.0, 1.0, 1.0, 1.0);
+        // windows.SetBGColor(1.0, 1.0, 1.0, 1.0);
+        windows.SetBGColor(0.0, 0.0, 0.0, 1.0);
 
 
         Eyer::EyerGLFrameBuffer windowsFrameBuffer(width, height);
@@ -127,6 +128,7 @@ namespace Eyer
         for(int frameIndex = 0; frameIndex < frameCount; frameIndex++){
             windows.Clear();
 
+            textProgressDraw.SetColor(1.0, 1.0, 1.0);
             textProgressDraw.SetText(EyerString("Eyer Wand 正 在 生 成 视 频 ： ") + EyerString::Number((int)(frameIndex * 1.0 / frameCount * 100)) + " %");
             int progressWidth = textProgressDraw.GetTextWidth();
             textProgressDraw.SetPos((width - progressWidth) / 2, height / 2);
