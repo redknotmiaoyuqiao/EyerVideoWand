@@ -1,4 +1,5 @@
 #include "EyerWand.hpp"
+#include <math.h>
 
 namespace Eyer
 {
@@ -98,6 +99,26 @@ namespace Eyer
 
         // avFrame.GetInfo();
         panel.SetData(avFrame);
+
+        EyerMat4x4 ortho;
+        int width = 1920;
+        int height = 1080;
+        ortho.SetOrtho(- width / 2.0, width / 2.0, height / 2.0, - height / 2.0, 0.0f, 1000.0f);
+        // ortho.SetOrtho(0.0, width, 0.0, - height, 0.0f, 1000.0f);
+
+        EyerMat4x4 scale;
+        scale.SetScale(width / 2.0, height / 2.0, 0.0);
+
+        EyerMat4x4 trans;
+
+        float x = 0.0;
+        float y = 0.0;
+        float z = 0.0;
+        fragment->GetTrans(ts, x, y, z);
+        trans.SetTrans(x, y, z);
+
+        panel.mvp = ortho * trans * scale ;
+        // panel.mvp.SetTrans(0.03 * sinf(layoutFrameIndex * 1.0f), 0.0, 0.0);
 
         return 0;
     }

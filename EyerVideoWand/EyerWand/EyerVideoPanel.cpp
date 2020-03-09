@@ -55,4 +55,9 @@ namespace Eyer
         frame = _frame;
         return 0;
     }
+
+    EyerMat4x4 EyerVideoPanel::GetMVPMat()
+    {
+        return mvp;
+    }
 }

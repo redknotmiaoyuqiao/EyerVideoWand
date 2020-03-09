@@ -18,6 +18,15 @@ namespace Eyer
             delete videoResource;
             videoResource = nullptr;
         }
+
+        for(int i=0;i<transKeyList.getLength();i++){
+            EyerTransKey * transKey = nullptr;
+            transKeyList.find(i, transKey);
+            if(transKey != nullptr){
+                delete transKey;
+            }
+        }
+        transKeyList.clear();
     }
 
     EyerVideoFragment & EyerVideoFragment::operator = (const EyerVideoFragment & fragment)
@@ -109,5 +118,25 @@ namespace Eyer
     {
         // EyerLog("%s\n", path.str);
         return path;
+    }
+
+
+    int EyerVideoFragment::AddTransKey(double t, float x, float y, float z)
+    {
+        EyerTransKey * transKey = new EyerTransKey();
+        transKey->x = x;
+        transKey->y = y;
+        transKey->z = z;
+        transKey->t = t;
+        transKeyList.insertBack(transKey);
+
+        return 0;
+    }
+
+    int EyerVideoFragment::GetTrans(double t, float & x, float & y, float & z)
+    {
+        //
+
+        return 0;
     }
 }

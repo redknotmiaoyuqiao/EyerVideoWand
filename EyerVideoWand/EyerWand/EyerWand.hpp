@@ -1,11 +1,11 @@
 #ifndef	EYER_LIB_AV_WAND_H
 #define	EYER_LIB_AV_WAND_H
 
-#include <EyerGL/EyerGL.hpp>
+#include "EyerGL/EyerGL.hpp"
 #include "EyerCore/EyerCore.hpp"
 #include "EyerAV/EyerAV.hpp"
 
-#define EYER_WAND_VERSION "1.0.0"
+#define EYER_WAND_VERSION "EyerWand 1.0.0"
 
 namespace Eyer {
     class EyerWand;
@@ -25,6 +25,7 @@ namespace Eyer {
     class EyerAudioFragment;
 
     class EyerVideoDecoderLine;
+    class EyerTransKey;
 
     class EyerAudioLayer;
 
@@ -107,8 +108,11 @@ namespace Eyer {
 
         int GetW();
         int GetH();
-    private:
+
+        EyerMat4x4 GetMVPMat();
+
         EyerMat4x4 mvp;
+    private:
         EyerAVFrame frame;
     };
 
@@ -241,6 +245,15 @@ namespace Eyer {
         EyerString path;
     };
 
+    class EyerTransKey
+    {
+    public:
+        double t = 0.0;
+        float x = 0.0f;
+        float y = 0.0f;
+        float z = 0.0f;
+    };
+
     class EyerVideoFragment
     {
     public:
@@ -254,6 +267,10 @@ namespace Eyer {
 
         int SetFrameIndex(int startIndex, int endIndex);
         int SetFrameTime(double startTime, double endTime);
+
+        int AddTransKey(double t, float x, float y, float z);
+        int GetTrans(double t, float & x, float & y, float & z);
+
 
         double GetDuration();
 
@@ -275,6 +292,8 @@ namespace Eyer {
         double duration = 0.0;
 
         Eyer::EyerWandVideoResource * videoResource = nullptr;
+
+        Eyer::EyerLinkedList<EyerTransKey *> transKeyList;
     };
 
 
