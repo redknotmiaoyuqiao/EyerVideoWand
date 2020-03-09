@@ -43,6 +43,15 @@ namespace Eyer
 
         videoResource = nullptr;
 
+        for(int i=0;i<fragment.transKeyList.getLength();i++){
+            EyerTransKey * transKey = nullptr;
+            fragment.transKeyList.find(i, transKey);
+            if(transKey != nullptr){
+                EyerTransKey * tk = new EyerTransKey(*transKey);
+                transKeyList.insertBack(tk);
+            }
+        }
+
         return *this;
     }
 
@@ -135,6 +144,15 @@ namespace Eyer
 
     int EyerVideoFragmentVideo::GetTrans(double t, float & x, float & y, float & z)
     {
+        printf("t:%f\n", t);
+
+        if(transKeyList.getLength() == 0){
+            x = 0;
+            y = 0;
+            z = 0;
+            return 0;
+        }
+
         EyerLinkedEle<Eyer::EyerTransKey *> * currentEle = transKeyList.head;
         for(int i=0; i< transKeyList.getLength()-1; i++){
             EyerLinkedEle<Eyer::EyerTransKey *> * temp = currentEle->next;
