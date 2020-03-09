@@ -135,6 +135,7 @@ namespace Eyer
 
     int EyerVideoFragment::GetTrans(double t, float & x, float & y, float & z)
     {
+        //
         EyerLinkedEle<Eyer::EyerTransKey *> * currentEle = transKeyList.head;
         for(int i=0; i<transKeyList.getLength()-1; i++){
             EyerLinkedEle<Eyer::EyerTransKey *> * temp = currentEle->next;
