@@ -55,17 +55,54 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     layer.SetFrame(0, fps * 5);
 
     Eyer::EyerVideoLayout layer2;
-    layer2.SetFrame(fps * 5, fps * 5 + fps * 25);
+    //layer2.SetFrame(fps * 5, fps * 5 + fps * 9);
+    layer2.SetFrame(0, fps * 9);
 
     Eyer::EyerVideoFragmentVideo videoFragment;
     videoFragment.LoadVideoFile("./M_1280_720.mp4");
+    videoFragment.AddTransKey(0.0, 5.0, 0.0, 0.0);
+    videoFragment.AddTransKey(0.1, -5.0, 0.0, 0.0);
+    videoFragment.AddTransKey(0.2, 3.0, 0.0, 0.0);
+    videoFragment.AddTransKey(0.3, -3.0, 0.0, 0.0);
+    videoFragment.AddTransKey(0.4, 2.0, 0.0, 0.0);
+    videoFragment.AddTransKey(0.5, 0.0, 0.0, 0.0);
+
     videoFragment.Print();
 
     Eyer::EyerVideoFragmentVideo videoFragment2;
-    videoFragment2.LoadVideoFile("./M_1280_720.mp4");
-
+    videoFragment2.LoadVideoFile("./demo.mp4");
     videoFragment2.AddTransKey(0.0, 0.0, 0.0, 0.0);
-    videoFragment2.AddTransKey(40.0, 1920 / 2.0, 0.0, 0.0);
+    videoFragment2.AddTransKey(0.1, -30.0, -30.0, 0.0);
+    videoFragment2.AddTransKey(0.2, 30.0, 30.0, 0.0);
+    videoFragment2.AddTransKey(0.3, -20.0, -20.0, 0.0);
+    videoFragment2.AddTransKey(0.4, 20.0, 20.0, 0.0);
+    videoFragment2.AddTransKey(0.5, 10.0, 10.0, 0.0);
+    videoFragment2.AddTransKey(0.6, 0.0, 0.0, 0.0);
+
+
+    videoFragment2.AddTransKey(2.1, 0.0, 0.0, 0.0);
+    videoFragment2.AddTransKey(2.2, 0.0, 20.0, 0.0);
+    videoFragment2.AddTransKey(2.3, 0.0, -20.0, 0.0);
+    videoFragment2.AddTransKey(2.4, 0.0, 10.0, 0.0);
+    videoFragment2.AddTransKey(2.5, 0.0, -10.0, 0.0);
+    videoFragment2.AddTransKey(2.6, 0.0, 6.0, 0.0);
+    videoFragment2.AddTransKey(2.7, 0.0, 0.0, 0.0);
+
+    videoFragment2.AddTransKey(4.1, 0.0, 0.0, 0.0);
+    videoFragment2.AddTransKey(4.2, 30.0, 0.0, 0.0);
+    videoFragment2.AddTransKey(4.3, -30.0, 0.0, 0.0);
+    videoFragment2.AddTransKey(4.4, 20.0, 0.0, 0.0);
+    videoFragment2.AddTransKey(4.5, -20.0, 0.0, 0.0);
+    videoFragment2.AddTransKey(4.6, 10.0, 0.0, 0.0);
+    videoFragment2.AddTransKey(4.7, 0.0, 0.0, 0.0);
+
+    videoFragment2.AddTransKey(6.3, 0.0, 0.0, 0.0);
+    videoFragment2.AddTransKey(6.4, -30.0, -30.0, 0.0);
+    videoFragment2.AddTransKey(6.5, 30.0, 30.0, 0.0);
+    videoFragment2.AddTransKey(6.6, -20.0, -20.0, 0.0);
+    videoFragment2.AddTransKey(6.7, 20.0, 20.0, 0.0);
+    videoFragment2.AddTransKey(6.8, 10.0, 10.0, 0.0);
+    videoFragment2.AddTransKey(6.9, 0.0, 0.0, 0.0);
 
     videoFragment2.Print();
 
@@ -77,9 +114,9 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     layer.AddVideoFragment(&videoFragment);
 
     layer2.AddVideoFragment(&videoFragment2);
-    // layer2.AddVideoFragment(&videoFragmentText);
+    layer2.AddVideoFragment(&videoFragmentText);
 
-    videoTrack.AddLayer(layer);
+    //videoTrack.AddLayer(layer);
     videoTrack.AddLayer(layer2);
 
     // 音频

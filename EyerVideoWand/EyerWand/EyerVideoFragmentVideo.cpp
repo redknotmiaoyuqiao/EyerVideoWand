@@ -144,7 +144,7 @@ namespace Eyer
 
     int EyerVideoFragmentVideo::GetTrans(double t, float & x, float & y, float & z)
     {
-        printf("t:%f\n", t);
+        // printf("t:%f\n", t);
 
         if(transKeyList.getLength() == 0){
             x = 0;
