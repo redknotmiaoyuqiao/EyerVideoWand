@@ -262,11 +262,12 @@ namespace Eyer {
         float y = 0.0f;
         float z = 0.0f;
     public:
-        bool operator < (const EyerTransKey &key2)
-        {
-            return t < key2.t;
-        }
+        bool operator < (const EyerTransKey &key2);
 
+        EyerTransKey();
+        EyerTransKey(const EyerTransKey & tk);
+
+        EyerTransKey & operator = (const EyerTransKey & tk);
     };
 
     enum EyerVideoFragmentType

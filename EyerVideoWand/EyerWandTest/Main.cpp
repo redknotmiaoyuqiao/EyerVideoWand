@@ -65,7 +65,7 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     videoFragment2.LoadVideoFile("./M_1280_720.mp4");
 
     videoFragment2.AddTransKey(0.0, 0.0, 0.0, 0.0);
-    videoFragment2.AddTransKey(40.0, -200.0, 0.0, 0.0);
+    videoFragment2.AddTransKey(40.0, 1920 / 2.0, 0.0, 0.0);
 
     videoFragment2.Print();
 

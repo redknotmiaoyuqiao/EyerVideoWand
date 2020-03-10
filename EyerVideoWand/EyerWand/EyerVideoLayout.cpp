@@ -169,6 +169,9 @@ namespace Eyer
                 float z = 0.0;
 
                 vfv->GetTrans(ts, x, y, z);
+
+                // printf("x:%f, y:%f, z:%f\n", x, y, z);
+
                 trans.SetTrans(x, y, z);
 
                 panel->mvp = ortho * trans * scale ;
