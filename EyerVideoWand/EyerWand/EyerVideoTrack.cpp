@@ -111,12 +111,13 @@ namespace Eyer
                 long long TIME_START_GetVideoPanel = EyerTime::GetTime();
 #endif
                 EyerVideoPanel * panel = new EyerVideoPanel();
-                int ret = layout->GetVideoPanel(panel, fragmentIndex, frameIndex - layout->GetStartFrameIndex(), fps);
+                EyerVideoFragment * fragmentP = nullptr;
+                int ret = layout->GetVideoPanel(panel, &fragmentP, fragmentIndex, frameIndex - layout->GetStartFrameIndex(), fps);
                 if(ret){
                     continue;
                 }
-                panelList.insertBack(panel);
 
+                panelList.insertBack(panel);
 
                 EyerMat4x4 panelMvp = panel->GetMVPMat();
 
@@ -129,11 +130,27 @@ namespace Eyer
 #endif
                 // EyerLog("Get Panel Success, Width: %d, Height: %d\n", panel.GetW(), panel.GetH());
 
-                EyerGLMVPTextureDraw * mvpTextureDraw = new EyerGLMVPTextureDraw();
-                mvpTextureDraw->SetTexture(&panel->targetTexture);
-                mvpTextureDraw->SetMVP(panelMvp);
-                frameDrawList.insertBack(mvpTextureDraw);
-                params->frameBuffer->AddComponent(mvpTextureDraw);
+                if(fragmentP == nullptr){
+                    continue;
+                }
+
+                if(fragmentP->GetType() == EyerVideoFragmentType::VIDEO_FRAGMENT_VIDEO){
+                    EyerGLMVPTextureDraw * mvpTextureDraw = new EyerGLMVPTextureDraw();
+                    mvpTextureDraw->SetTexture(&panel->targetTexture);
+                    mvpTextureDraw->SetMVP(panelMvp);
+                    frameDrawList.insertBack(mvpTextureDraw);
+                    params->frameBuffer->AddComponent(mvpTextureDraw);
+                }
+                if(fragmentP->GetType() == EyerVideoFragmentType::VIDEO_FRAGMENT_TEXT){
+                    EyerVideoFragmentText * vft = (EyerVideoFragmentText *)fragmentP;
+                    EyerGLTextDraw * textDraw = new EyerGLTextDraw(vft->fontPath);
+                    textDraw->SetText(vft->text);
+                    textDraw->SetPos(0.0, 300);
+                    textDraw->SetSize(100);
+                    textDraw->SetColor(1.0, 0.0, 0.0);
+
+                    params->frameBuffer->AddComponent(textDraw);
+                }
             }
         }
         params->frameBuffer->AddComponent(params->titleTextDraw);

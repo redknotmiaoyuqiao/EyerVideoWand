@@ -231,7 +231,7 @@ namespace Eyer {
 
 
         int GetVideoFragmentCount();
-        int GetVideoPanel(EyerVideoPanel * panel, int videoFragmentIndex, int layoutFrameIndex, int fps);
+        int GetVideoPanel(EyerVideoPanel * panel, EyerVideoFragment ** fragmentP, int videoFragmentIndex, int layoutFrameIndex, int fps);
     private:
         int startFrameIndex = 0;
         int endFrameIndex = 0;
@@ -333,10 +333,18 @@ namespace Eyer {
         EyerVideoFragmentText();
         ~EyerVideoFragmentText();
 
+        EyerVideoFragmentText(const EyerVideoFragmentText & vft);
+
+        EyerVideoFragmentText & operator = (const EyerVideoFragmentText & vft);
+
         int SetFontPath(EyerString path);
         int SetText(EyerString text);
 
         virtual EyerVideoFragmentType GetType() const;
+
+    public:
+        EyerString fontPath;
+        EyerString text;
     };
 
 

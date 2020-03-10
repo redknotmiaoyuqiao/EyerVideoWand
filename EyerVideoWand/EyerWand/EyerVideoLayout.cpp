@@ -77,7 +77,7 @@ namespace Eyer
         return videoFragmentList.getLength();
     }
 
-    int EyerVideoLayout::GetVideoPanel(EyerVideoPanel * panel, int videoFragmentIndex, int layoutFrameIndex, int fps)
+    int EyerVideoLayout::GetVideoPanel(EyerVideoPanel * panel, EyerVideoFragment ** fragmentP,int videoFragmentIndex, int layoutFrameIndex, int fps)
     {
         EyerVideoFragment * fragment = nullptr;
         videoFragmentList.find(videoFragmentIndex, fragment);
@@ -86,15 +86,17 @@ namespace Eyer
             return -1;
         }
 
+        *fragmentP = fragment;
+
 
         EyerMat4x4 ortho;
-        int width = 1920;
-        int height = 1080;
-        ortho.SetOrtho(- width / 2.0, width / 2.0, height / 2.0, - height / 2.0, 0.0f, 1000.0f);
+        int w = 1920;
+        int h = 1080;
+        ortho.SetOrtho(- w / 2.0, w / 2.0, h / 2.0, - h / 2.0, 0.0f, 1000.0f);
 
         EyerMat4x4 scale;
-        // scale.SetScale(width / 2.0, height / 2.0, 0.0);
-        scale.SetScale(200, 200, 1.0);
+        scale.SetScale(w / 2.0, h / 2.0, 0.0);
+        //scale.SetScale(200, 200, 1.0);
 
         EyerMat4x4 trans;
 
@@ -179,10 +181,41 @@ namespace Eyer
         }
 
         if(fragment->GetType() == EyerVideoFragmentType::VIDEO_FRAGMENT_TEXT){
+            /*
+            EyerVideoFragmentText * vft = (EyerVideoFragmentText *)fragment;
+
+            double ts = 1000 * 1.0 / fps * (layoutFrameIndex);
+            ts = ts / 1000.0;
+
+            int width = 0;
+            int height = 100;
+
+            EyerGLTextDraw textDraw(vft->fontPath);
+
+            textDraw.SetText(vft->text);
+            textDraw.SetPos(0.0, 0.0);
+            textDraw.SetSize(height);
+            textDraw.SetColor(1.0, 0.0, 0.0);
+
+            width = textDraw.GetTextWidth();
+
+            textDraw.Viewport(width, height);
+
+            // EyerLog("Font W:%d, H:%d\n", width, height);
+
+            EyerGLFrameBuffer frameBuffer(width, height, &panel->targetTexture);
+
+            frameBuffer.Clear();
+
+            frameBuffer.AddComponent(&textDraw);
+            frameBuffer.Draw();
+
+            frameBuffer.ClearAllComponent();
 
 
             scale.SetScale(100, 100, 1.0);
             panel->mvp = ortho * trans * scale;
+            */
         }
 
         return 0;

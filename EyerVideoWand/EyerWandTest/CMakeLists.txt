@@ -42,6 +42,12 @@ file(COPY
         ${CMAKE_CURRENT_BINARY_DIR}/
         )
 
+file(COPY
+        ${CMAKE_CURRENT_SOURCE_DIR}/demo.mp4
+        DESTINATION
+        ${CMAKE_CURRENT_BINARY_DIR}/
+        )
+
 INSTALL(
         TARGETS EyerWandTest
         RUNTIME DESTINATION bin
