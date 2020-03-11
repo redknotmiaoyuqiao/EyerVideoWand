@@ -114,11 +114,14 @@ namespace Eyer
                 return -1;
             }
 
+            avFrame.GetInfo();
+
             int width = avFrame.GetWidth();
             int height = avFrame.GetHeight();
 
 
-            EyerGLFrameBuffer * frameBuffer = new EyerGLFrameBuffer(width, height, &panel->targetTexture);
+            // EyerGLFrameBuffer * frameBuffer = new EyerGLFrameBuffer(width, height, &panel->targetTexture);
+            EyerGLFrameBuffer * frameBuffer = new EyerGLFrameBuffer(width, height);
 
             EyerGLYUV2TextureComponent * yuv2texture = new EyerGLYUV2TextureComponent();
 
