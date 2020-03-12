@@ -62,7 +62,10 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
 
     Eyer::EyerVideoLayout layer3;
     // layer3.SetFrame(fps * 9, fps * 9 + fps * 5);
-    layer3.SetFrame(fps * 9, fps * 9 + fps * 5);
+    layer3.SetFrame(0, fps * 5);
+
+    Eyer::EyerVideoLayout layer4;
+    layer4.SetFrame(fps * 5, fps * 5 + fps *5);
 
     Eyer::EyerVideoFragmentVideo videoFragment;
     videoFragment.LoadVideoFile("./M_1280_720.mp4");
@@ -124,13 +127,17 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
 
 
     Eyer::EyerVideoFragmentVideo videoFragmentImage;
-    videoFragmentImage.LoadVideoFile("./mulan.jpg");
+    videoFragmentImage.LoadVideoFile("./3.jpg");
 
     layer3.AddVideoFragment(&videoFragmentImage);
 
+    Eyer::EyerVideoFragmentVideo videoFragmentImage2;
+    videoFragmentImage2.LoadVideoFile("./4.jpg");
+    layer4.AddVideoFragment(&videoFragmentImage2);
+
     //videoTrack.AddLayer(layer);
-    videoTrack.AddLayer(layer2);
     videoTrack.AddLayer(layer3);
+    videoTrack.AddLayer(layer4);
 
     // 音频
     Eyer::EyerAudioTrack audioTrack;
