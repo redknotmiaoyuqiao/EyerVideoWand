@@ -33,7 +33,7 @@ namespace Eyer
         decoder = new EyerAVDecoder();
         decoder->Init(&avStream);
 
-        reader->SeekFrame(videoStreamIndex, initStart);
+        /// TODO reader->SeekFrame(videoStreamIndex, initStart);
     }
 
     EyerVideoDecoderLine::~EyerVideoDecoderLine()
@@ -69,14 +69,15 @@ namespace Eyer
         EyerAVFrame * pFrame = nullptr;
 
         while(1){
-
             int ret = SelectFrameInList(pFrame, ts);
             if(ret){
                 // 先判断是否已经读取到文件末尾
                 if(fileEndFlag){
+                    int length = frameList.getLength();
                     // 已经到了末尾，取最后一帧，退出
                     if(frameList.getLength() <= 0){
                         continue;
+                        // break;
                     }
                     int lastInex = frameList.getLength() - 1;
                     frameList.find(lastInex, pFrame);
@@ -198,6 +199,7 @@ namespace Eyer
         }
         EyerAVPacket pkt;
         int ret = reader->Read(&pkt);
+        EyerLog("Read Frame: %d\n", ret);
         if(pkt.GetStreamId() != videoStreamIndex){
             return -1;
         }
