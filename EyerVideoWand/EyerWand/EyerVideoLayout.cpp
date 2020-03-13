@@ -173,11 +173,15 @@ namespace Eyer
                 float y = 0.0;
                 float z = 0.0;
 
-                vfv->GetTrans(ts, x, y, z);
-
-                // printf("x:%f, y:%f, z:%f\n", x, y, z);
-
+                vfv->GetLinearValue(EyerVideoChangeType::VIDEO_FRAGMENT_CHANGE_TRANS, ts, x, y, z);
                 trans.SetTrans(x, y, z);
+
+                float scale_x = 0.0;
+                float scale_y = 0.0;
+                float scale_z = 0.0;
+                
+                vfv->GetLinearValue(EyerVideoChangeType::VIDEO_FRAGMENT_CHANGE_SCALE, ts, scale_x, scale_y, scale_z);
+                scale.SetScale(scale_x, scale_y, scale_z);
 
                 panel->mvp = ortho * trans * scale ;
             }

@@ -285,6 +285,11 @@ namespace Eyer {
         static EyerVideoFragment * CopyFragment(const EyerVideoFragment * fragment);
     };
 
+    enum EyerVideoChangeType
+    {
+        VIDEO_FRAGMENT_CHANGE_TRANS,
+        VIDEO_FRAGMENT_CHANGE_SCALE
+    };
     class EyerVideoFragmentVideo : public EyerVideoFragment
     {
     public:
@@ -300,7 +305,8 @@ namespace Eyer {
         int SetFrameTime(double startTime, double endTime);
 
         int AddTransKey(double t, float x, float y, float z);
-        int GetTrans(double t, float & x, float & y, float & z);
+        int AddScaleKey(double t, float x, float y, float z);
+        int GetLinearValue(EyerVideoChangeType type, double t, float & x, float & y, float & z);
 
         double GetDuration();
 
@@ -325,6 +331,8 @@ namespace Eyer {
         Eyer::EyerWandVideoResource * videoResource = nullptr;
 
         Eyer::EyerLinkedList<EyerTransKey *> transKeyList;
+        Eyer::EyerLinkedList<EyerTransKey *> scaleKeyList;
+
     };
 
     class EyerVideoFragmentText : public EyerVideoFragment

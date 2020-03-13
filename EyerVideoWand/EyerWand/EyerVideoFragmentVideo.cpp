@@ -27,6 +27,15 @@ namespace Eyer
             }
         }
         transKeyList.clear();
+
+        for(int i=0; i<scaleKeyList.getLength(); i++){
+            EyerTransKey * scaleKey = nullptr;
+            scaleKeyList.find(i, scaleKey);
+            if(scaleKey != nullptr){
+                delete scaleKey;
+            }
+        }
+        scaleKeyList.clear();
     }
 
     EyerVideoFragmentVideo & EyerVideoFragmentVideo::operator = (const EyerVideoFragmentVideo & fragment)
@@ -49,6 +58,15 @@ namespace Eyer
             if(transKey != nullptr){
                 EyerTransKey * tk = new EyerTransKey(*transKey);
                 transKeyList.insertBack(tk);
+            }
+        }
+
+        for(int i=0; i<fragment.scaleKeyList.getLength(); i++){
+            EyerTransKey * scaleKey = nullptr;
+            fragment.scaleKeyList.find(i, scaleKey);
+            if(scaleKey != nullptr){
+                EyerTransKey * sk = new EyerTransKey(*scaleKey);
+                scaleKeyList.insertBack(sk);
             }
         }
 
@@ -142,17 +160,35 @@ namespace Eyer
         return 0;
     }
 
-    int EyerVideoFragmentVideo::GetTrans(double t, float & x, float & y, float & z)
+    int EyerVideoFragmentVideo::AddScaleKey(double t, float x, float y, float z)
     {
-        if(transKeyList.getLength() == 0){
+        EyerTransKey * scaleKey = new EyerTransKey();
+        scaleKey->x = x;
+        scaleKey->y = y;
+        scaleKey->z = z;
+        scaleKey->t = t;
+        scaleKeyList.insertBack(scaleKey);
+        return 0;
+    }
+
+    int EyerVideoFragmentVideo::GetLinearValue(EyerVideoChangeType type, double t, float & x, float & y, float & z)
+    {
+        Eyer::EyerLinkedList<EyerTransKey *> * changeKeyList = new Eyer::EyerLinkedList<EyerTransKey *>();
+        if(type == EyerVideoChangeType::VIDEO_FRAGMENT_CHANGE_TRANS){
+            *changeKeyList = transKeyList;
+        }else if(type == EyerVideoChangeType::VIDEO_FRAGMENT_CHANGE_SCALE){
+            *changeKeyList = scaleKeyList;
+        }
+        
+        if(changeKeyList->getLength() == 0){
             x = 0;
             y = 0;
             z = 0;
             return 0;
         }
 
-        EyerLinkedEle<Eyer::EyerTransKey *> * currentEle = transKeyList.head;
-        for(int i=0; i< transKeyList.getLength()-1; i++){
+        EyerLinkedEle<Eyer::EyerTransKey *> * currentEle = changeKeyList->head;
+        for(int i=0; i< changeKeyList->getLength()-1; i++){
             EyerLinkedEle<Eyer::EyerTransKey *> * temp = currentEle->next;
             while (temp != nullptr){
                 if(temp->data->t < currentEle->data->t){
@@ -169,8 +205,8 @@ namespace Eyer
 
         Eyer::EyerTransKey * firstdata = nullptr;
         Eyer::EyerTransKey * lastdata = nullptr;
-        transKeyList.find(0, firstdata);
-        transKeyList.find(transKeyList.getLength()-1, lastdata);
+        changeKeyList->find(0, firstdata);
+        changeKeyList->find(changeKeyList->getLength()-1, lastdata);
 
         if(t < firstdata->t){
             x = firstdata->x;
@@ -184,9 +220,9 @@ namespace Eyer
             return 0;
         }
 
-        for(int i=0; i<transKeyList.getLength()-1; i++){
-            transKeyList.find(i, firstdata);
-            transKeyList.find(i+1, lastdata);
+        for(int i=0; i<changeKeyList->getLength()-1; i++){
+            changeKeyList->find(i, firstdata);
+            changeKeyList->find(i+1, lastdata);
 
             if(t >= firstdata->t && t < lastdata->t){
                 double tPart = (t - firstdata->t)/(lastdata->t - firstdata->t);
