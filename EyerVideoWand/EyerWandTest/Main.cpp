@@ -58,7 +58,7 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
 
     Eyer::EyerVideoLayout layer2;
     //layer2.SetFrame(fps * 5, fps * 5 + fps * 9);
-    layer2.SetFrame(0, fps * 9);
+    layer2.SetFrame(fps * 4, fps * 4 + fps * 4);
 
     Eyer::EyerVideoLayout layer3;
     // layer3.SetFrame(fps * 9, fps * 9 + fps * 5);
@@ -97,7 +97,7 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     videoFragment2.AddTransKey(2.6, 0.0, 6.0, 0.0);
     videoFragment2.AddTransKey(2.7, 0.0, 0.0, 0.0);
 
-    videoFragment2.AddTransKey(4.1, 0.0, 0.0, 0.0);
+   /* videoFragment2.AddTransKey(4.1, 0.0, 0.0, 0.0);
     videoFragment2.AddTransKey(4.2, 30.0, 0.0, 0.0);
     videoFragment2.AddTransKey(4.3, -30.0, 0.0, 0.0);
     videoFragment2.AddTransKey(4.4, 20.0, 0.0, 0.0);
@@ -112,7 +112,7 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     videoFragment2.AddTransKey(6.7, 20.0, 20.0, 0.0);
     videoFragment2.AddTransKey(6.8, 10.0, 10.0, 0.0);
     videoFragment2.AddTransKey(6.9, 0.0, 0.0, 0.0);
-
+*/
     videoFragment2.Print();
 
 
@@ -123,20 +123,24 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     layer.AddVideoFragment(&videoFragment);
 
     layer2.AddVideoFragment(&videoFragment2);
-    layer2.AddVideoFragment(&videoFragmentText);
+    //layer2.AddVideoFragment(&videoFragmentText);
 
 
     Eyer::EyerVideoFragmentVideo videoFragmentImage;
     videoFragmentImage.LoadVideoFile("./3.jpg");
+    videoFragmentImage.AddScaleKey(0.0, 960.0, 540.0, 0.0);
+    videoFragmentImage.AddScaleKey(5.0, 1460.0, 840.0, 0.0);
 
     layer3.AddVideoFragment(&videoFragmentImage);
 
     Eyer::EyerVideoFragmentVideo videoFragmentImage2;
     videoFragmentImage2.LoadVideoFile("./4.jpg");
+    videoFragmentImage2.AddScaleKey(0.0, 1460.0, 840.0, 0.0);
+    videoFragmentImage2.AddScaleKey(5.0, 960.0, 540.0, 0.0);
     layer4.AddVideoFragment(&videoFragmentImage2);
 
-    //videoTrack.AddLayer(layer);
     videoTrack.AddLayer(layer3);
+    //videoTrack.AddLayer(layer2);
     videoTrack.AddLayer(layer4);
 
     // 音频
