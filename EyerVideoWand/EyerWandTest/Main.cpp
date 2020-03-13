@@ -134,9 +134,13 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     layer3.AddVideoFragment(&videoFragmentImage);
 
     Eyer::EyerVideoFragmentVideo videoFragmentImage2;
-    videoFragmentImage2.LoadVideoFile("./4.jpg");
+
+    // videoFragmentImage2.LoadVideoFile("./4.jpg");
     videoFragmentImage2.AddScaleKey(0.0, 1460.0, 840.0, 0.0);
     videoFragmentImage2.AddScaleKey(5.0, 960.0, 540.0, 0.0);
+
+    videoFragmentImage2.LoadVideoFile("./mulan.jpg");
+
     layer4.AddVideoFragment(&videoFragmentImage2);
 
     videoTrack.AddLayer(layer3);

@@ -114,7 +114,7 @@ namespace Eyer
                 return -1;
             }
 
-            avFrame.GetInfo();
+            // avFrame.GetInfo();
 
             int width = avFrame.GetWidth();
             int height = avFrame.GetHeight();
@@ -181,7 +181,9 @@ namespace Eyer
                 float scale_z = 0.0;
                 
                 vfv->GetLinearValue(EyerVideoChangeType::VIDEO_FRAGMENT_CHANGE_SCALE, ts, scale_x, scale_y, scale_z);
-                scale.SetScale(scale_x, scale_y, scale_z);
+                
+                // scale.SetScale(scale_x, scale_y, scale_z);
+                scale.SetScale(200.0, 200.0, scale_z);
 
                 panel->mvp = ortho * trans * scale ;
             }

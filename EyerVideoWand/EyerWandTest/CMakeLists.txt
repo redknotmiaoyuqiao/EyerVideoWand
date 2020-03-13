@@ -48,6 +48,33 @@ file(COPY
         ${CMAKE_CURRENT_BINARY_DIR}/
         )
 
+
+file(COPY
+        ${CMAKE_CURRENT_SOURCE_DIR}/1.jpg
+        DESTINATION
+        ${CMAKE_CURRENT_BINARY_DIR}/
+        )
+
+
+file(COPY
+        ${CMAKE_CURRENT_SOURCE_DIR}/2.jpg
+        DESTINATION
+        ${CMAKE_CURRENT_BINARY_DIR}/
+        )
+
+file(COPY
+        ${CMAKE_CURRENT_SOURCE_DIR}/3.jpg
+        DESTINATION
+        ${CMAKE_CURRENT_BINARY_DIR}/
+        )
+
+
+file(COPY
+        ${CMAKE_CURRENT_SOURCE_DIR}/4.jpg
+        DESTINATION
+        ${CMAKE_CURRENT_BINARY_DIR}/
+        )
+
 INSTALL(
         TARGETS EyerWandTest
         RUNTIME DESTINATION bin
