@@ -114,7 +114,7 @@ namespace Eyer
                 return -1;
             }
 
-            avFrame.GetInfo();
+            // avFrame.GetInfo();
 
             int width = avFrame.GetWidth();
             int height = avFrame.GetHeight();
