@@ -68,7 +68,6 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     Eyer::EyerVideoLayout layer5;
     layer5.SetFrame(fps * 20, fps * 25);
 
-
     Eyer::EyerVideoFragmentVideo videoFragment;
     videoFragment.LoadVideoFile("./M_1280_720.mp4");
     videoFragment.AddTransKey(0.0, 5.0, 0.0, 0.0);
@@ -123,7 +122,6 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     videoFragmentText.SetText("这里是测试字幕");
 
     layer1.AddVideoFragment(&videoFragment);
-
     layer2.AddVideoFragment(&videoFragment2);
 
     Eyer::EyerVideoFragmentVideo videoFragmentImage;
@@ -143,8 +141,8 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
 
     Eyer::EyerVideoFragmentVideo videoFragmentImage3;
     videoFragmentImage3.LoadVideoFile("./1.jpg");
-    videoFragmentImage3.AddScaleKey(0.0, 1460.0, 840.0, 0.0);
-    videoFragmentImage3.AddScaleKey(5.0, 960.0, 540.0, 0.0);
+    videoFragmentImage3.AddScaleKey(0.0, 200.0, 200.0, 0.0);
+    videoFragmentImage3.AddScaleKey(5.0, 200.0, 200.0, 0.0);
 
     layer5.AddVideoFragment(&videoFragmentImage3);
 

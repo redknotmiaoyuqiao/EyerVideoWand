@@ -201,8 +201,8 @@ namespace Eyer
                 
                 vfv->GetLinearValue(EyerVideoChangeType::VIDEO_FRAGMENT_CHANGE_SCALE, ts, scale_x, scale_y, scale_z);
                 
-                // scale.SetScale(scale_x, scale_y, scale_z);
-                scale.SetScale(1920.0 / 2, 1080.0 / 2, scale_z);
+                scale.SetScale(scale_x / 2, scale_y / 2, scale_z / 2);
+                // scale.SetScale(1920.0 / 2, 1080.0 / 2, scale_z);
 
                 panel->mvp = ortho * trans * scale ;
             }
