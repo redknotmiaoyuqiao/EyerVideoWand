@@ -53,19 +53,21 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     // 视频
     Eyer::EyerVideoTrack videoTrack;
 
-    Eyer::EyerVideoLayout layer;
-    layer.SetFrame(0, fps * 5);
+    Eyer::EyerVideoLayout layer1;
+    layer1.SetFrame(0, fps * 5);
 
     Eyer::EyerVideoLayout layer2;
-    //layer2.SetFrame(fps * 5, fps * 5 + fps * 9);
-    layer2.SetFrame(fps * 4, fps * 4 + fps * 4);
+    layer2.SetFrame(fps * 5, fps * 10);
 
     Eyer::EyerVideoLayout layer3;
-    // layer3.SetFrame(fps * 9, fps * 9 + fps * 5);
-    layer3.SetFrame(0, fps * 5);
+    layer3.SetFrame(fps * 10, fps * 15);
 
     Eyer::EyerVideoLayout layer4;
-    layer4.SetFrame(fps * 5, fps * 5 + fps *5);
+    layer4.SetFrame(fps * 15, fps * 20);
+
+    Eyer::EyerVideoLayout layer5;
+    layer5.SetFrame(fps * 20, fps * 25);
+
 
     Eyer::EyerVideoFragmentVideo videoFragment;
     videoFragment.LoadVideoFile("./M_1280_720.mp4");
@@ -120,32 +122,39 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     videoFragmentText.SetFontPath("./xiao_xiao_yuan_pin_ying.ttf");
     videoFragmentText.SetText("这里是测试字幕");
 
-    layer.AddVideoFragment(&videoFragment);
+    layer1.AddVideoFragment(&videoFragment);
 
     layer2.AddVideoFragment(&videoFragment2);
-    //layer2.AddVideoFragment(&videoFragmentText);
-
 
     Eyer::EyerVideoFragmentVideo videoFragmentImage;
-    videoFragmentImage.LoadVideoFile("./3.jpg");
+    videoFragmentImage.LoadVideoFile("./2.jpg");
     videoFragmentImage.AddScaleKey(0.0, 960.0, 540.0, 0.0);
     videoFragmentImage.AddScaleKey(5.0, 1460.0, 840.0, 0.0);
 
     layer3.AddVideoFragment(&videoFragmentImage);
 
     Eyer::EyerVideoFragmentVideo videoFragmentImage2;
-
-    // videoFragmentImage2.LoadVideoFile("./4.jpg");
+    videoFragmentImage2.LoadVideoFile("./4.jpg");
     videoFragmentImage2.AddScaleKey(0.0, 1460.0, 840.0, 0.0);
     videoFragmentImage2.AddScaleKey(5.0, 960.0, 540.0, 0.0);
 
-    videoFragmentImage2.LoadVideoFile("./mulan.jpg");
-
     layer4.AddVideoFragment(&videoFragmentImage2);
 
+
+    Eyer::EyerVideoFragmentVideo videoFragmentImage3;
+    videoFragmentImage3.LoadVideoFile("./1.jpg");
+    videoFragmentImage3.AddScaleKey(0.0, 1460.0, 840.0, 0.0);
+    videoFragmentImage3.AddScaleKey(5.0, 960.0, 540.0, 0.0);
+
+    layer5.AddVideoFragment(&videoFragmentImage3);
+
+
+
+    videoTrack.AddLayer(layer1);
+    videoTrack.AddLayer(layer2);
     videoTrack.AddLayer(layer3);
-    //videoTrack.AddLayer(layer2);
     videoTrack.AddLayer(layer4);
+    videoTrack.AddLayer(layer5);
 
     // 音频
     Eyer::EyerAudioTrack audioTrack;

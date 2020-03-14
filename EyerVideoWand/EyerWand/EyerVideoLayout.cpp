@@ -114,7 +114,7 @@ namespace Eyer
                 return -1;
             }
 
-            // avFrame.GetInfo();
+            avFrame.GetInfo();
 
             int width = avFrame.GetWidth();
             int height = avFrame.GetHeight();
@@ -125,27 +125,46 @@ namespace Eyer
 
             EyerGLYUV2TextureComponent * yuv2texture = new EyerGLYUV2TextureComponent();
 
-
-            unsigned char * yData = (unsigned char *)malloc(width * height);
-            avFrame.GetYData(yData);
-            unsigned char * uData = (unsigned char *)malloc(width / 2 * height / 2);
-            avFrame.GetUData(uData);
-            unsigned char * vData = (unsigned char *)malloc(width / 2 * height / 2);
-            avFrame.GetVData(vData);
-
+            unsigned char * yData = nullptr;
+            unsigned char * uData = nullptr;
+            unsigned char * vData = nullptr;
             EyerGLTexture * y = new EyerGLTexture();
-            y->SetDataRedChannel(yData, width, height);
-
             EyerGLTexture * u = new EyerGLTexture();
-            u->SetDataRedChannel(uData, width / 2, height / 2);
-
             EyerGLTexture * v = new EyerGLTexture();
-            v->SetDataRedChannel(vData, width / 2, height / 2);
 
-            yuv2texture->SetYTexture(y);
-            yuv2texture->SetUTexture(u);
-            yuv2texture->SetVTexture(v);
+            if(avFrame.GetPixFormat() == EyerAVPixelFormat::Eyer_AV_PIX_FMT_YUV420P || avFrame.GetPixFormat() == EyerAVPixelFormat::Eyer_AV_PIX_FMT_YUVJ420P){
+                yData = (unsigned char *)malloc(width * height);
+                avFrame.GetYData(yData);
+                uData = (unsigned char *)malloc(width / 2 * height / 2);
+                avFrame.GetUData(uData);
+                vData = (unsigned char *)malloc(width / 2 * height / 2);
+                avFrame.GetVData(vData);
 
+                y->SetDataRedChannel(yData, width, height);
+                u->SetDataRedChannel(uData, width / 2, height / 2);
+                v->SetDataRedChannel(vData, width / 2, height / 2);
+
+                yuv2texture->SetYTexture(y);
+                yuv2texture->SetUTexture(u);
+                yuv2texture->SetVTexture(v);
+            }
+
+            if(avFrame.GetPixFormat() == EyerAVPixelFormat::Eyer_AV_PIX_FMT_YUV444P || avFrame.GetPixFormat() == EyerAVPixelFormat::Eyer_AV_PIX_FMT_YUVJ444P){
+                yData = (unsigned char *)malloc(width * height);
+                avFrame.GetYData(yData);
+                uData = (unsigned char *)malloc(width * height);
+                avFrame.GetUData(uData);
+                vData = (unsigned char *)malloc(width * height);
+                avFrame.GetVData(vData);
+
+                y->SetDataRedChannel(yData, width, height);
+                u->SetDataRedChannel(uData, width, height);
+                v->SetDataRedChannel(vData, width, height);
+
+                yuv2texture->SetYTexture(y);
+                yuv2texture->SetUTexture(u);
+                yuv2texture->SetVTexture(v);
+            }
 
 
             frameBuffer->Clear();
@@ -183,7 +202,7 @@ namespace Eyer
                 vfv->GetLinearValue(EyerVideoChangeType::VIDEO_FRAGMENT_CHANGE_SCALE, ts, scale_x, scale_y, scale_z);
                 
                 // scale.SetScale(scale_x, scale_y, scale_z);
-                scale.SetScale(200.0, 200.0, scale_z);
+                scale.SetScale(1920.0 / 2, 1080.0 / 2, scale_z);
 
                 panel->mvp = ortho * trans * scale ;
             }
