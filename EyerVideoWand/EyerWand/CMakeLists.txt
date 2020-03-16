@@ -32,6 +32,7 @@ target_link_libraries (EyerWand EyerCore)
 target_link_libraries (EyerWand EyerGL)
 target_link_libraries (EyerWand EyerYUV)
 target_link_libraries (EyerWand EyerType)
+target_link_libraries (EyerWand EyerGPUDomino)
 
 ADD_DEFINITIONS(-D EYER_DEBUG)
 

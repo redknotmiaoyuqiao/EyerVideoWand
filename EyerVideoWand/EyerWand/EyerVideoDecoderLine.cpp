@@ -199,7 +199,7 @@ namespace Eyer
         }
         EyerAVPacket pkt;
         int ret = reader->Read(&pkt);
-        EyerLog("Read Frame: %d\n", ret);
+        // EyerLog("Read Frame: %d\n", ret);
         if(pkt.GetStreamId() != videoStreamIndex){
             return -1;
         }

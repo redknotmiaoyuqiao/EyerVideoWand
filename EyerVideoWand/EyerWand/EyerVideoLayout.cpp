@@ -1,5 +1,6 @@
 #include "EyerWand.hpp"
 #include <math.h>
+#include "EyerGPUDomino/EyerGPUDomino.hpp"
 
 namespace Eyer
 {
@@ -114,13 +115,15 @@ namespace Eyer
                 return -1;
             }
 
-            avFrame.GetInfo();
+            // avFrame.GetInfo();
 
             int width = avFrame.GetWidth();
             int height = avFrame.GetHeight();
 
 
-            EyerGLFrameBuffer * frameBuffer = new EyerGLFrameBuffer(width, height, &panel->targetTexture);
+            Eyer::EyerGLTexture yuv2rgbTexture;
+            EyerGLFrameBuffer * frameBuffer = new EyerGLFrameBuffer(width, height, &yuv2rgbTexture);
+            // EyerGLFrameBuffer * frameBuffer = new EyerGLFrameBuffer(width, height, &panel->targetTexture);
             //EyerGLFrameBuffer * frameBuffer = new EyerGLFrameBuffer(width, height);
 
             EyerGLYUV2TextureComponent * yuv2texture = new EyerGLYUV2TextureComponent();
@@ -186,6 +189,19 @@ namespace Eyer
 
             delete frameBuffer;
             delete yuv2texture;
+
+            Eyer::EyerGominoGaussianBlur gb0;
+            Eyer::EyerGominoGaussianBlur gb1;
+            Eyer::EyerGominoGaussianBlur gb2;
+            Eyer::EyerGominoGaussianBlur gb3;
+
+            Eyer::EyerGominoPip pip;
+            pip << &gb0;
+            pip << &gb1;
+            pip << &gb2;
+            pip << &gb3;
+
+            pip.Go(&yuv2rgbTexture, &panel->targetTexture, width, height);
 
             {
                 float x = 0.0;
