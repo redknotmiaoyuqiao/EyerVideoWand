@@ -57,7 +57,7 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     layer1.SetFrame(0, fps * 5);
 
     Eyer::EyerVideoLayout layer2;
-    layer2.SetFrame(fps * 5, fps * 10);
+    layer2.SetFrame(fps * 0, fps * 8);
 
     Eyer::EyerVideoLayout layer3;
     layer3.SetFrame(fps * 10, fps * 15);
@@ -101,8 +101,8 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     videoFragment2.AddTransKey(2.6, 0.0, 6.0, 0.0);
     videoFragment2.AddTransKey(2.7, 0.0, 0.0, 0.0);
 
-    videoFragment2.AddScaleKey(0.0, 1920.0, 1080.0, 0.0);
-    videoFragment2.AddScaleKey(5.0, 1920.0 / 2, 1080.0 / 2, 0.0);
+    videoFragment2.AddScaleKey(0.0, 1920.0 , 1080.0, 0.0);
+    videoFragment2.AddScaleKey(5.0, 1920.0, 1080.0, 0.0);
 
    /* videoFragment2.AddTransKey(4.1, 0.0, 0.0, 0.0);
     videoFragment2.AddTransKey(4.2, 30.0, 0.0, 0.0);
@@ -152,11 +152,11 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
 
     layer5.AddVideoFragment(&videoFragmentImage3);
 
-    videoTrack.AddLayer(layer1);
+    //videoTrack.AddLayer(layer1);
     videoTrack.AddLayer(layer2);
-    videoTrack.AddLayer(layer3);
-    videoTrack.AddLayer(layer4);
-    videoTrack.AddLayer(layer5);
+    //videoTrack.AddLayer(layer3);
+    //videoTrack.AddLayer(layer4);
+    //videoTrack.AddLayer(layer5);
 
     // 音频
     Eyer::EyerAudioTrack audioTrack;
