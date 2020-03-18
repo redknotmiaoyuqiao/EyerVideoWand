@@ -195,11 +195,13 @@ namespace Eyer
             Eyer::EyerGominoGaussianBlur gb2;
             Eyer::EyerGominoGaussianBlur gb3;
 
+            Eyer::EyerGominoCopy cp0;
+
+            Eyer::EyerGominoZoomBlur zb0;
+
             Eyer::EyerGominoPip pip;
-            pip << &gb0;
-            pip << &gb1;
-            pip << &gb2;
-            pip << &gb3;
+            pip << &cp0;
+            pip << &zb0;
 
             pip.Go(&yuv2rgbTexture, &panel->targetTexture, width, height);
 
