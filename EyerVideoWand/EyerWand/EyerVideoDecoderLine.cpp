@@ -1,4 +1,5 @@
 #include "EyerWand.hpp"
+#include <math.h>
 
 namespace Eyer
 {

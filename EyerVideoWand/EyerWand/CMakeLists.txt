@@ -75,7 +75,6 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
 
     target_link_libraries (EyerWand libglfw3.a)
 
-    target_link_libraries (EyerWand libEyerCore.a)
     target_link_libraries (EyerWand libyuv.a)
     target_link_libraries (EyerWand libfreetype.a)
 
@@ -86,6 +85,57 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Android")
     MESSAGE(STATUS "current platform: Android")
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     MESSAGE(STATUS "current platform: Darwin")
+
+    target_link_libraries (EyerWand avformat)
+    target_link_libraries (EyerWand avdevice)
+    target_link_libraries (EyerWand avcodec)
+    target_link_libraries (EyerWand avutil)
+    target_link_libraries (EyerWand avfilter)
+    target_link_libraries (EyerWand swresample)
+    target_link_libraries (EyerWand swscale)
+
+    target_link_libraries (EyerWand dl)
+    target_link_libraries (EyerWand z)
+
+    target_link_libraries (EyerWand x264)
+
+    target_link_libraries (EyerWand glfw3)
+
+    target_link_libraries (EyerWand libyuv.a)
+    target_link_libraries (EyerWand libfreetype.a)
+    target_link_libraries (EyerWand png)
+    target_link_libraries (EyerWand bz2)
+    target_link_libraries (EyerWand iconv)
+    target_link_libraries (EyerWand lzma)
+
+    macro(ADD_FRAMEWORK appname fwname) 
+        find_library(FRAMEWORK_${fwname} NAMES ${fwname} PATHS ${CMAKE_OSX_SYSROOT}/System/Library PATH_SUFFIXES Frameworks NO_DEFAULT_PATH) 
+        if( ${FRAMEWORK_${fwname}} STREQUAL FRAMEWORK_${fwname}-NOTFOUND) 
+            MESSAGE(ERROR ": Framework ${fwname} not found") 
+        else() 
+            TARGET_LINK_LIBRARIES(${appname} "${FRAMEWORK_${fwname}}/${fwname}.tbd") 
+            MESSAGE(STATUS "Framework ${fwname} found at ${FRAMEWORK_${fwname}}") 
+        endif() 
+    endmacro(ADD_FRAMEWORK)
+
+    add_framework(EyerWand AudioToolbox)
+    add_framework(EyerWand IOKit)
+    add_framework(EyerWand CoreGraphics)
+    add_framework(EyerWand CoreMedia)
+    add_framework(EyerWand Cocoa)
+    add_framework(EyerWand VideoToolbox)
+    add_framework(EyerWand AVFoundation)
+    add_framework(EyerWand Security)
+    add_framework(EyerWand CoreFoundation)
+    add_framework(EyerWand CoreVideo)
+    add_framework(EyerWand OpenGL)
+    add_framework(EyerWand AppKit)
+    add_framework(EyerWand CoreImage)
+    add_framework(EyerWand VideoDecodeAcceleration)
+
+    set(CMAKE_EXE_LINKER_FLAGS
+        "-framework IOKit -framework AudioToolbox -framework CoreGraphics -framework CoreMedia -framework Cocoa -framework VideoToolbox -framework AVFoundation -framework Security -framework CoreFoundation -framework CoreVideo -framework OpenGL -framework AppKit -framework CoreImage -framework VideoDecodeAcceleration"
+    )
 ELSE ()
     MESSAGE(STATUS "other platform: ${CMAKE_SYSTEM_NAME}")
 ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
