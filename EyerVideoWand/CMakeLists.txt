@@ -8,10 +8,6 @@ MESSAGE(STATUS "operation system is ${CMAKE_SYSTEM}")
 
 SET(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/install/)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC -Wl,-Bsymbolic")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -Wl,-Bsymbolic")
-
-
 include_directories (googletest/googletest/include)
 include_directories (${CMAKE_SOURCE_DIR}/../../Lib/EyerLib/include)
 
@@ -25,8 +21,15 @@ link_directories (${CMAKE_SOURCE_DIR}/../../Lib/libpng_install/lib)
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
     MESSAGE(STATUS "current platform: Linux ")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC -Wl,-Bsymbolic")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -Wl,-Bsymbolic")
+
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
     MESSAGE(STATUS "current platform: Windows")
+
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC -Wl,-Bsymbolic")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -Wl,-Bsymbolic")
+    
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Android")
     MESSAGE(STATUS "current platform: Android")
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
