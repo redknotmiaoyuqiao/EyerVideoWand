@@ -29,12 +29,14 @@ namespace Eyer
         startTime = layer.startTime;
         endTime = layer.endTime;
 
-        for(int i=0;i<audioFragmentList.getLength();i++){
+        for(int i=0;i<layer.audioFragmentList.getLength();i++){
+
             EyerAudioFragment * audio = nullptr;
-            audioFragmentList.find(i, audio);
+            layer.audioFragmentList.find(i, audio);
+
             if(audio != nullptr){
                 EyerAudioFragment * a = new EyerAudioFragment(*audio);
-                audioFragmentList.insertBack(a);
+                this->audioFragmentList.insertBack(a);
             }
         }
 
@@ -70,6 +72,17 @@ namespace Eyer
         for(int i=0;i<frameDataSize / 4;i++){
             frameData[i] = 0.5;
         }
+
+        for(int i=0;i<audioFragmentList.getLength();i++){
+    
+            EyerAudioFragment * audio = nullptr;
+            audioFragmentList.find(i, audio);
+            if(audio != nullptr){
+                EyerAVFrame frame;
+                audio->ReaderAVFrame(ts, frame);
+            }
+        }
+
         return 0;
     }
 }

@@ -50,7 +50,7 @@ namespace Eyer {
     class EyerVideoDecoderLine
     {
     public:
-        EyerVideoDecoderLine(EyerString resPath, double initStart);
+        EyerVideoDecoderLine(EyerString resPath, double initStart, EyerAVStreamType type = EyerAVStreamType::STREAM_TYPE_VIDEO);
         ~EyerVideoDecoderLine();
 
         int GetFrame(EyerAVFrame & frame, double ts);
@@ -250,8 +250,12 @@ namespace Eyer {
 
         int LoadAudioFile(EyerString path);
 
+        int ReaderAVFrame(double ts, EyerAVFrame & frame);
+
     private:
         EyerString path;
+
+        EyerVideoDecoderLine * decoderLine = nullptr;
     };
 
     class EyerTransKey

@@ -87,6 +87,8 @@ namespace Eyer
 
 
         EyerLinkedList<float *> dataCache;
+        
+        // EyerLog("List: %d\n", activeLayerList.getLength());
         for(int i=0;i<activeLayerList.getLength();i++){
             EyerAudioLayer * layer = nullptr;
             layoutList.find(i, layer);
@@ -98,6 +100,7 @@ namespace Eyer
             float * layerData = (float *)malloc(frameDataSize);
             memset(layerData, 0, frameDataSize);
 
+            
             layer->RenderLayerFrame(ts, layerData, frameDataSize);
 
             dataCache.insertBack(layerData);
@@ -123,7 +126,6 @@ namespace Eyer
             dataCache.find(i,d);
             if(d != nullptr){
                 int layerCount = dataCache.getLength();
-
             }
         }
 

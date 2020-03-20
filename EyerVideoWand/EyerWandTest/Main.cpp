@@ -158,6 +158,9 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     videoTrack.AddLayer(layer3);
     videoTrack.AddLayer(layer4);
     videoTrack.AddLayer(layer5);
+
+
+    
     // 音频
     Eyer::EyerAudioTrack audioTrack;
 

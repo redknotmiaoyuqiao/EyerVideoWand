@@ -3,7 +3,7 @@
 
 namespace Eyer
 {
-    EyerVideoDecoderLine::EyerVideoDecoderLine(EyerString _resPath, double _initStart)
+    EyerVideoDecoderLine::EyerVideoDecoderLine(EyerString _resPath, double _initStart, EyerAVStreamType type)
     {
         initStart = _initStart;
         resPath = _resPath;
@@ -23,7 +23,7 @@ namespace Eyer
                 continue;
             }
 
-            if(stream.GetStreamType() == EyerAVStreamType::STREAM_TYPE_VIDEO){
+            if(stream.GetStreamType() == type){
                 videoStreamIndex = i;
             }
         }
@@ -104,7 +104,7 @@ namespace Eyer
 
         double t = frame.GetPTS() * 1.0 * streamTimebase.num / streamTimebase.den;
 
-        // EyerLog("Target TS: %f, TS: %f, D: %f\n", ts, t, t - ts);
+        // EyerLog("Target TS: %f, Frame TS: %f, D: %f\n", ts, t, t - ts);
 
         // EyerLog("List Size: %d\n", frameList.getLength());
 
