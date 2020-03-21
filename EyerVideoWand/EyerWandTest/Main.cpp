@@ -174,7 +174,7 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     audioFragment2.LoadAudioFile("./M_1280_720.mp4");
 
     Eyer::EyerAudioFragment audioFragment3;
-    audioFragment3.LoadAudioFile("./wei.mp3");
+    audioFragment3.LoadAudioFile("./wei.aac");
 
     // audioLayer.AddAudioFragment(audioFragment);
     audioLayer.AddAudioFragment(audioFragment2);
