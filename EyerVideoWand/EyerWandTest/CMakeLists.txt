@@ -87,6 +87,7 @@ file(COPY
         ${CMAKE_CURRENT_BINARY_DIR}/
         )
 
+
 INSTALL(
         TARGETS EyerWandTest
         RUNTIME DESTINATION bin

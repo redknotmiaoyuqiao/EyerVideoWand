@@ -167,10 +167,18 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     Eyer::EyerAudioLayer audioLayer;
     audioLayer.SetTime(0.0, 5.0);
 
-    Eyer::EyerAudioFragment audioFragment;
-    audioFragment.LoadAudioFile("./wei.mp3");
+    // Eyer::EyerAudioFragment audioFragment;
+    // audioFragment.LoadAudioFile("./error_test_video.mp4");
 
-    audioLayer.AddAudioFragment(audioFragment);
+    Eyer::EyerAudioFragment audioFragment2;
+    audioFragment2.LoadAudioFile("./M_1280_720.mp4");
+
+    Eyer::EyerAudioFragment audioFragment3;
+    audioFragment3.LoadAudioFile("./wei.mp3");
+
+    // audioLayer.AddAudioFragment(audioFragment);
+    audioLayer.AddAudioFragment(audioFragment2);
+    audioLayer.AddAudioFragment(audioFragment3);
 
     audioTrack.AddLayer(audioLayer);
 

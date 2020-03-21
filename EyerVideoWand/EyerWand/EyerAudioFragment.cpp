@@ -41,6 +41,8 @@ namespace Eyer
         EyerAVFrame f;
         decoderLine->GetFrame(f, ts);
 
+        f.GetInfo();
+
         return 0;
     }
 }

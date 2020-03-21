@@ -72,7 +72,7 @@ namespace Eyer
         writer.WriteHand();
 
         // Video
-        VideoTrackProcess(&writer, &encoder, videoStreamIndex);
+        //// VideoTrackProcess(&writer, &encoder, videoStreamIndex);
 
         // Audio
         AudioTrackProcess(&writer, &audioEncoder, audioStreamIndex);
@@ -252,6 +252,9 @@ namespace Eyer
             Eyer::EyerAVFrame avFrame;
 
             int frameSize = encoder->GetFrameSize();
+
+            EyerLog("Frame Size: %d\n", frameSize);
+
             int size = encoder->GetBufferSize();
 
             float * d = (float *)malloc(size);
