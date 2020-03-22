@@ -38,10 +38,7 @@ namespace Eyer
             decoderLine = new EyerVideoDecoderLine(path, 0.0, EyerAVStreamType::STREAM_TYPE_AUDIO);
         }
 
-        EyerAVFrame f;
-        decoderLine->GetFrame(f, ts);
-
-        f.GetInfo();
+        decoderLine->GetFrame(frame, ts);
 
         return 0;
     }

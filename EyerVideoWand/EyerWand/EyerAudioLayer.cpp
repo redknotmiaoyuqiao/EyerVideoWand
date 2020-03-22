@@ -67,21 +67,23 @@ namespace Eyer
         return endTime;
     }
 
-    int EyerAudioLayer::RenderLayerFrame(double ts, float * frameData, int frameDataSize)
+    int EyerAudioLayer::RenderLayerFrame(double ts, EyerAVFrame & outFrame)
     {
-        for(int i=0;i<frameDataSize / 4;i++){
-            frameData[i] = 0.5;
-        }
+        EyerAVAudioFrameUtil mergeAudioUtil;
 
+        int audioCount = audioFragmentList.getLength();
         for(int i=0;i<audioFragmentList.getLength();i++){
-    
             EyerAudioFragment * audio = nullptr;
             audioFragmentList.find(i, audio);
             if(audio != nullptr){
                 EyerAVFrame frame;
                 audio->ReaderAVFrame(ts, frame);
+
+                mergeAudioUtil.AddAudioFrame(frame, 1.0 / audioCount);
             }
         }
+        
+        mergeAudioUtil.MergeAudioFrame(outFrame);
 
         return 0;
     }

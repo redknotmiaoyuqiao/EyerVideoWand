@@ -184,7 +184,7 @@ namespace Eyer {
 
         double GetCountTime();
 
-        int RenderFrame(double ts, float * frameData, int frameDataSize);
+        int RenderFrame(double ts, EyerAVFrame & outFrame);
     private:
         EyerLinkedList<EyerAudioLayer *> layoutList;
     };
@@ -197,7 +197,7 @@ namespace Eyer {
         EyerAudioLayer(const EyerAudioLayer & layer);
         EyerAudioLayer & operator = (const EyerAudioLayer & layer);
 
-        int RenderLayerFrame(double ts, float * frameData, int frameDataSize);
+        int RenderLayerFrame(double ts, EyerAVFrame & frame);
 
         int SetTime(double startTime, double endTime);
 

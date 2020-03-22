@@ -165,7 +165,7 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     Eyer::EyerAudioTrack audioTrack;
 
     Eyer::EyerAudioLayer audioLayer;
-    audioLayer.SetTime(0.0, 5.0);
+    audioLayer.SetTime(0.0, 25.0);
 
     // Eyer::EyerAudioFragment audioFragment;
     // audioFragment.LoadAudioFile("./error_test_video.mp4");
