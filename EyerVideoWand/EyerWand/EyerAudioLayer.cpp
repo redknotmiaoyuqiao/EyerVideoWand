@@ -7,6 +7,17 @@ namespace Eyer
 
     }
 
+    int EyerAudioLayer::SetWeight(float _weight)
+    {
+        weight = _weight;
+        return 0;
+    }
+
+    float EyerAudioLayer::GetWeight()
+    {
+        return weight;
+    }
+
     EyerAudioLayer::~EyerAudioLayer()
     {
         for(int i=0;i<audioFragmentList.getLength();i++){
@@ -79,7 +90,11 @@ namespace Eyer
                 EyerAVFrame frame;
                 audio->ReaderAVFrame(ts, frame);
 
-                mergeAudioUtil.AddAudioFrame(frame, 1.0 / audioCount);
+                float w = audio->GetWeight();
+                if(w < 0.0f){
+                    w = 1.0 / audioCount;
+                }
+                mergeAudioUtil.AddAudioFrame(frame, w);
             }
         }
         

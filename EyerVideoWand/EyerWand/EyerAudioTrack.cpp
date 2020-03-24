@@ -99,7 +99,13 @@ namespace Eyer
             layer->RenderLayerFrame(ts, *oFrame);
             tempFrameManager.insertBack(oFrame);
 
-            mergeAudioUtil.AddAudioFrame(*oFrame, 1.0 / activeLayerList.getLength());
+
+            float w = layer->GetWeight();
+            if(w < 0.0f){
+                w = 1.0 / activeLayerList.getLength();
+            }
+
+            mergeAudioUtil.AddAudioFrame(*oFrame, w);
         }
 
         mergeAudioUtil.MergeAudioFrame(outFrame);

@@ -205,11 +205,16 @@ namespace Eyer {
 
         int AddAudioFragment(const EyerAudioFragment & audio);
 
+        int SetWeight(float _weight);
+        float GetWeight();
+
         double GetStartTime();
         double GetEndTime();
     private:
         double startTime = 0.0;
         double endTime = 0.0;
+
+        float weight = -1.0f;
 
         EyerLinkedList<EyerAudioFragment *> audioFragmentList;
     };
@@ -250,13 +255,17 @@ namespace Eyer {
         EyerAudioFragment(const EyerAudioFragment & fragment);
         EyerAudioFragment & operator = (const EyerAudioFragment & fragment);
 
+        int SetWeight(float _weight);
+        float GetWeight();
+
         int LoadAudioFile(EyerString path);
 
         int ReaderAVFrame(double ts, EyerAVFrame & frame);
 
     private:
-        EyerString path;
+        float weight = -1.0f;
 
+        EyerString path;
         EyerVideoDecoderLine * decoderLine = nullptr;
     };
 
@@ -330,7 +339,6 @@ namespace Eyer {
         int endIndex = 0;
         double startTime = 0.0;
         double endTime = 0.0;
-
 
         double duration = 0.0;
 

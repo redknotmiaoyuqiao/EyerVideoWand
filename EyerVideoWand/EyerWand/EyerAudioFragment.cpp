@@ -23,6 +23,7 @@ namespace Eyer
     EyerAudioFragment & EyerAudioFragment::operator = (const EyerAudioFragment & fragment)
     {
         path = fragment.path;
+        weight = fragment.weight;
         return *this;
     }
 
@@ -41,5 +42,16 @@ namespace Eyer
         decoderLine->GetFrame(frame, ts);
 
         return 0;
+    }
+
+    int EyerAudioFragment::SetWeight(float _weight)
+    {
+        weight = _weight;
+        return 0;
+    }
+
+    float EyerAudioFragment::GetWeight()
+    {
+        return weight;
     }
 }
