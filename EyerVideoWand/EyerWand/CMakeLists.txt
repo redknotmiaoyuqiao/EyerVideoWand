@@ -30,6 +30,8 @@ add_library(
 target_link_libraries (EyerWand EyerAV)
 target_link_libraries (EyerWand EyerCore)
 target_link_libraries (EyerWand EyerGL)
+target_link_libraries (EyerWand EyerGLAD)
+target_link_libraries (EyerWand EyerGLWindow)
 target_link_libraries (EyerWand EyerYUV)
 target_link_libraries (EyerWand EyerType)
 target_link_libraries (EyerWand EyerGPUDomino)

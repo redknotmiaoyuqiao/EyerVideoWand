@@ -2,6 +2,7 @@
 #define	EYER_LIB_AV_WAND_H
 
 #include "EyerGL/EyerGL.hpp"
+#include "EyerGLWindow/EyerGLWindow.hpp"
 #include "EyerCore/EyerCore.hpp"
 #include "EyerAV/EyerAV.hpp"
 
