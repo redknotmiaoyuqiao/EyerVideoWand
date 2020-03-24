@@ -50,9 +50,6 @@ IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
     target_link_libraries (EyerWand swresample)
     target_link_libraries (EyerWand swscale)
 
-    target_link_libraries (EyerWand dl)
-    target_link_libraries (EyerWand z)
-
     target_link_libraries (EyerWand x264)
 
     target_link_libraries (EyerWand glfw3)
@@ -64,6 +61,9 @@ IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
     target_link_libraries (EyerWand harfbuzz)
     target_link_libraries (EyerWand bz2)
     target_link_libraries (EyerWand lzma)
+
+    target_link_libraries (EyerWand dl)
+    target_link_libraries (EyerWand z.a)
 
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
     MESSAGE(STATUS "current platform: Windows")
