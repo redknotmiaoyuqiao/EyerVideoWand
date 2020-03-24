@@ -116,9 +116,9 @@ namespace Eyer
 
     int EyerVideoFragmentVideo::Print()
     {
-        RedLog("Video Duration:%f\n", duration);
-        RedLog("Start Index: %d, End Index: %d\n", startIndex, endIndex);
-        RedLog("Start Time: %f, End Time: %f\n", startTime, endTime);
+        EyerLog("Video Duration:%f\n", duration);
+        EyerLog("Start Index: %d, End Index: %d\n", startIndex, endIndex);
+        EyerLog("Start Time: %f, End Time: %f\n", startTime, endTime);
         return 0;
     }
 
