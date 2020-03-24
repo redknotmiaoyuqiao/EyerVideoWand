@@ -5,6 +5,7 @@
 #include "EyerGLWindow/EyerGLWindow.hpp"
 #include "EyerCore/EyerCore.hpp"
 #include "EyerAV/EyerAV.hpp"
+#include "EyerGLCustomComponent/EyerGLCustomComponent.hpp"
 
 #define EYER_WAND_VERSION "EyerWand 1.0.0"
 

@@ -35,6 +35,7 @@ target_link_libraries (EyerWand EyerGLWindow)
 target_link_libraries (EyerWand EyerYUV)
 target_link_libraries (EyerWand EyerType)
 target_link_libraries (EyerWand EyerGPUDomino)
+target_link_libraries (EyerWand EyerGLCustomComponent)
 
 ADD_DEFINITIONS(-D EYER_DEBUG)
 
