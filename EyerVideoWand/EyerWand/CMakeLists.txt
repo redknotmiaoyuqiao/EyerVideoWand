@@ -27,15 +27,16 @@ add_library(
         EyerTransKey.cpp
         )
 
-target_link_libraries (EyerWand EyerAV)
 target_link_libraries (EyerWand EyerCore)
-target_link_libraries (EyerWand EyerGL)
-target_link_libraries (EyerWand EyerGLAD)
+target_link_libraries (EyerWand EyerAV)
 target_link_libraries (EyerWand EyerGLWindow)
-target_link_libraries (EyerWand EyerYUV)
-target_link_libraries (EyerWand EyerType)
-target_link_libraries (EyerWand EyerGPUDomino)
+target_link_libraries (EyerWand EyerGL)
 target_link_libraries (EyerWand EyerGLCustomComponent)
+target_link_libraries (EyerWand EyerYUV)
+target_link_libraries (EyerWand EyerGPUDomino)
+target_link_libraries (EyerWand EyerGLAD)
+target_link_libraries (EyerWand EyerType)
+target_link_libraries (EyerWand EyerGLShader)
 
 ADD_DEFINITIONS(-D EYER_DEBUG)
 
