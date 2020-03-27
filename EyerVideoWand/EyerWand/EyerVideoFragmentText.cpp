@@ -1,5 +1,11 @@
 #include "EyerWand.hpp"
 
+#ifdef EYER_PLATFORM_WINDOWS
+#include <windows.h>
+#else
+#include <locale.h>
+#endif
+
 namespace Eyer
 {
     EyerVideoFragmentText::EyerVideoFragmentText()
