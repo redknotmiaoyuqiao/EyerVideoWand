@@ -145,9 +145,11 @@ namespace Eyer
                     EyerVideoFragmentText * vft = (EyerVideoFragmentText *)fragmentP;
                     EyerGLTextDraw * textDraw = new EyerGLTextDraw(vft->fontPath);
                     textDraw->SetText(vft->text);
-                    textDraw->SetPos(0.0, 300);
-                    textDraw->SetSize(100);
-                    textDraw->SetColor(1.0, 0.0, 0.0);
+                    textDraw->SetPos(vft->GetPosX(), vft->GetPosY());
+                    textDraw->SetSize(vft->GetSize());
+                    textDraw->SetColor(vft->GetColorR(), vft->GetColorG(), vft->GetColorB());
+
+                    frameDrawList.insertBack(textDraw);
 
                     params->frameBuffer->AddComponent(textDraw);
                 }

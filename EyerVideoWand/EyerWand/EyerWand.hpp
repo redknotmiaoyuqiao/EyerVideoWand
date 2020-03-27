@@ -361,12 +361,32 @@ namespace Eyer {
 
         int SetFontPath(EyerString path);
         int SetText(EyerString text);
+        int SetColor(float r, float g, float b);
+        int SetSize(float size);
+        int SetPos(float x, float y);
+
+        int GetTextWidth();
+
+        float GetColorR();
+        float GetColorG();
+        float GetColorB();
+
+        float GetPosX();
+        float GetPosY();
+
+        float GetSize();
 
         virtual EyerVideoFragmentType GetType() const;
 
     public:
         EyerString fontPath;
         EyerString text;
+        float r = 0.0f;
+        float g = 0.0f;
+        float b = 0.0f;
+        float size = 100.0f;
+        float posX = 0.0f;
+        float posY = 0.0f;
     };
 
 

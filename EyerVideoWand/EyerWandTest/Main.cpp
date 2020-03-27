@@ -126,6 +126,12 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     Eyer::EyerVideoFragmentText videoFragmentText;
     videoFragmentText.SetFontPath("./xiao_xiao_yuan_pin_ying.ttf");
     videoFragmentText.SetText("这里是测试字幕");
+    videoFragmentText.SetSize(100.0f);
+    videoFragmentText.SetColor(1.0, 1.0, 0.0);
+    int width = videoFragmentText.GetTextWidth();
+    EyerLog("Text Width: %d\n", width);
+    videoFragmentText.SetPos(1920 / 2.0 - width / 2.0, 400.0f);
+
 
     layer1.AddVideoFragment(&videoFragment);
     layer1.AddVideoFragment(&videoFragmentText);
