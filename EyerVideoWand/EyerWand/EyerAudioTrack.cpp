@@ -88,7 +88,7 @@ namespace Eyer
 
         for(int i=0;i<activeLayerList.getLength();i++){
             EyerAudioLayer * layer = nullptr;
-            layoutList.find(i, layer);
+            activeLayerList.find(i, layer);
 
             if(layer == nullptr){
                 continue;
