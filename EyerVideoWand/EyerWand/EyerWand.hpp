@@ -288,7 +288,8 @@ namespace Eyer {
     enum EyerVideoFragmentType
     {
         VIDEO_FRAGMENT_VIDEO,
-        VIDEO_FRAGMENT_TEXT
+        VIDEO_FRAGMENT_TEXT,
+        VIDEO_FRAGMENT_FRAME_SEQUENTIAL
     };
 
     class EyerVideoFragment
@@ -389,6 +390,32 @@ namespace Eyer {
         float posY = 0.0f;
     };
 
+
+    class EyerVideoFragmentFrameSequential : public EyerVideoFragment
+    {
+    public:
+        EyerVideoFragmentFrameSequential();
+        ~EyerVideoFragmentFrameSequential();
+
+        EyerVideoFragmentFrameSequential(const EyerVideoFragmentFrameSequential & vft);
+        EyerVideoFragmentFrameSequential & operator = (const EyerVideoFragmentFrameSequential & vft);
+
+        virtual EyerVideoFragmentType GetType() const;
+
+        int GetData(EyerMat4x4 & mvp, EyerGLTexture * targetTexture, double time);
+
+    private:
+        EyerString path;
+        float x = 0.0;
+        float y = 0.0;
+        float z = 0.0;
+
+        float scaleX = 1.0;
+        float scaleY = 1.0;
+        float scaleZ = 1.0;
+
+        float fps = 10;
+    };
 
     class EyerWandBuilder
     {

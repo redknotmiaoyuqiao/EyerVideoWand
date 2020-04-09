@@ -153,6 +153,24 @@ namespace Eyer
 
                     params->frameBuffer->AddComponent(textDraw);
                 }
+                if(fragmentP->GetType() == EyerVideoFragmentType::VIDEO_FRAGMENT_FRAME_SEQUENTIAL){
+                    EyerGLMVPTextureDraw * mvpTextureDraw = new EyerGLMVPTextureDraw();
+
+                    EyerVideoFragmentFrameSequential * fragmentFrameSequential = (EyerVideoFragmentFrameSequential *)fragmentP;
+
+                    EyerMat4x4 panelMvp;
+                    EyerGLTexture targetTexture;
+                    fragmentFrameSequential->GetData(panelMvp, &targetTexture, 1.0);
+
+                    mvpTextureDraw->SetTexture(&targetTexture);
+                    mvpTextureDraw->SetMVP(panelMvp);
+
+                    frameDrawList.insertBack(mvpTextureDraw);
+
+                    params->frameBuffer->AddComponent(mvpTextureDraw);
+                }
+
+
             }
         }
         params->frameBuffer->AddComponent(params->titleTextDraw);

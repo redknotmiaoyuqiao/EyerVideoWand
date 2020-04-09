@@ -2,6 +2,33 @@
 #include <gtest/gtest.h>
 #include <EyerWand/EyerWand.hpp>
 
+TEST(EyerVideoFragment, readpng){
+    int fps = 30;
+
+    Eyer::EyerWandBuilder builder("./struct_builder_vidoe_mp4_png.mp4");
+    builder.SetVideoWH(1920, 1080);
+    builder.SetVideoFPS(fps);
+
+    // 视频
+    Eyer::EyerVideoTrack videoTrack;
+
+    Eyer::EyerVideoLayout layer1;
+    layer1.SetFrame(0, fps * 5);
+
+    Eyer::EyerVideoFragmentVideo videoFragment2;
+    videoFragment2.LoadVideoFile("./1.jpg");
+    videoFragment2.AddScaleKey(0.0, 1920, 1080, 1.0);
+    videoFragment2.AddScaleKey(5.0, 1920, 1080, 1.0);
+
+    layer1.AddVideoFragment(&videoFragment2);
+
+    videoTrack.AddLayout(layer1);
+
+    builder.AddVideoTrack(videoTrack);
+
+    builder.Process();
+}
+
 TEST(EyerWand, Eyer_Decoder_Line){
     /*
     Eyer::EyerVideoDecoderLine decoderLine("./M_1280_720.mp4", 20.0);
@@ -42,7 +69,7 @@ TEST(EyerVideoTrack, EyerWandRes_Base){
     builder.AddVideoTrack(videoTrack);
      */
 }
-
+/*
 TEST(EyerVideoBuild, EyerVideoBuild_Test){
     int fps = 30;
 
@@ -104,22 +131,7 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     videoFragment2.AddScaleKey(0.0, 1920.0 , 1080.0, 0.0);
     videoFragment2.AddScaleKey(5.0, 1920.0, 1080.0, 0.0);
 
-   /* videoFragment2.AddTransKey(4.1, 0.0, 0.0, 0.0);
-    videoFragment2.AddTransKey(4.2, 30.0, 0.0, 0.0);
-    videoFragment2.AddTransKey(4.3, -30.0, 0.0, 0.0);
-    videoFragment2.AddTransKey(4.4, 20.0, 0.0, 0.0);
-    videoFragment2.AddTransKey(4.5, -20.0, 0.0, 0.0);
-    videoFragment2.AddTransKey(4.6, 10.0, 0.0, 0.0);
-    videoFragment2.AddTransKey(4.7, 0.0, 0.0, 0.0);
 
-    videoFragment2.AddTransKey(6.3, 0.0, 0.0, 0.0);
-    videoFragment2.AddTransKey(6.4, -30.0, -30.0, 0.0);
-    videoFragment2.AddTransKey(6.5, 30.0, 30.0, 0.0);
-    videoFragment2.AddTransKey(6.6, -20.0, -20.0, 0.0);
-    videoFragment2.AddTransKey(6.7, 20.0, 20.0, 0.0);
-    videoFragment2.AddTransKey(6.8, 10.0, 10.0, 0.0);
-    videoFragment2.AddTransKey(6.9, 0.0, 0.0, 0.0);
-*/
     videoFragment2.Print();
 
 
@@ -180,10 +192,10 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     // audioFragment.LoadAudioFile("./error_test_video.mp4");
 
     Eyer::EyerAudioFragment audioFragment2;
-    audioFragment2.LoadAudioFile("./M_1280_720.mp4");
+    audioFragment2.LoadAudioFile("./wei.aac");
 
     Eyer::EyerAudioFragment audioFragment3;
-    audioFragment3.LoadAudioFile("./wei.aac");
+    audioFragment3.LoadAudioFile("./M_1280_720.mp4");
 
     // audioLayer.AddAudioFragment(audioFragment);
     audioLayer.AddAudioFragment(audioFragment2);
@@ -196,6 +208,8 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     builder.AddAudioTrack(audioTrack);
     builder.Process();
 }
+
+ */
 
 TEST(EyerBuilder, EyerBuilder){
     /*
