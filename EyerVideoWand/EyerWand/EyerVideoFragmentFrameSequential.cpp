@@ -84,6 +84,10 @@ namespace Eyer {
         ortho.SetOrtho(- w / 2.0, w / 2.0, h / 2.0, - h / 2.0, 0.0f, 1000.0f);
 
         EyerMat4x4 scale;
+        if(scaleX == 0.0 && scaleY == 0.0){
+            scaleX = w;
+            scaleY = h;
+        }
         scale.SetScale(scaleX / 2, scaleY / 2, scaleY / 2);
         EyerMat4x4 trans;
         trans.SetTrans(x, y, z);

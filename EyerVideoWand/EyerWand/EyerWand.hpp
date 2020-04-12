@@ -422,9 +422,9 @@ namespace Eyer {
         float y = 0.0;
         float z = 0.0;
 
-        float scaleX = 1.0;
-        float scaleY = 1.0;
-        float scaleZ = 1.0;
+        float scaleX = 0.0;
+        float scaleY = 0.0;
+        float scaleZ = 0.0;
 
         float fps = 10;
     };
