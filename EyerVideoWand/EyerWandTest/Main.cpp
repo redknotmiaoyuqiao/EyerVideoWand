@@ -6,7 +6,7 @@ TEST(EyerVideoFragment, readpng){
     int fps = 30;
 
     Eyer::EyerWandBuilder builder("./struct_builder_vidoe_mp4_png.mp4");
-    builder.SetVideoWH(1920, 1080);
+    builder.SetVideoWH(1280, 720);
     builder.SetVideoFPS(fps);
 
     // 视频
@@ -17,10 +17,15 @@ TEST(EyerVideoFragment, readpng){
 
     Eyer::EyerVideoFragmentVideo videoFragment2;
     videoFragment2.LoadVideoFile("./1.jpg");
-    videoFragment2.AddScaleKey(0.0, 1920, 1080, 1.0);
-    videoFragment2.AddScaleKey(5.0, 1920, 1080, 1.0);
+    videoFragment2.AddScaleKey(0.0, 1280, 720, 1.0);
+    videoFragment2.AddScaleKey(5.0, 1280, 720, 1.0);
 
+    Eyer::EyerVideoFragmentFrameSequential fragmentFrameSequential;
+    fragmentFrameSequential.SetDirPathModel("./earl", 24, 1);
+    fragmentFrameSequential.SetScale(400.0, 150.0, 0.0);
+    fragmentFrameSequential.SetTrans(0.0, 0.0, 0.0);
     layer1.AddVideoFragment(&videoFragment2);
+    layer1.AddVideoFragment(&fragmentFrameSequential);
 
     videoTrack.AddLayout(layer1);
 
