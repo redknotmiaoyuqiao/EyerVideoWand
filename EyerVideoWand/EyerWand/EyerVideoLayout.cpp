@@ -93,7 +93,6 @@ namespace Eyer
         EyerMat4x4 ortho;
         int w = params->videoW;
         int h = params->videoH;
-        printf("++++++++++++++++++++videoW:%d, videoH:%d\n", w,h);
         ortho.SetOrtho(- w / 2.0, w / 2.0, h / 2.0, - h / 2.0, 0.0f, 1000.0f);
 
         EyerMat4x4 scale;
