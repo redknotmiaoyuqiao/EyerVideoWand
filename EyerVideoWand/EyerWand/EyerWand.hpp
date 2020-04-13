@@ -7,6 +7,9 @@
 #include "EyerAV/EyerAV.hpp"
 #include "EyerGLCustomComponent/EyerGLCustomComponent.hpp"
 
+#include "EyerImg/stb_image.h"
+#define STB_IMAGE_IMPLEMENTATION
+
 #define EYER_WAND_VERSION "EyerWand 1.0.0"
 
 namespace Eyer {
@@ -238,7 +241,7 @@ namespace Eyer {
 
 
         int GetVideoFragmentCount();
-        int GetVideoPanel(EyerVideoPanel * panel, EyerVideoFragment ** fragmentP, int videoFragmentIndex, int layoutFrameIndex, int fps);
+        int GetVideoPanel(EyerVideoPanel * panel, EyerVideoFragment ** fragmentP, int videoFragmentIndex, int layoutFrameIndex, int fps, EyerVideoTrackRenderParams * params);
     private:
         int startFrameIndex = 0;
         int endFrameIndex = 0;
@@ -288,7 +291,8 @@ namespace Eyer {
     enum EyerVideoFragmentType
     {
         VIDEO_FRAGMENT_VIDEO,
-        VIDEO_FRAGMENT_TEXT
+        VIDEO_FRAGMENT_TEXT,
+        VIDEO_FRAGMENT_FRAME_SEQUENTIAL
     };
 
     class EyerVideoFragment
@@ -389,6 +393,41 @@ namespace Eyer {
         float posY = 0.0f;
     };
 
+
+    class EyerVideoFragmentFrameSequential : public EyerVideoFragment
+    {
+    public:
+        EyerVideoFragmentFrameSequential();
+        ~EyerVideoFragmentFrameSequential();
+
+        EyerVideoFragmentFrameSequential(const EyerVideoFragmentFrameSequential & vft);
+        EyerVideoFragmentFrameSequential & operator = (const EyerVideoFragmentFrameSequential & vft);
+
+        virtual EyerVideoFragmentType GetType() const;
+
+        int GetData(EyerMat4x4 & mvp, EyerGLTexture * targetTexture, double time, EyerVideoTrackRenderParams * params);
+
+        int SetDirPathModel(EyerString path, int fileNum, int model);
+
+        int SetScale(float scaleX, float scaleY, float scaleZ);
+
+        int SetTrans(float x, float y, float z);
+
+    private:
+        EyerString path;
+        int fileNum = 0;
+        //model 0动画只显示一次  1动画显示一次，且停留在最后一帧   2动画循环显示
+        int model = 0;
+        float x = 0.0;
+        float y = 0.0;
+        float z = 0.0;
+
+        float scaleX = 0.0;
+        float scaleY = 0.0;
+        float scaleZ = 0.0;
+
+        float fps = 10;
+    };
 
     class EyerWandBuilder
     {

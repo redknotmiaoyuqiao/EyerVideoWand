@@ -112,7 +112,7 @@ namespace Eyer
 #endif
                 EyerVideoPanel * panel = new EyerVideoPanel();
                 EyerVideoFragment * fragmentP = nullptr;
-                int ret = layout->GetVideoPanel(panel, &fragmentP, fragmentIndex, frameIndex - layout->GetStartFrameIndex(), fps);
+                int ret = layout->GetVideoPanel(panel, &fragmentP, fragmentIndex, frameIndex - layout->GetStartFrameIndex(), fps, params);
                 if(ret){
                     continue;
                 }
@@ -153,6 +153,27 @@ namespace Eyer
 
                     params->frameBuffer->AddComponent(textDraw);
                 }
+                if(fragmentP->GetType() == EyerVideoFragmentType::VIDEO_FRAGMENT_FRAME_SEQUENTIAL){
+                    EyerGLMVPTextureDraw * mvpTextureDraw = new EyerGLMVPTextureDraw();
+
+                    EyerVideoFragmentFrameSequential * fragmentFrameSequential = (EyerVideoFragmentFrameSequential *)fragmentP;
+
+                    EyerMat4x4 panelMvp;
+                    // EyerGLTexture targetTexture;
+                    int ret = fragmentFrameSequential->GetData(panelMvp, &panel->targetTexture, (float)frameIndex/(float)fps, params);
+                    if(ret != 0){
+                        break;
+                    }
+
+                    mvpTextureDraw->SetTexture(&panel->targetTexture);
+                    mvpTextureDraw->SetMVP(panelMvp);
+
+                    frameDrawList.insertBack(mvpTextureDraw);
+
+                    params->frameBuffer->AddComponent(mvpTextureDraw);
+                }
+
+
             }
         }
         params->frameBuffer->AddComponent(params->titleTextDraw);

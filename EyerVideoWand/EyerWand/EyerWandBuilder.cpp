@@ -110,9 +110,11 @@ namespace Eyer
         EyerGLTexture canvasRenderTarget;
         Eyer::EyerGLFrameBuffer frameBuffer(width, height, &canvasRenderTarget);
 
-        Eyer::EyerGLTextDraw textDraw("./wenquanyi_dengkuan.ttf");
+        Eyer::EyerGLTextDraw textDraw("./xiao_xiao_yuan_pin_ying.ttf");
         textDraw.SetText("Redknot Miaomiao ABC GL gg");
         textDraw.SetColor(0.0, 1.0, 0.0);
+        textDraw.SetSize(50);
+        textDraw.SetPos(0, 0 + 50);
 
         textDraw.SetSize(height / 5.0);
     
@@ -154,14 +156,16 @@ namespace Eyer
 
 
             int msec = (int)(frameIndex * 1.0 / encoder->GetFPS() * 1000);
-            textDraw.SetText(Eyer::EyerString::Number(msec / 1000 / 60 / 60, "%02d") + ":" +
+
+           /* textDraw.SetText(Eyer::EyerString("Eyer Wand 基情支持") + Eyer::EyerString::Number(msec / 1000 / 60 / 60, "%02d") + ":" +
                                   Eyer::EyerString::Number(msec / 1000 / 60 % 60, "%02d") + ":" +
                                   Eyer::EyerString::Number(msec / 1000 % 60, "%02d") + ":" +
-                                  Eyer::EyerString::Number(msec % 1000, "%03d"));
-
-            
-            
+                                  Eyer::EyerString::Number(msec % 1000, "%03d"));*/
+            textDraw.SetText("");
+            textDraw.SetPos(0, 0 + 50);
+            textDraw.SetColor(1.0, 0.0, 0.0);
             textDraw.Viewport(width, height);
+
 
             EyerVideoTrackRenderParams params;
             params.videoW = width;

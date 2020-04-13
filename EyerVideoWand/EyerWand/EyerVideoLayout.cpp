@@ -78,7 +78,7 @@ namespace Eyer
         return videoFragmentList.getLength();
     }
 
-    int EyerVideoLayout::GetVideoPanel(EyerVideoPanel * panel, EyerVideoFragment ** fragmentP,int videoFragmentIndex, int layoutFrameIndex, int fps)
+    int EyerVideoLayout::GetVideoPanel(EyerVideoPanel * panel, EyerVideoFragment ** fragmentP,int videoFragmentIndex, int layoutFrameIndex, int fps, EyerVideoTrackRenderParams * params)
     {
         EyerVideoFragment * fragment = nullptr;
         videoFragmentList.find(videoFragmentIndex, fragment);
@@ -91,8 +91,8 @@ namespace Eyer
 
 
         EyerMat4x4 ortho;
-        int w = 1920;
-        int h = 1080;
+        int w = params->videoW;
+        int h = params->videoH;
         ortho.SetOrtho(- w / 2.0, w / 2.0, h / 2.0, - h / 2.0, 0.0f, 1000.0f);
 
         EyerMat4x4 scale;

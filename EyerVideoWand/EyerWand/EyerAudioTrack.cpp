@@ -88,7 +88,7 @@ namespace Eyer
 
         for(int i=0;i<activeLayerList.getLength();i++){
             EyerAudioLayer * layer = nullptr;
-            layoutList.find(i, layer);
+            activeLayerList.find(i, layer);
 
             if(layer == nullptr){
                 continue;
@@ -96,7 +96,7 @@ namespace Eyer
 
             EyerAVFrame * oFrame = new EyerAVFrame();
             oFrame->InitAACFrame(6);
-            layer->RenderLayerFrame(ts, *oFrame);
+            layer->RenderLayerFrame(ts - layer->GetStartTime(), *oFrame);
             tempFrameManager.insertBack(oFrame);
 
 

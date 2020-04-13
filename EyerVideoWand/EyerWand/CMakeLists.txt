@@ -25,7 +25,7 @@ add_library(
         EyerVideoFragmentVideo.cpp
         EyerVideoFragment.cpp
         EyerTransKey.cpp
-        )
+        EyerVideoFragmentFrameSequential.cpp)
 
 target_link_libraries (EyerWand EyerCore)
 target_link_libraries (EyerWand EyerAV)
@@ -37,6 +37,7 @@ target_link_libraries (EyerWand EyerGPUDomino)
 target_link_libraries (EyerWand EyerGLAD)
 target_link_libraries (EyerWand EyerType)
 target_link_libraries (EyerWand EyerGLShader)
+target_link_libraries (EyerWand EyerImg)
 
 ADD_DEFINITIONS(-D EYER_DEBUG)
 
