@@ -74,13 +74,9 @@ TEST(EyerVideoTrack, EyerWandRes_Base){
     builder.AddVideoTrack(videoTrack);
      */
 }
-<<<<<<< HEAD
 
 /*
 
-=======
-/*
->>>>>>> 5743d36c7ae078fa7cad7bef7f31044a040a9cbd
 TEST(EyerVideoBuild, EyerVideoBuild_Test){
     int fps = 30;
 
@@ -142,7 +138,6 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     videoFragment2.AddScaleKey(0.0, 1920.0 , 1080.0, 0.0);
     videoFragment2.AddScaleKey(5.0, 1920.0, 1080.0, 0.0);
 
-<<<<<<< HEAD
     videoFragment2.AddTransKey(4.1, 0.0, 0.0, 0.0);
     videoFragment2.AddTransKey(4.2, 30.0, 0.0, 0.0);
     videoFragment2.AddTransKey(4.3, -30.0, 0.0, 0.0);
@@ -158,8 +153,6 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     videoFragment2.AddTransKey(6.7, 20.0, 20.0, 0.0);
     videoFragment2.AddTransKey(6.8, 10.0, 10.0, 0.0);
     videoFragment2.AddTransKey(6.9, 0.0, 0.0, 0.0);
-=======
->>>>>>> 5743d36c7ae078fa7cad7bef7f31044a040a9cbd
 
     videoFragment2.Print();
 
