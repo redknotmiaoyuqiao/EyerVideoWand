@@ -110,13 +110,21 @@ namespace Eyer
         EyerGLTexture canvasRenderTarget;
         Eyer::EyerGLFrameBuffer frameBuffer(width, height, &canvasRenderTarget);
 
-        /*Eyer::EyerGLTextDraw textDraw("./xiao_xiao_yuan_pin_ying.ttf");
+        Eyer::EyerGLTextDraw textDraw("./wenquanyi_dengkuan.ttf");
         textDraw.SetText("Redknot Miaomiao ABC GL gg");
         textDraw.SetColor(0.0, 1.0, 0.0);
-        textDraw.SetSize(50);
-        textDraw.SetPos(0, 0 + 50);*/
 
-        //frameBuffer.AddComponent(&textDraw);
+        textDraw.SetSize(height / 5.0);
+    
+        textDraw.SetColor(1.0, 1.0, 1.0);
+
+        textDraw.SetText("00:00:00:000");
+        int textWidth = textDraw.GetTextWidth();
+        textDraw.SetPos(width / 2.0 - textWidth / 2.0, height / 2.0);
+        // textDraw.SetPos(width / 4.0, height / 2.0);
+
+
+        frameBuffer.AddComponent(&textDraw);
 
 
 
@@ -129,6 +137,9 @@ namespace Eyer
         outFrameBuffer.AddComponent(&canvasDraw);
 
         for(int frameIndex = 0; frameIndex < frameCount; frameIndex++){
+            printf("Now Frame Id: %d / %d\n", frameIndex, frameCount);
+
+
             windows.Clear();
 
             textProgressDraw.SetColor(1.0, 1.0, 1.0);
@@ -143,21 +154,20 @@ namespace Eyer
 
 
             int msec = (int)(frameIndex * 1.0 / encoder->GetFPS() * 1000);
-            /*
-            textDraw.SetText(Eyer::EyerString("Eyer Wand 基情支持") + Eyer::EyerString::Number(msec / 1000 / 60 / 60, "%02d") + ":" +
+            textDraw.SetText(Eyer::EyerString::Number(msec / 1000 / 60 / 60, "%02d") + ":" +
                                   Eyer::EyerString::Number(msec / 1000 / 60 % 60, "%02d") + ":" +
                                   Eyer::EyerString::Number(msec / 1000 % 60, "%02d") + ":" +
                                   Eyer::EyerString::Number(msec % 1000, "%03d"));
-            textDraw.SetPos(0, 0 + 50);
-            textDraw.SetColor(1.0, 0.0, 0.0);
+
+            
+            
             textDraw.Viewport(width, height);
-             */
 
             EyerVideoTrackRenderParams params;
             params.videoW = width;
             params.videoH = height;
             params.frameBuffer = &frameBuffer;
-            //params.titleTextDraw = &textDraw;
+            params.titleTextDraw = &textDraw;
 
             videoTrack.RenderFrame(frameIndex, &params, videoFps);
 
