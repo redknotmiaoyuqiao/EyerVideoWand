@@ -115,6 +115,7 @@ namespace Eyer
                 return -1;
             }
 
+            // printf("==============================\n");
             // avFrame.GetInfo();
 
             int width = avFrame.GetWidth();
@@ -135,6 +136,14 @@ namespace Eyer
             EyerGLTexture * u = new EyerGLTexture();
             EyerGLTexture * v = new EyerGLTexture();
 
+            EyerGLYUV2TextureComponentColorRange colorRange = EyerGLYUV2TextureComponentColorRange::COLOR_RANGE_FULL;
+            if(avFrame.GetPixFormat() == EyerAVPixelFormat::Eyer_AV_PIX_FMT_YUV420P || avFrame.GetPixFormat() == EyerAVPixelFormat::Eyer_AV_PIX_FMT_YUV444P){
+                colorRange = EyerGLYUV2TextureComponentColorRange::COLOR_RANGE_FULL;
+            }
+            else{
+                colorRange = EyerGLYUV2TextureComponentColorRange::COLOR_RANGE_JPEG;
+            }
+
             if(avFrame.GetPixFormat() == EyerAVPixelFormat::Eyer_AV_PIX_FMT_YUV420P || avFrame.GetPixFormat() == EyerAVPixelFormat::Eyer_AV_PIX_FMT_YUVJ420P){
                 yData = (unsigned char *)malloc(width * height);
                 avFrame.GetYData(yData);
@@ -147,6 +156,7 @@ namespace Eyer
                 u->SetDataRedChannel(uData, width / 2, height / 2);
                 v->SetDataRedChannel(vData, width / 2, height / 2);
 
+                yuv2texture->SetColoRange(colorRange);
                 yuv2texture->SetYTexture(y);
                 yuv2texture->SetUTexture(u);
                 yuv2texture->SetVTexture(v);
@@ -164,6 +174,7 @@ namespace Eyer
                 u->SetDataRedChannel(uData, width, height);
                 v->SetDataRedChannel(vData, width, height);
 
+                yuv2texture->SetColoRange(colorRange);
                 yuv2texture->SetYTexture(y);
                 yuv2texture->SetUTexture(u);
                 yuv2texture->SetVTexture(v);
@@ -201,7 +212,7 @@ namespace Eyer
 
             Eyer::EyerGominoPip pip;
             pip << &cp0;
-            pip << &zb0;
+            // pip << &zb0;
 
             pip.Go(&yuv2rgbTexture, &panel->targetTexture, width, height);
 

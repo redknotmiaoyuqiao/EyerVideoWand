@@ -2,7 +2,57 @@
 #include <gtest/gtest.h>
 #include <EyerWand/EyerWand.hpp>
 
+TEST(EyerVideoFragment, whiteBG){
+    int fps = 30;
+
+    Eyer::EyerWandBuilder builder("./struct_builder_vidoe_mp4_png.mp4");
+    builder.SetVideoWH(1280, 720);
+    builder.SetVideoFPS(fps);
+
+    // 视频
+    Eyer::EyerVideoTrack videoTrack;
+
+    Eyer::EyerVideoLayout layer1;
+    layer1.SetFrame(0, fps * 15);
+
+    Eyer::EyerVideoFragmentVideo videoFragment2;
+    videoFragment2.LoadVideoFile("./white.jpeg");
+    videoFragment2.AddScaleKey(0.0, 1280, 720, 1.0);
+    videoFragment2.AddScaleKey(5.0, 1280, 720, 1.0);
+
+    Eyer::EyerVideoFragmentVideo videoFragment4;
+    videoFragment4.LoadVideoFile("./eggCooker.jpg");
+    videoFragment4.AddScaleKey(0.0, 100, 100, 1.0);
+    videoFragment4.AddScaleKey(5.0, 100, 100, 1.0);
+    videoFragment4.AddTransKey(0.0, -400, 0,0);
+    videoFragment4.AddTransKey(5.0, -400, 0,0);
+
+    Eyer::EyerVideoFragmentVideo videoFragment3;
+    videoFragment3.LoadVideoFile("./qipao.mp4");
+    videoFragment3.AddScaleKey(0.0, 400, 400, 1.0);
+    videoFragment3.AddScaleKey(5.0, 400, 400, 1.0);
+
+    Eyer::EyerVideoFragmentVideo videoFragment5;
+    videoFragment5.LoadVideoFile("./start.mp4");
+    videoFragment5.AddScaleKey(0.0, 500, 500, 1.0);
+    videoFragment5.AddScaleKey(5.0, 500, 500, 1.0);
+    videoFragment5.AddTransKey(0.0, 500, 0,0);
+    videoFragment5.AddTransKey(5.0, 500, 0,0);
+
+    layer1.AddVideoFragment(&videoFragment2);
+    layer1.AddVideoFragment(&videoFragment3);
+    layer1.AddVideoFragment(&videoFragment4);
+    layer1.AddVideoFragment(&videoFragment5);
+
+    videoTrack.AddLayout(layer1);
+
+    builder.AddVideoTrack(videoTrack);
+
+    builder.Process();
+}
+
 TEST(EyerVideoFragment, readpng){
+    /*
     int fps = 30;
 
     Eyer::EyerWandBuilder builder("./struct_builder_vidoe_mp4_png.mp4");
@@ -32,6 +82,7 @@ TEST(EyerVideoFragment, readpng){
     builder.AddVideoTrack(videoTrack);
 
     builder.Process();
+     */
 }
 
 TEST(EyerWand, Eyer_Decoder_Line){
