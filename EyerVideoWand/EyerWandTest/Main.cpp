@@ -125,7 +125,9 @@ TEST(EyerVideoTrack, EyerWandRes_Base){
     builder.AddVideoTrack(videoTrack);
      */
 }
+
 /*
+
 TEST(EyerVideoBuild, EyerVideoBuild_Test){
     int fps = 30;
 
@@ -187,6 +189,21 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     videoFragment2.AddScaleKey(0.0, 1920.0 , 1080.0, 0.0);
     videoFragment2.AddScaleKey(5.0, 1920.0, 1080.0, 0.0);
 
+    videoFragment2.AddTransKey(4.1, 0.0, 0.0, 0.0);
+    videoFragment2.AddTransKey(4.2, 30.0, 0.0, 0.0);
+    videoFragment2.AddTransKey(4.3, -30.0, 0.0, 0.0);
+    videoFragment2.AddTransKey(4.4, 20.0, 0.0, 0.0);
+    videoFragment2.AddTransKey(4.5, -20.0, 0.0, 0.0);
+    videoFragment2.AddTransKey(4.6, 10.0, 0.0, 0.0);
+    videoFragment2.AddTransKey(4.7, 0.0, 0.0, 0.0);
+
+    videoFragment2.AddTransKey(6.3, 0.0, 0.0, 0.0);
+    videoFragment2.AddTransKey(6.4, -30.0, -30.0, 0.0);
+    videoFragment2.AddTransKey(6.5, 30.0, 30.0, 0.0);
+    videoFragment2.AddTransKey(6.6, -20.0, -20.0, 0.0);
+    videoFragment2.AddTransKey(6.7, 20.0, 20.0, 0.0);
+    videoFragment2.AddTransKey(6.8, 10.0, 10.0, 0.0);
+    videoFragment2.AddTransKey(6.9, 0.0, 0.0, 0.0);
 
     videoFragment2.Print();
 
@@ -265,7 +282,32 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     builder.Process();
 }
 
- */
+*/
+
+
+TEST(EyerVideoBuild, EyerVideoBuild_Test){
+    int fps = 60;
+
+    Eyer::EyerWandBuilder builder("./time_clock_1h_1920x1080_60fps.mp4");
+    builder.SetVideoWH(1920, 1080);
+    builder.SetVideoFPS(fps);
+
+    // 视频
+    Eyer::EyerVideoTrack videoTrack;
+
+    Eyer::EyerVideoLayout layer1;
+    // layer1.SetFrame(0, fps * 60 * 60 * 4);
+    layer1.SetFrame(0, fps * 60 * 60);
+
+    videoTrack.AddLayer(layer1);
+    
+    // 音频
+    Eyer::EyerAudioTrack audioTrack;
+
+    builder.AddVideoTrack(videoTrack);
+    builder.AddAudioTrack(audioTrack);
+    builder.Process();
+}
 
 TEST(EyerBuilder, EyerBuilder){
     /*

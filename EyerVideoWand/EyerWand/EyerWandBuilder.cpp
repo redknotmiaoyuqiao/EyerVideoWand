@@ -116,7 +116,17 @@ namespace Eyer
         textDraw.SetSize(50);
         textDraw.SetPos(0, 0 + 50);
 
-        //frameBuffer.AddComponent(&textDraw);
+        textDraw.SetSize(height / 5.0);
+    
+        textDraw.SetColor(1.0, 1.0, 1.0);
+
+        textDraw.SetText("00:00:00:000");
+        int textWidth = textDraw.GetTextWidth();
+        textDraw.SetPos(width / 2.0 - textWidth / 2.0, height / 2.0);
+        // textDraw.SetPos(width / 4.0, height / 2.0);
+
+
+        frameBuffer.AddComponent(&textDraw);
 
 
 
@@ -129,6 +139,9 @@ namespace Eyer
         outFrameBuffer.AddComponent(&canvasDraw);
 
         for(int frameIndex = 0; frameIndex < frameCount; frameIndex++){
+            printf("Now Frame Id: %d / %d\n", frameIndex, frameCount);
+
+
             windows.Clear();
 
             textProgressDraw.SetColor(1.0, 1.0, 1.0);
