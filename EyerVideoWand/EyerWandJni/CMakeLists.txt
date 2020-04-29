@@ -5,7 +5,11 @@ add_library(
     EyerWandJni
     SHARED
     EyerWandJniVersion.cpp
+    EyerWandJniCrop.cpp
 )
+
+target_link_libraries (EyerWandJni EyerCore)
+target_link_libraries (EyerWandJni EyerCrop)
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
     MESSAGE(STATUS "current platform: Linux ")

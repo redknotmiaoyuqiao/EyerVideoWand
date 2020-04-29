@@ -9,11 +9,51 @@ extern "C" {
 #endif
 /*
  * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
- * Method:    getVersion
+ * Method:    get_version
  * Signature: ()Ljava/lang/String;
  */
-JNIEXPORT jstring JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_getVersion
+JNIEXPORT jstring JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_get_1version
   (JNIEnv *, jclass);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    crop_init
+ * Signature: (IIII)J
+ */
+JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_crop_1init
+  (JNIEnv *, jclass, jint, jint, jint, jint);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    crop_uninit
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_crop_1uninit
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    crop_get_crop_width
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_crop_1get_1crop_1width
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    crop_get_crop_height
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_crop_1get_1crop_1height
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    crop_crop
+ * Signature: (JI)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_crop_1crop
+  (JNIEnv *, jclass, jlong, jint);
 
 #ifdef __cplusplus
 }
