@@ -6,10 +6,23 @@ add_library(
     SHARED
     EyerWandJniVersion.cpp
     EyerWandJniCrop.cpp
+    EyerWandJniOGL.cpp
 )
 
-target_link_libraries (EyerWandJni EyerCore)
+target_link_libraries (EyerWandJni EyerThread)
+target_link_libraries (EyerWandJni EyerGLContext)
 target_link_libraries (EyerWandJni EyerCrop)
+target_link_libraries (EyerWandJni EyerGLCustomComponent)
+target_link_libraries (EyerWandJni EyerGL)
+target_link_libraries (EyerWandJni EyerCore)
+target_link_libraries (EyerWandJni EyerGLShader)
+
+target_link_libraries (EyerWandJni android)
+target_link_libraries (EyerWandJni OpenSLES)
+target_link_libraries (EyerWandJni GLESv3)
+target_link_libraries (EyerWandJni EGL)
+target_link_libraries (EyerWandJni log)
+target_link_libraries (EyerWandJni jnigraphics)
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
     MESSAGE(STATUS "current platform: Linux ")

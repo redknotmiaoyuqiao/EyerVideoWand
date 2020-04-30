@@ -55,6 +55,30 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_crop
 JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_crop_1crop
   (JNIEnv *, jclass, jlong, jint);
 
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    ogl_create_thread
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_ogl_1create_1thread
+(JNIEnv * env, jclass, jobject surface);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    ogl_stop_thread
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_ogl_1stop_1thread
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    ogl_set_wh
+ * Signature: (II)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_ogl_1set_1wh
+  (JNIEnv *, jclass, jlong, jint, jint);
+
 #ifdef __cplusplus
 }
 #endif
