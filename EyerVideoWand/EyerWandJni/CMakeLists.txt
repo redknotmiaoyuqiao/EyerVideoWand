@@ -7,14 +7,19 @@ add_library(
     EyerWandJniVersion.cpp
     EyerWandJniCrop.cpp
     EyerWandJniOGL.cpp
+    EyerWandJniRenderTask.cpp
 )
 
 target_link_libraries (EyerWandJni EyerThread)
 target_link_libraries (EyerWandJni EyerGLContext)
 target_link_libraries (EyerWandJni EyerCrop)
+target_link_libraries (EyerWandJni EyerGLShader)
+target_link_libraries (EyerWandJni EyerGLRenderTask)
 target_link_libraries (EyerWandJni EyerGLCustomComponent)
+target_link_libraries (EyerWandJni EyerCore)
 target_link_libraries (EyerWandJni EyerGL)
 target_link_libraries (EyerWandJni EyerCore)
+target_link_libraries (EyerWandJni EyerGLCustomComponent)
 target_link_libraries (EyerWandJni EyerGLShader)
 
 target_link_libraries (EyerWandJni android)

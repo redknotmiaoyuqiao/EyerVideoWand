@@ -74,10 +74,42 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_ogl_
 /*
  * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
  * Method:    ogl_set_wh
- * Signature: (II)I
+ * Signature: (JII)I
  */
 JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_ogl_1set_1wh
   (JNIEnv *, jclass, jlong, jint, jint);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    ogl_add_task_to_render_queue
+ * Signature: (JJ)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_ogl_1add_1task_1to_1render_1queue
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    ogl_add_task_to_destory_queue
+ * Signature: (JJ)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_ogl_1add_1task_1to_1destory_1queue
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    render_task_init
+ * Signature: (Ljava/lang/String;)J
+ */
+JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_render_1task_1init
+  (JNIEnv *, jclass, jstring);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    render_task_uninit
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_render_1task_1uninit
+  (JNIEnv *, jclass, jlong);
 
 #ifdef __cplusplus
 }
