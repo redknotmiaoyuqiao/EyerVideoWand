@@ -49,6 +49,7 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Android")
     MESSAGE(STATUS "current platform: Android")
 
+    ADD_DEFINITIONS(-D EYER_PLATFORM_ANDROID)
     ADD_SUBDIRECTORY(EyerWandJni)
 
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
@@ -56,6 +57,7 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     set(CMAKE_EXE_LINKER_FLAGS
         "-framework AudioToolbox -framework CoreGraphics -framework CoreMedia -framework Cocoa -framework VideoToolbox -framework AVFoundation -framework Security -framework CoreFoundation -framework CoreVideo -framework OpenGL -framework AppKit -framework CoreImage -framework VideoDecodeAcceleration"
     )
+    
     ADD_SUBDIRECTORY(EyerWand)
     ADD_SUBDIRECTORY(EyerWandTest)
     ADD_SUBDIRECTORY(EyerWandTest_C)

@@ -61,7 +61,7 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_crop
  * Signature: ()J
  */
 JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_ogl_1create_1thread
-(JNIEnv * env, jclass, jobject surface);
+  (JNIEnv * env, jclass, jobject surface);
 
 /*
  * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
@@ -109,6 +109,46 @@ JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_ren
  * Signature: (J)I
  */
 JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_render_1task_1uninit
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    avreader_init
+ * Signature: (Ljava/lang/String;)J
+ */
+JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_avreader_1init
+  (JNIEnv *, jclass, jstring);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    avreader_uninit
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_avreader_1uninit
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    avreader_open
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_avreader_1open
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    avreader_close
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_avreader_1close
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    avreader_print_info
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_avreader_1print_1info
   (JNIEnv *, jclass, jlong);
 
 #ifdef __cplusplus

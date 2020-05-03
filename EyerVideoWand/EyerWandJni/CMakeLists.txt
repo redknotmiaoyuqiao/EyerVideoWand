@@ -8,6 +8,7 @@ add_library(
     EyerWandJniCrop.cpp
     EyerWandJniOGL.cpp
     EyerWandJniRenderTask.cpp
+    EyerWandJniAvReader.cpp
 )
 
 target_link_libraries (EyerWandJni EyerThread)
@@ -21,7 +22,17 @@ target_link_libraries (EyerWandJni EyerGL)
 target_link_libraries (EyerWandJni EyerCore)
 target_link_libraries (EyerWandJni EyerGLCustomComponent)
 target_link_libraries (EyerWandJni EyerGLShader)
+target_link_libraries (EyerWandJni EyerAV)
 
+target_link_libraries (EyerWandJni avformat)
+target_link_libraries (EyerWandJni avcodec)
+target_link_libraries (EyerWandJni avutil)
+target_link_libraries (EyerWandJni avfilter)
+target_link_libraries (EyerWandJni swresample)
+target_link_libraries (EyerWandJni swscale)
+target_link_libraries (EyerWandJni x264)
+
+target_link_libraries (EyerWandJni z)
 target_link_libraries (EyerWandJni android)
 target_link_libraries (EyerWandJni OpenSLES)
 target_link_libraries (EyerWandJni GLESv3)
