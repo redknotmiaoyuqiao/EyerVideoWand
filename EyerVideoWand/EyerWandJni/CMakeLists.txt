@@ -9,6 +9,7 @@ add_library(
     EyerWandJniOGL.cpp
     EyerWandJniRenderTask.cpp
     EyerWandJniAvReader.cpp
+    EyerWandJniContext.cpp
 )
 
 target_link_libraries (EyerWandJni EyerThread)
@@ -23,6 +24,8 @@ target_link_libraries (EyerWandJni EyerCore)
 target_link_libraries (EyerWandJni EyerGLCustomComponent)
 target_link_libraries (EyerWandJni EyerGLShader)
 target_link_libraries (EyerWandJni EyerAV)
+
+target_link_libraries (EyerWandJni EyerWand)
 
 target_link_libraries (EyerWandJni avformat)
 target_link_libraries (EyerWandJni avcodec)

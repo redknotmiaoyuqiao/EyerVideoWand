@@ -1,7 +1,11 @@
 include_directories (../)
 include_directories (./)
 
-add_library(
+
+
+IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
+    MESSAGE(STATUS "current platform: Linux ")
+    add_library(
         EyerWand
         SHARED
 
@@ -25,24 +29,103 @@ add_library(
         EyerVideoFragmentVideo.cpp
         EyerVideoFragment.cpp
         EyerTransKey.cpp
-        EyerVideoFragmentFrameSequential.cpp)
+        EyerVideoFragmentFrameSequential.cpp
+        
+        EyerWandContext.cpp
+        )
+ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
+    MESSAGE(STATUS "current platform: Windows")
+    add_library(
+        EyerWand
+        SHARED
 
-target_link_libraries (EyerWand EyerCore)
-target_link_libraries (EyerWand EyerAV)
-target_link_libraries (EyerWand EyerGLWindow)
-target_link_libraries (EyerWand EyerGL)
-target_link_libraries (EyerWand EyerGLCustomComponent)
-target_link_libraries (EyerWand EyerYUV)
-target_link_libraries (EyerWand EyerGPUDomino)
-target_link_libraries (EyerWand EyerGLAD)
-target_link_libraries (EyerWand EyerType)
-target_link_libraries (EyerWand EyerGLShader)
-target_link_libraries (EyerWand EyerImg)
+        EyerWand.cpp
+        EyerWandResource.cpp
+        EyerWandVideoResource.cpp
+        EyerWandAudioResource.cpp
+        EyerWandBuilder.cpp
+        EyerVideoTrack.cpp
+        EyerVideoLayout.cpp
+
+        EyerVideoPanel.cpp
+        InterfaceC.cpp
+        InterfaceCSharp.cpp
+        EyerVideoDecoderLine.cpp
+        EyerAudioTrack.cpp
+        EyerAudioLayer.cpp
+        EyerAudioFragment.cpp
+        EyerWandDebug.cpp
+        EyerVideoFragmentText.cpp
+        EyerVideoFragmentVideo.cpp
+        EyerVideoFragment.cpp
+        EyerTransKey.cpp
+        EyerVideoFragmentFrameSequential.cpp
+        
+        EyerWandContext.cpp
+        )
+ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Android")
+    MESSAGE(STATUS "current platform: Android")
+    add_library(
+        EyerWand
+        # SHARED
+
+        EyerWandContext.cpp
+        )
+ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
+    MESSAGE(STATUS "current platform: Darwin")
+    add_library(
+        EyerWand
+        SHARED
+
+        EyerWand.cpp
+        EyerWandResource.cpp
+        EyerWandVideoResource.cpp
+        EyerWandAudioResource.cpp
+        EyerWandBuilder.cpp
+        EyerVideoTrack.cpp
+        EyerVideoLayout.cpp
+
+        EyerVideoPanel.cpp
+        InterfaceC.cpp
+        InterfaceCSharp.cpp
+        EyerVideoDecoderLine.cpp
+        EyerAudioTrack.cpp
+        EyerAudioLayer.cpp
+        EyerAudioFragment.cpp
+        EyerWandDebug.cpp
+        EyerVideoFragmentText.cpp
+        EyerVideoFragmentVideo.cpp
+        EyerVideoFragment.cpp
+        EyerTransKey.cpp
+        EyerVideoFragmentFrameSequential.cpp
+        
+        EyerWandContext.cpp
+        )
+ELSE ()
+    MESSAGE(STATUS "other platform: ${CMAKE_SYSTEM_NAME}")
+ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
+
+
+
+
+
 
 ADD_DEFINITIONS(-D EYER_DEBUG)
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
     MESSAGE(STATUS "current platform: Linux ")
+
+    target_link_libraries (EyerWand EyerCore)
+    target_link_libraries (EyerWand EyerAV)
+    target_link_libraries (EyerWand EyerGLWindow)
+    target_link_libraries (EyerWand EyerGL)
+    target_link_libraries (EyerWand EyerGLCustomComponent)
+    target_link_libraries (EyerWand EyerYUV)
+    target_link_libraries (EyerWand EyerGPUDomino)
+    target_link_libraries (EyerWand EyerGLAD)
+    target_link_libraries (EyerWand EyerType)
+    target_link_libraries (EyerWand EyerGLShader)
+    target_link_libraries (EyerWand EyerImg)
 
     target_link_libraries (EyerWand avformat)
     target_link_libraries (EyerWand avdevice)
@@ -70,6 +153,18 @@ IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
     MESSAGE(STATUS "current platform: Windows")
 
+    target_link_libraries (EyerWand EyerCore)
+    target_link_libraries (EyerWand EyerAV)
+    target_link_libraries (EyerWand EyerGLWindow)
+    target_link_libraries (EyerWand EyerGL)
+    target_link_libraries (EyerWand EyerGLCustomComponent)
+    target_link_libraries (EyerWand EyerYUV)
+    target_link_libraries (EyerWand EyerGPUDomino)
+    target_link_libraries (EyerWand EyerGLAD)
+    target_link_libraries (EyerWand EyerType)
+    target_link_libraries (EyerWand EyerGLShader)
+    target_link_libraries (EyerWand EyerImg)
+
     target_link_libraries (EyerWand avformat)
     target_link_libraries (EyerWand avdevice)
     target_link_libraries (EyerWand avcodec)
@@ -90,6 +185,18 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Android")
     MESSAGE(STATUS "current platform: Android")
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     MESSAGE(STATUS "current platform: Darwin")
+
+    target_link_libraries (EyerWand EyerCore)
+    target_link_libraries (EyerWand EyerAV)
+    target_link_libraries (EyerWand EyerGLWindow)
+    target_link_libraries (EyerWand EyerGL)
+    target_link_libraries (EyerWand EyerGLCustomComponent)
+    target_link_libraries (EyerWand EyerYUV)
+    target_link_libraries (EyerWand EyerGPUDomino)
+    target_link_libraries (EyerWand EyerGLAD)
+    target_link_libraries (EyerWand EyerType)
+    target_link_libraries (EyerWand EyerGLShader)
+    target_link_libraries (EyerWand EyerImg)
 
     target_link_libraries (EyerWand avformat)
     target_link_libraries (EyerWand avdevice)
