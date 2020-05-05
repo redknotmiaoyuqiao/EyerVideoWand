@@ -12,36 +12,25 @@ add_library(
     EyerWandJniContext.cpp
 )
 
-target_link_libraries (EyerWandJni EyerThread)
-target_link_libraries (EyerWandJni EyerGLContext)
-target_link_libraries (EyerWandJni EyerCrop)
-target_link_libraries (EyerWandJni EyerGLShader)
-target_link_libraries (EyerWandJni EyerGLRenderTask)
-target_link_libraries (EyerWandJni EyerGLCustomComponent)
-target_link_libraries (EyerWandJni EyerCore)
-target_link_libraries (EyerWandJni EyerGL)
-target_link_libraries (EyerWandJni EyerCore)
-target_link_libraries (EyerWandJni EyerGLCustomComponent)
-target_link_libraries (EyerWandJni EyerGLShader)
-target_link_libraries (EyerWandJni EyerAV)
+target_link_libraries (EyerWandJni
+    Eyer
 
-target_link_libraries (EyerWandJni EyerWand)
+    avformat
+    avcodec
+    avutil
+    avfilter
+    swresample
+    swscale
+    x264
 
-target_link_libraries (EyerWandJni avformat)
-target_link_libraries (EyerWandJni avcodec)
-target_link_libraries (EyerWandJni avutil)
-target_link_libraries (EyerWandJni avfilter)
-target_link_libraries (EyerWandJni swresample)
-target_link_libraries (EyerWandJni swscale)
-target_link_libraries (EyerWandJni x264)
-
-target_link_libraries (EyerWandJni z)
-target_link_libraries (EyerWandJni android)
-target_link_libraries (EyerWandJni OpenSLES)
-target_link_libraries (EyerWandJni GLESv3)
-target_link_libraries (EyerWandJni EGL)
-target_link_libraries (EyerWandJni log)
-target_link_libraries (EyerWandJni jnigraphics)
+    log
+    z
+    android
+    OpenSLES
+    GLESv3
+    EGL
+    jnigraphics
+)
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
     MESSAGE(STATUS "current platform: Linux ")

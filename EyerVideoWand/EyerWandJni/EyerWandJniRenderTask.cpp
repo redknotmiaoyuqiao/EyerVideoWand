@@ -2,6 +2,7 @@
 
 #include "EyerCrop/EyerCrop.hpp"
 #include "EyerGLContext/EyerGLContext.hpp"
+#include "EyerWand/EyerWandContext.hpp"
 #include "EyerGLRenderTask/EyerGLRenderTask.hpp"
 
 JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_render_1task_1init

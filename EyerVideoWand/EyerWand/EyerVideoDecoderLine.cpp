@@ -104,9 +104,9 @@ namespace Eyer
 
         double t = frame.GetPTS() * 1.0 * streamTimebase.num / streamTimebase.den;
 
-        // EyerLog("Target TS: %f, Frame TS: %f, D: %f\n", ts, t, t - ts);
+        EyerLog("Target TS: %f, Frame TS: %f, D: %f\n", ts, t, t - ts);
 
-        // EyerLog("List Size: %d\n", frameList.getLength());
+        EyerLog("List Size: %d\n", frameList.getLength());
 
         return 0;
     }

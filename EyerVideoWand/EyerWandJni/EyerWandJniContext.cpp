@@ -1,5 +1,6 @@
 #include "com_eyer_eyer_wand_editor_lib_EyerWandNative.h"
 #include "EyerWand/EyerWand.hpp"
+#include "EyerWand/EyerWandContext.hpp"
 
 JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1context_1init
 (JNIEnv *, jclass, jint width, jint height, jint fps)

@@ -85,6 +85,8 @@ namespace Eyer
 
     int EyerVideoFragmentVideo::LoadVideoFile(EyerString _path)
     {
+        // TODO 验证资源
+
         path = _path;
 
         if(videoResource == nullptr){

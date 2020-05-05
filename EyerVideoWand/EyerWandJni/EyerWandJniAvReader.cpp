@@ -2,6 +2,7 @@
 
 #include "EyerCrop/EyerCrop.hpp"
 #include "EyerAV/EyerAV.hpp"
+#include "EyerWand/EyerWandContext.hpp"
 
 char* jstringtochar( JNIEnv *env, jstring jstr );
 

@@ -70,6 +70,7 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Android")
         # SHARED
 
         EyerWandContext.cpp
+        EyerVideoDecoderLine.cpp
         )
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     MESSAGE(STATUS "current platform: Darwin")
@@ -183,6 +184,35 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
 
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Android")
     MESSAGE(STATUS "current platform: Android")
+
+    target_link_libraries (EyerWand
+        EyerGLRenderTask
+        EyerCore
+        EyerGLContext
+        EyerAV
+        EyerGLCustomComponent
+        EyerGLRenderTask
+        EyerThread
+        EyerGL
+        EyerGLShader
+
+        avformat
+        avcodec
+        avutil
+        avfilter
+        swresample
+        swscale
+        x264
+
+        log
+        z
+        android
+        OpenSLES
+        GLESv3
+        EGL
+        jnigraphics
+    )
+
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     MESSAGE(STATUS "current platform: Darwin")
 

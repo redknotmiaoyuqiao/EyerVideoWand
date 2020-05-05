@@ -12,7 +12,7 @@
 
 #define EYER_WAND_VERSION "EyerWand 1.0.0"
 
-#include "EyerWandContext.hpp"
+// #include "EyerWandContext.hpp"
 
 namespace Eyer {
     class EyerWand;

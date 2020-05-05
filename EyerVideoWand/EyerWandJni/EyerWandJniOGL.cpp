@@ -3,6 +3,7 @@
 #include "EyerGLContext/EyerGLContext.hpp"
 #include "EyerGLRenderTask/EyerGLRenderTask.hpp"
 #include <android/native_window_jni.h>
+#include "EyerWand/EyerWandContext.hpp"
 
 JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_ogl_1create_1thread
 (JNIEnv * env, jclass, jobject surface)

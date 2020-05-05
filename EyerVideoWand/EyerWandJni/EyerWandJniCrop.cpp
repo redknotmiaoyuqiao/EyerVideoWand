@@ -1,6 +1,7 @@
 #include "com_eyer_eyer_wand_editor_lib_EyerWandNative.h"
 
 #include "EyerCrop/EyerCrop.hpp"
+#include "EyerWand/EyerWandContext.hpp"
 
 JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_crop_1init
 (JNIEnv *, jclass, jint viewW, jint viewH, jint imageW, jint imageH)

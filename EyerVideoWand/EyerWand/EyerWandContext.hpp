@@ -2,6 +2,7 @@
 #define	EYER_LIB_AV_WAND_CONTEXT_H
 
 #include "EyerGLContext/EyerGLContext.hpp"
+#include "EyerWand.hpp"
 
 namespace Eyer
 {
@@ -23,6 +24,8 @@ namespace Eyer
         int fps = 25;
 
         Eyer::EyerGLRenderTask * renderTask = nullptr;
+
+        Eyer::EyerVideoDecoderLine * decoderLine = nullptr;
     };
 }
 
