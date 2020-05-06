@@ -5,7 +5,7 @@
 #include "EyerVideoProcess/EyerVideoProcess.hpp"
 
 TEST(EyerVideoWand, EyerVPAudioRes_Base){
-    Eyer::EyerString pathRes = "/Users/yuqiaomiao/Video/1280_720.mp4";
+    Eyer::EyerString pathRes = "/Users/yuqiaomiao/Video/encoder_number_mp4.mp4";
 
     for(int i=-1000;i<1000;i++){
         Eyer::EyerVPAudioRes audioRes;

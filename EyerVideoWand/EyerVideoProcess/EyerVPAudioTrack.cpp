@@ -33,31 +33,14 @@ namespace Eyer
         for(int i=0;i<audioList.size();i++){
             EyerVPAudioRes * res = audioList[i];
 
-            Eyer::EyerAVReader reader(res->GetRes());
-            int ret = reader.Open();
-            if(ret){
+            if(res->GetDuration() <= 0){
                 continue;
             }
 
-            int streamCount = reader.GetStreamCount();
-            if(res->GetStreamIndex() < 0 || res->GetStreamIndex() >= streamCount){
-                reader.Close();
-                continue;
-            }
-
-            EyerAVStream stream;
-            ret = reader.GetStream(stream, res->GetStreamIndex());
-            if(ret){
-                reader.Close();
-                continue;
-            }
-
-            long long d = stream.GetDuration() + res->GetPosition();
+            long long d = res->GetDuration() + res->GetPosition();
             if(duration < d){
                 duration = d;
             }
-
-            reader.Close();
         }
         return duration;
     }
@@ -67,11 +50,10 @@ namespace Eyer
         Eyer::EyerAVWriter writer(outPath);
         int streamIndex = writer.AddStream(&encoder);
         writer.Open();
+        writer.WriteHand();
 
         // 记录当前写入的长度
         double wirteTime = 0.0;
-
-        long long apts = 0;
 
         while(1){
             if(wirteTime >= GetDuration()){
@@ -87,7 +69,7 @@ namespace Eyer
                 EyerVPAudioRes * res = audioList[i];
 
                 double startTime = res->GetPosition();
-                double endTime = startTime + 10000.0;
+                double endTime = startTime + res->GetDuration();
 
                 if(wirteTime >= startTime && wirteTime <= endTime){
                     alternateList.push_back(res);
@@ -97,6 +79,15 @@ namespace Eyer
             // Create Frame
             Eyer::EyerAVFrame avFrame;
 
+            int frameSize = encoder.GetFrameSize();
+            int size = encoder.GetBufferSize();
+
+            float * d = (float *)malloc(size);
+            for(int i=0;i<size / 4;i++){
+                d[i] = 0.1;
+            }
+
+            std::vector<float *> mixFrameList;
             for(int i=0;i<alternateList.size();i++){
                 EyerVPAudioRes * res = alternateList[i];
                 Eyer::EyerAVFrame resAvFrame;
@@ -105,8 +96,32 @@ namespace Eyer
                     continue;
                 }
 
-                resAvFrame.GetInfo();
+                float * a = (float *)malloc(size);
+                resAvFrame.GetAudioData((unsigned char *)a);
+                mixFrameList.push_back(a);
             }
+
+            // printf("Frame Size::%d\n", mixFrameList.size());
+            if(mixFrameList.size() > 0){
+                for(int i=0;i<size / 4;i++){
+                    float kkk = 0.0f;
+                    for(int j=0;j<mixFrameList.size();j++){
+                        kkk += mixFrameList[j][i];
+                    }
+                    kkk = kkk / mixFrameList.size();
+                    d[i] = kkk;
+                }
+            }
+
+            for(int i=0;i<mixFrameList.size();i++){
+                float * f = mixFrameList[i];
+                free(f);
+            }
+            mixFrameList.clear();
+
+            avFrame.SetAudioData((unsigned char *)d, size, frameSize, 2, Eyer::EyerAVFormat::EYER_AV_SAMPLE_FMT_FLTP);
+
+            free(d);
 
             encoder.SendFrame(&avFrame);
             while(1){
@@ -117,8 +132,6 @@ namespace Eyer
                 }
 
                 avPacket.SetStreamId(streamIndex);
-
-                // printf("PTS:%lld\n", avPacket.GetPTS());
 
                 writer.WritePacket(&avPacket);
 
