@@ -58,10 +58,10 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_crop
 /*
  * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
  * Method:    ogl_create_thread
- * Signature: ()J
+ * Signature: (Landroid/view/Surface;)J
  */
 JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_ogl_1create_1thread
-  (JNIEnv *, jclass, jobject surface);
+  (JNIEnv *, jclass, jobject);
 
 /*
  * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
