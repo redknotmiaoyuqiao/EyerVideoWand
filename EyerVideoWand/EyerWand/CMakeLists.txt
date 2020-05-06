@@ -186,16 +186,6 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Android")
     MESSAGE(STATUS "current platform: Android")
 
     target_link_libraries (EyerWand
-        EyerGLRenderTask
-        EyerCore
-        EyerGLContext
-        EyerAV
-        EyerGLCustomComponent
-        EyerGLRenderTask
-        EyerThread
-        EyerGL
-        EyerGLShader
-
         avformat
         avcodec
         avutil

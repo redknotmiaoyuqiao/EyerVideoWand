@@ -13,7 +13,15 @@ add_library(
 )
 
 target_link_libraries (EyerWandJni
-    Eyer
+    EyerCrop
+    EyerGLContext
+    EyerGL
+    EyerThread
+    EyerWand
+    EyerGLShader
+    EyerAV
+    EyerCore
+    EyerGL
 
     avformat
     avcodec

@@ -1,7 +1,7 @@
 #include "com_eyer_eyer_wand_editor_lib_EyerWandNative.h"
 
 #include "EyerGLContext/EyerGLContext.hpp"
-#include "EyerGLRenderTask/EyerGLRenderTask.hpp"
+#include "EyerGL/EyerGLRenderTask/EyerGLRenderTask.hpp"
 #include <android/native_window_jni.h>
 #include "EyerWand/EyerWandContext.hpp"
 

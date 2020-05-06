@@ -5,7 +5,7 @@
 // #include "EyerGLWindow/EyerGLWindow.hpp"
 #include "EyerCore/EyerCore.hpp"
 #include "EyerAV/EyerAV.hpp"
-#include "EyerGLCustomComponent/EyerGLCustomComponent.hpp"
+#include "EyerGL/EyerGLCustomComponent/EyerGLCustomComponent.hpp"
 
 // #include "EyerImg/stb_image.h"
 // #define STB_IMAGE_IMPLEMENTATION

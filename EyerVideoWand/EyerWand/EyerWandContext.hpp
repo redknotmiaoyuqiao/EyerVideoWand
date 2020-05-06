@@ -23,7 +23,7 @@ namespace Eyer
         int height = 0;
         int fps = 25;
 
-        Eyer::EyerGLRenderTask * renderTask = nullptr;
+        Eyer::YUVRenderTask * renderTask = nullptr;
 
         Eyer::EyerVideoDecoderLine * decoderLine = nullptr;
     };

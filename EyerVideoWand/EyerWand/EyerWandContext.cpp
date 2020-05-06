@@ -42,7 +42,28 @@ namespace Eyer
             if(ret){
                 EyerLog("GetFrame Fail: %d\n", ret);
             }
+
+            int w = frame.GetWidth();
+            int h = frame.GetHeight();
+
+            unsigned char * y = (unsigned char *)malloc(w * h);
+            frame.GetYData(y);
+            unsigned char * u = (unsigned char *)malloc(w / 2 * h / 2);
+            frame.GetUData(u);
+            unsigned char * v = (unsigned char *)malloc(w / 2 * h / 2);
+            frame.GetVData(v);
+
+            EyerLog("Frame W: %d, H: %d\n", w, h);
+
+            renderTask->SetY(y, w, h);
+            renderTask->SetU(u, w / 2, h / 2);
+            renderTask->SetV(v, w / 2, h / 2);
+
             glCtx->AddTaskToRenderQueue(renderTask);
+
+            free(y);
+            free(u);
+            free(v);
         }
     
         return 0;
