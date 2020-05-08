@@ -3,6 +3,7 @@
 #include <EyerWand/EyerWand.hpp>
 
 TEST(EyerVideoFragment, whiteBG){
+    /*
     int fps = 30;
 
     Eyer::EyerWandBuilder builder("./struct_builder_vidoe_mp4_png.mp4");
@@ -49,6 +50,7 @@ TEST(EyerVideoFragment, whiteBG){
     builder.AddVideoTrack(videoTrack);
 
     builder.Process();
+    */
 }
 
 TEST(EyerVideoFragment, readpng){
@@ -286,7 +288,7 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
 
 
 TEST(EyerVideoBuild, EyerVideoBuild_Test){
-    int fps = 60;
+    int fps = 30;
 
     Eyer::EyerWandBuilder builder("./time_clock_1h_1920x1080_60fps.mp4");
     builder.SetVideoWH(1920, 1080);
@@ -297,7 +299,7 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
 
     Eyer::EyerVideoLayout layer1;
     // layer1.SetFrame(0, fps * 60 * 60 * 4);
-    layer1.SetFrame(0, fps * 60 * 60);
+    layer1.SetFrame(0, fps * 6);
 
     videoTrack.AddLayer(layer1);
     

@@ -17,7 +17,7 @@ namespace Eyer
     {
 
     }
-
+    
     int EyerWandBuilder::SetVideoWH(int w, int h)
     {
         videoWidth = w;
