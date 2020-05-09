@@ -183,6 +183,30 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
 JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1context_1render_1frame
   (JNIEnv *, jclass, jlong, jdouble);
 
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_snapshot_init
+ * Signature: (Ljava/lang/String;)J
+ */
+JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1snapshot_1init
+  (JNIEnv *, jclass, jstring);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_snapshot_uninit
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1snapshot_1uninit
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_snapshot_bitmap
+ * Signature: (JDLandroid/graphics/Bitmap;)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1snapshot_1bitmap
+  (JNIEnv *, jclass, jlong, jdouble, jobject);
+
 #ifdef __cplusplus
 }
 #endif

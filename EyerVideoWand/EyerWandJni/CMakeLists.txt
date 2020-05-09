@@ -10,6 +10,7 @@ add_library(
     EyerWandJniRenderTask.cpp
     EyerWandJniAvReader.cpp
     EyerWandJniContext.cpp
+    EyerWandJniSnapshot.cpp
 )
 
 target_link_libraries (EyerWandJni
