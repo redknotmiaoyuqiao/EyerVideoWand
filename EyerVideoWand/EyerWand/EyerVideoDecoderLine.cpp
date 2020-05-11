@@ -63,7 +63,9 @@ namespace Eyer
 
     int EyerVideoDecoderLine::GetFrame(EyerAVFrame & frame, double ts)
     {
-        if(ts < initStart){
+        if(ts < GetStartTime()){
+            EyerLog("ts < initStart\n");
+            EyerLog("ts:%f, initStart:%f", ts, initStart);
             return -1;
         }
 

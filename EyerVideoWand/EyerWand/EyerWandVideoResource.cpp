@@ -22,6 +22,7 @@ namespace Eyer
     int EyerWandVideoResource::GetVideoFrame(EyerAVFrame & avFrame, double ts)
     {
         // EyerLog("Deocde Line: %d\n", decoderLineList.getLength());
+        EyerLog("=============================================Start\n");
         EyerVideoDecoderLine * decoderLine = nullptr;
         for(int i=0;i<decoderLineList.getLength();i++) {
             EyerVideoDecoderLine * dl = nullptr;
@@ -32,11 +33,14 @@ namespace Eyer
         }
 
         if(decoderLine == nullptr){
+            EyerLog("new EyerVideoDecoderLine  : %f\n", ts);
             decoderLine = new EyerVideoDecoderLine(resPath, ts);
             decoderLineList.insertBack(decoderLine);
         }
 
         decoderLine->GetFrame(avFrame, ts);
+
+        EyerLog("=============================================End\n");
 
         return 0;
     }
