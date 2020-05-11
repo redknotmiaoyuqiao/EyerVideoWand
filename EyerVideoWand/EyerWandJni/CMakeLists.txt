@@ -11,6 +11,7 @@ add_library(
     EyerWandJniAvReader.cpp
     EyerWandJniContext.cpp
     EyerWandJniSnapshot.cpp
+    JniUtil.cpp
 )
 
 target_link_libraries (EyerWandJni
@@ -23,6 +24,7 @@ target_link_libraries (EyerWandJni
     EyerAV
     EyerCore
     EyerGL
+    EyerYUV
 
     avformat
     avcodec
@@ -31,6 +33,8 @@ target_link_libraries (EyerWandJni
     swresample
     swscale
     x264
+
+    yuv
 
     log
     z

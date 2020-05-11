@@ -71,6 +71,8 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Android")
 
         EyerWandContext.cpp
         EyerVideoDecoderLine.cpp
+        EyerWandVideoResource.cpp
+        EyerWandResource.cpp
         )
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     MESSAGE(STATUS "current platform: Darwin")

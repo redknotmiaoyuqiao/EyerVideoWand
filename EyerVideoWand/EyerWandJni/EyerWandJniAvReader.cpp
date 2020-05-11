@@ -4,6 +4,8 @@
 #include "EyerAV/EyerAV.hpp"
 #include "EyerWand/EyerWandContext.hpp"
 
+#include "JniUtil.h"
+
 char* jstringtochar( JNIEnv *env, jstring jstr );
 
 JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_avreader_1init
@@ -54,23 +56,4 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_avre
     Eyer::EyerAVReader * avReader = (Eyer::EyerAVReader *)reader;
 
     return avReader->PrintInfo();
-}
-
-char* jstringtochar( JNIEnv *env, jstring jstr )
-{
-    char* rtn = NULL;
-    jclass clsstring = env->FindClass("java/lang/String");
-    jstring strencode = env->NewStringUTF("utf-8");
-    jmethodID mid = env->GetMethodID(clsstring, "getBytes", "(Ljava/lang/String;)[B");
-    jbyteArray barr= (jbyteArray)env->CallObjectMethod(jstr, mid, strencode);
-    jsize alen = env->GetArrayLength(barr);
-    jbyte* ba = env->GetByteArrayElements(barr, JNI_FALSE);
-    if (alen > 0)
-    {
-        rtn = (char*)malloc(alen + 1);
-        memcpy(rtn, ba, alen);
-        rtn[alen] = 0;
-    }
-    env->ReleaseByteArrayElements(barr, ba, 0);
-    return rtn;
 }
