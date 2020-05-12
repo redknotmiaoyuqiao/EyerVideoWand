@@ -63,6 +63,8 @@ namespace Eyer {
         int GetFrame(EyerAVFrame & frame, double ts);
 
         double GetStartTime();
+
+        int GetCacheFrameCount();
     private:
         int ReadFrame();
         int SelectFrameInList(EyerAVFrame * & frame, double ts);
@@ -89,6 +91,8 @@ namespace Eyer {
 
     private:
         EyerLinkedList<EyerVideoDecoderLine *> decoderLineList;
+
+        std::mutex mut;
     };
 
     class EyerWandAudioResource : public EyerWandResource {

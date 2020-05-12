@@ -50,6 +50,39 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
     unsigned char * yuv420_v = (unsigned char *)malloc(w / 2 * h / 2);
     unsigned char * rgba8888 = (unsigned char *)malloc(w * h * 4);
 
+    if(yuv420_y == NULL){
+        EyerLog("malloc fail!!!!\n");
+        free(yuv420_y);
+        free(yuv420_u);
+        free(yuv420_v);
+        free(rgba8888);
+        return -1;
+    }
+    if(yuv420_u == NULL){
+        EyerLog("malloc fail!!!!\n");
+        free(yuv420_y);
+        free(yuv420_u);
+        free(yuv420_v);
+        free(rgba8888);
+        return -1;
+    }
+    if(yuv420_v == NULL){
+        EyerLog("malloc fail!!!!\n");
+        free(yuv420_y);
+        free(yuv420_u);
+        free(yuv420_v);
+        free(rgba8888);
+        return -1;
+    }
+    if(rgba8888 == NULL){
+        EyerLog("malloc fail!!!!\n");
+        free(yuv420_y);
+        free(yuv420_u);
+        free(yuv420_v);
+        free(rgba8888);
+        return -1;
+    }
+
     frame.GetYData(yuv420_y);
     frame.GetUData(yuv420_u);
     frame.GetVData(yuv420_v);
@@ -82,15 +115,6 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
         free(yuv420_v);
         free(rgba8888);
         return -1;
-    }
-
-    for(int i=0;i<bitmapH;i++){
-        for(int j=0;j<bitmapW;j++){
-            buf[i * stride + j * 4 + 0] = 0;
-            buf[i * stride + j * 4 + 1] = 0;
-            buf[i * stride + j * 4 + 2] = 255;
-            buf[i * stride + j * 4 + 3] = 255;
-        }
     }
 
     memcpy(buf, rgba8888, stride * bitmapH);

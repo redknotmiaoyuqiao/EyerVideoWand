@@ -34,7 +34,7 @@ namespace Eyer
         decoder = new EyerAVDecoder();
         decoder->Init(&avStream);
 
-        /// TODO reader->SeekFrame(videoStreamIndex, initStart);
+        reader->SeekFrame(-1, (int64_t)(initStart * 1000000));
     }
 
     EyerVideoDecoderLine::~EyerVideoDecoderLine()
@@ -60,12 +60,16 @@ namespace Eyer
         frameList.clear();
     }
 
+    int EyerVideoDecoderLine::GetCacheFrameCount()
+    {
+        return frameList.getLength();
+    }
 
     int EyerVideoDecoderLine::GetFrame(EyerAVFrame & frame, double ts)
     {
         if(ts < GetStartTime()){
-            EyerLog("ts < initStart\n");
-            EyerLog("ts:%f, initStart:%f", ts, initStart);
+            // EyerLog("ts < initStart\n");
+            // EyerLog("ts:%f, initStart:%f", ts, initStart);
             return -1;
         }
 
@@ -106,9 +110,9 @@ namespace Eyer
 
         double t = frame.GetPTS() * 1.0 * streamTimebase.num / streamTimebase.den;
 
-        EyerLog("Target TS: %f, Frame TS: %f, D: %f\n", ts, t, t - ts);
+        // EyerLog("Target TS: %f, Frame TS: %f, D: %f\n", ts, t, t - ts);
 
-        EyerLog("List Size: %d\n", frameList.getLength());
+        // EyerLog("List Size: %d\n", frameList.getLength());
 
         return 0;
     }
@@ -156,9 +160,6 @@ namespace Eyer
 
                         double lastFT = lastF->GetPTS() * 1.0 * streamTimebase.num / streamTimebase.den;
 
-                        // EyerLog("lastFT - ts : %f\n", abs(lastFT - ts));
-                        // EyerLog("t - ts : %f\n", abs(t - ts));
-
                         if(abs(lastFT - ts) < abs(t - ts)){
                             ff = lastF;
                         }
@@ -176,14 +177,8 @@ namespace Eyer
             }
         }
 
-        if(ff == nullptr){
-            // 查找失败
-            return -1;
-        }
-
-        frame = ff;
-
-        while(frameList.getLength() > 30){
+        // 无论成功还是失败，都要丢帧
+        while(frameList.getLength() > 5){
             EyerAVFrame * f = nullptr;
             frameList.find(0, f);
             if(f != nullptr){
@@ -191,6 +186,13 @@ namespace Eyer
             }
             frameList.deleteEle(0);
         }
+
+        if(ff == nullptr){
+            
+            return -1;
+        }
+
+        frame = ff;
 
         return 0;
     }
@@ -210,14 +212,14 @@ namespace Eyer
             // 清空解码器
             decoder->SendPacket(nullptr);
             while(1){
-                EyerAVFrame frame;
-                ret = decoder->RecvFrame(&frame);
+                EyerAVFrame * frame = new EyerAVFrame();
+                ret = decoder->RecvFrame(frame);
                 if(ret){
+                    delete frame;
                     break;
                 }
 
-                EyerAVFrame * f = new EyerAVFrame(frame);
-                frameList.insertBack(f);
+                frameList.insertBack(frame);
             }
 
             fileEndFlag = 1;
@@ -225,16 +227,17 @@ namespace Eyer
         else{
             decoder->SendPacket(&pkt);
             while(1){
-                EyerAVFrame frame;
-                ret = decoder->RecvFrame(&frame);
+                EyerAVFrame * frame = new EyerAVFrame();
+                ret = decoder->RecvFrame(frame);
                 if(ret){
+                    delete frame;
                     break;
                 }
 
-                EyerAVFrame * f = new EyerAVFrame(frame);
-                frameList.insertBack(f);
+                frameList.insertBack(frame);
             }
         }
+        
         return 0;
     }
 }
