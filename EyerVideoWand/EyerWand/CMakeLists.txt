@@ -31,7 +31,6 @@ IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
         EyerTransKey.cpp
         EyerVideoFragmentFrameSequential.cpp
         
-        EyerWandContext.cpp
         )
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
     MESSAGE(STATUS "current platform: Windows")
@@ -61,7 +60,6 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
         EyerTransKey.cpp
         EyerVideoFragmentFrameSequential.cpp
         
-        EyerWandContext.cpp
         )
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Android")
     MESSAGE(STATUS "current platform: Android")
@@ -102,7 +100,6 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
         EyerTransKey.cpp
         EyerVideoFragmentFrameSequential.cpp
         
-        EyerWandContext.cpp
         )
 ELSE ()
     MESSAGE(STATUS "other platform: ${CMAKE_SYSTEM_NAME}")
@@ -122,7 +119,6 @@ IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
     target_link_libraries (EyerWand EyerAV)
     target_link_libraries (EyerWand EyerGLWindow)
     target_link_libraries (EyerWand EyerGL)
-    target_link_libraries (EyerWand EyerGLCustomComponent)
     target_link_libraries (EyerWand EyerYUV)
     target_link_libraries (EyerWand EyerGPUDomino)
     target_link_libraries (EyerWand EyerGLAD)
@@ -160,7 +156,6 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
     target_link_libraries (EyerWand EyerAV)
     target_link_libraries (EyerWand EyerGLWindow)
     target_link_libraries (EyerWand EyerGL)
-    target_link_libraries (EyerWand EyerGLCustomComponent)
     target_link_libraries (EyerWand EyerYUV)
     target_link_libraries (EyerWand EyerGPUDomino)
     target_link_libraries (EyerWand EyerGLAD)
@@ -212,7 +207,6 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     target_link_libraries (EyerWand EyerAV)
     target_link_libraries (EyerWand EyerGLWindow)
     target_link_libraries (EyerWand EyerGL)
-    target_link_libraries (EyerWand EyerGLCustomComponent)
     target_link_libraries (EyerWand EyerYUV)
     target_link_libraries (EyerWand EyerGPUDomino)
     target_link_libraries (EyerWand EyerGLAD)

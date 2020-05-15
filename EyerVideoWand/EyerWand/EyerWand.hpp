@@ -2,17 +2,20 @@
 #define	EYER_LIB_AV_WAND_H
 
 #include "EyerGL/EyerGL.hpp"
-// #include "EyerGLWindow/EyerGLWindow.hpp"
 #include "EyerCore/EyerCore.hpp"
 #include "EyerAV/EyerAV.hpp"
 #include "EyerGL/EyerGLCustomComponent/EyerGLCustomComponent.hpp"
 
-// #include "EyerImg/stb_image.h"
-// #define STB_IMAGE_IMPLEMENTATION
-
 #define EYER_WAND_VERSION "EyerWand 1.0.0"
 
-// #include "EyerWandContext.hpp"
+
+#ifdef EYER_PLATFORM_ANDROID
+#include "EyerWandContext.hpp"
+#else
+#include "EyerGLWindow/EyerGLWindow.hpp"
+#include "EyerImg/stb_image.h"
+#define STB_IMAGE_IMPLEMENTATION
+#endif
 
 namespace Eyer {
     class EyerWand;
