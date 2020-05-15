@@ -25,6 +25,11 @@ target_link_libraries (EyerWandJni
     EyerCore
     EyerGL
     EyerYUV
+    EyerImg
+    EyerWand
+    EyerGLContext
+    EyerGPUDomino
+    EyerType
 
     avformat
     avcodec
@@ -33,6 +38,7 @@ target_link_libraries (EyerWandJni
     swresample
     swscale
     x264
+    freetype
 
     yuv
 

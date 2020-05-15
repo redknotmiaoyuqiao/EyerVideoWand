@@ -95,11 +95,13 @@ namespace Eyer
 
         videoResource->SetPath(path);
 
+        EyerLog("Start GetVideoDuration\n");
         int ret = videoResource->GetVideoDuration(duration);
         if(ret){
-            // RedLog("GetVideoDuration Error\n");
+            EyerLog("GetVideoDuration Error\n");
         }
-        // RedLog("Video Duration:%f\n", duration);
+        EyerLog("End GetVideoDuration\n");
+        EyerLog("Video Duration:%f\n", duration);
 
         SetFrameTime(0.0, duration);
 

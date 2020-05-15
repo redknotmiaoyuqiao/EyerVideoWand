@@ -67,10 +67,28 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Android")
         EyerWand
         # SHARED
 
-        EyerWandContext.cpp
-        EyerVideoDecoderLine.cpp
-        EyerWandVideoResource.cpp
+        EyerWand.cpp
         EyerWandResource.cpp
+        EyerWandVideoResource.cpp
+        EyerWandAudioResource.cpp
+        # EyerWandBuilder.cpp
+        EyerWandContext.cpp
+        EyerVideoTrack.cpp
+        EyerVideoLayout.cpp
+
+        EyerVideoPanel.cpp
+        InterfaceC.cpp
+        InterfaceCSharp.cpp
+        EyerVideoDecoderLine.cpp
+        EyerAudioTrack.cpp
+        EyerAudioLayer.cpp
+        EyerAudioFragment.cpp
+        EyerWandDebug.cpp
+        EyerVideoFragmentText.cpp
+        EyerVideoFragmentVideo.cpp
+        EyerVideoFragment.cpp
+        EyerTransKey.cpp
+        EyerVideoFragmentFrameSequential.cpp
         )
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     MESSAGE(STATUS "current platform: Darwin")

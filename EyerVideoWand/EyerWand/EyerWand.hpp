@@ -10,7 +10,7 @@
 
 
 #ifdef EYER_PLATFORM_ANDROID
-#include "EyerWandContext.hpp"
+// #include "EyerWandContext.hpp"
 #else
 #include "EyerGLWindow/EyerGLWindow.hpp"
 #include "EyerImg/stb_image.h"

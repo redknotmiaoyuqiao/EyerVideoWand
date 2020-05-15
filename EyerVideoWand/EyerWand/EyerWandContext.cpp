@@ -11,6 +11,18 @@ namespace Eyer
         fps = _fps;
 
         renderTask = new Eyer::YUVRenderTask();
+
+        
+        EyerVideoFragmentVideo fragmentVideo;
+        fragmentVideo.LoadVideoFile("/storage/emulated/0/ST/time_clock_1min_720x1280_30fps.mp4");
+    
+        /*
+        EyerVideoLayer layer;
+        layer.SetFrame(0, 100);
+        layer.AddVideoFragment(&fragmentVideo);
+        */
+
+        // videoTrack.AddLayer(layer);
         decoderLine = new Eyer::EyerVideoDecoderLine("/storage/emulated/0/ST/time_clock_1min_720x1280_30fps.mp4", 0.0);
     }
 

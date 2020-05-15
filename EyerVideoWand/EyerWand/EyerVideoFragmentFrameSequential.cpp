@@ -3,6 +3,7 @@
 //
 #include "EyerWand.hpp"
 #include <stdio.h>
+#include "EyerImg/stb_image.h"
 
 namespace Eyer {
     EyerVideoFragmentFrameSequential::EyerVideoFragmentFrameSequential()

@@ -26,6 +26,9 @@ namespace Eyer
         Eyer::YUVRenderTask * renderTask = nullptr;
 
         Eyer::EyerVideoDecoderLine * decoderLine = nullptr;
+
+        EyerVideoTrack videoTrack;
+        EyerAudioTrack audioTrack;
     };
 }
 
