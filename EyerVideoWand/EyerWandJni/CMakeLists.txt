@@ -15,22 +15,10 @@ add_library(
 )
 
 target_link_libraries (EyerWandJni
-    EyerCrop
-    EyerGLContext
-    EyerGL
-    EyerThread
-    EyerWand
-    EyerGLShader
-    EyerAV
-    EyerCore
-    EyerGL
-    EyerYUV
-    EyerImg
-    EyerWand
-    EyerGLContext
-    EyerGPUDomino
-    EyerType
 
+    EyerWand
+    EyerLib
+    
     avformat
     avcodec
     avutil

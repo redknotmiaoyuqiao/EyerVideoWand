@@ -14,11 +14,12 @@ namespace Eyer
 
     EyerVideoFragmentVideo::~EyerVideoFragmentVideo()
     {
+        
         if(videoResource != nullptr){
             delete videoResource;
             videoResource = nullptr;
         }
-
+        
         for(int i=0;i<transKeyList.getLength();i++){
             EyerTransKey * transKey = nullptr;
             transKeyList.find(i, transKey);
@@ -36,6 +37,7 @@ namespace Eyer
             }
         }
         scaleKeyList.clear();
+        
     }
 
     EyerVideoFragmentVideo & EyerVideoFragmentVideo::operator = (const EyerVideoFragmentVideo & fragment)

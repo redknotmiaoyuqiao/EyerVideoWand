@@ -185,6 +185,14 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
 
 /*
  * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_context_render_frame_index
+ * Signature: (JI)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1context_1render_1frame_1index
+  (JNIEnv *, jclass, jlong, jint);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
  * Method:    wand_snapshot_init
  * Signature: (Ljava/lang/String;)J
  */

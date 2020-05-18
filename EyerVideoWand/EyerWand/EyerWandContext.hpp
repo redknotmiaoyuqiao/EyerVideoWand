@@ -15,6 +15,7 @@ namespace Eyer
         int SetGLCtx(EyerGLContextThread * glCtx);
 
         int RenderFrame(double time);
+        int RenderFrameByIndex(int frameIndex);
 
     private:
         EyerGLContextThread * glCtx = nullptr;
@@ -22,10 +23,6 @@ namespace Eyer
         int width = 0;
         int height = 0;
         int fps = 25;
-
-        Eyer::YUVRenderTask * renderTask = nullptr;
-
-        Eyer::EyerVideoDecoderLine * decoderLine = nullptr;
 
         EyerVideoTrack videoTrack;
         EyerAudioTrack audioTrack;

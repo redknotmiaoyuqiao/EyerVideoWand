@@ -18,7 +18,7 @@ namespace Eyer
             }
         }
         decoderLineList.clear();
-        mut.lock();
+        mut.unlock();
     }
 
     int EyerWandVideoResource::GetVideoFrame(EyerAVFrame & avFrame, double ts)
