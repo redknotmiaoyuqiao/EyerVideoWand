@@ -169,7 +169,6 @@ namespace Eyer {
     class EyerVideoTrack : public EyerTrack {
     public:
         EyerVideoTrack();
-
         ~EyerVideoTrack();
 
         EyerVideoTrack(const EyerVideoTrack &track);
@@ -182,8 +181,13 @@ namespace Eyer {
 
         int RenderFrame(int frameIndex, EyerVideoTrackRenderParams * params, int fps);
         int RenderFrame2(int frameIndex, int fps, EyerGLContextThread * glCtx);
+
+        int SetTargetVideoWH(int w, int h);
     private:
         EyerLinkedList<EyerVideoLayout *> layoutList;
+
+        int videoW = 0;
+        int videoH = 0;
     };
 
     /**
@@ -253,6 +257,8 @@ namespace Eyer {
 
 
         int GetVideoFragmentCount();
+        int GetVideoFragment(EyerVideoFragment * & fragment, int index);
+
         int GetVideoPanel(EyerVideoPanel * panel, EyerVideoFragment ** fragmentP, int videoFragmentIndex, int layoutFrameIndex, int fps, EyerVideoTrackRenderParams * params);
     private:
         int startFrameIndex = 0;

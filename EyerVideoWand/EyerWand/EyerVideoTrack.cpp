@@ -56,6 +56,13 @@ namespace Eyer
         return AddLayout(layout);
     }
 
+    int EyerVideoTrack::SetTargetVideoWH(int w, int h)
+    {
+        videoW = w;
+        videoH = h;
+        return 0;
+    }
+
     int EyerVideoTrack::GetFrameCount()
     {
         int frameCount = 0;
@@ -97,6 +104,8 @@ namespace Eyer
             EyerLog("Frame !!! , Frame Index: %d\n", frameIndex);
 
             LayerRenderTask * renderFrameTask = new LayerRenderTask(*layout);
+            renderFrameTask->SetScreenWH(glCtx->GetW(), glCtx->GetH());
+            renderFrameTask->SetVideoWH(videoW, videoH);
             glCtx->AddTaskToRenderAndFreeQueue(renderFrameTask);
         }
         return 0;

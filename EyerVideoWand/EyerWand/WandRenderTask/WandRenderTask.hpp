@@ -11,12 +11,21 @@ namespace Eyer {
         LayerRenderTask(EyerVideoLayer & layer);
         ~LayerRenderTask();
 
+        int SetScreenWH(int w, int h);
+        int SetVideoWH(int w, int h);
+
         virtual int Render();
         virtual int Init();
         virtual int Destory();
 
     private:
         EyerVideoLayer layer;
+
+        int screenW = 0;
+        int screenH = 0;
+
+        int videoW = 0;
+        int videoH = 0;
     };
 }
 

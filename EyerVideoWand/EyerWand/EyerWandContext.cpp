@@ -10,6 +10,8 @@ namespace Eyer
         height = h;
         fps = _fps;
 
+        videoTrack.SetTargetVideoWH(width, height);
+
         EyerVideoFragmentVideo fragmentVideo;
         fragmentVideo.LoadVideoFile("/storage/emulated/0/ST/time_clock_1min_720x1280_30fps.mp4");
     
@@ -70,5 +72,12 @@ namespace Eyer
     int EyerWandContext::RenderFrameByIndex(int frameIndex)
     {
         return videoTrack.RenderFrame2(frameIndex, fps, glCtx);
+    }
+
+    int EyerWandContext::UpdateScreenWH(int _screenW, int _screenH)
+    {
+        screenW = _screenW;
+        screenH = _screenH;
+        return 0;
     }
 }

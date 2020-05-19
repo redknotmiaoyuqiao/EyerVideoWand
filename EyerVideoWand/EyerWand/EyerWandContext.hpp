@@ -17,12 +17,17 @@ namespace Eyer
         int RenderFrame(double time);
         int RenderFrameByIndex(int frameIndex);
 
+        int UpdateScreenWH(int screenW, int screenH);
+
     private:
         EyerGLContextThread * glCtx = nullptr;
 
         int width = 0;
         int height = 0;
         int fps = 25;
+
+        int screenW = 0;
+        int screenH = 0;
 
         EyerVideoTrack videoTrack;
         EyerAudioTrack audioTrack;
