@@ -87,6 +87,7 @@ namespace Eyer
 
     int EyerVideoTrack::RenderFrame2(int frameIndex, int fps, EyerGLContextThread * glCtx)
     {
+        /*
         for(int i=0;i<layoutList.getLength();i++){
             EyerVideoLayout * layout = nullptr;
             layoutList.find(i, layout);
@@ -108,6 +109,11 @@ namespace Eyer
             renderFrameTask->SetVideoWH(videoW, videoH);
             glCtx->AddTaskToRenderAndFreeQueue(renderFrameTask);
         }
+        */
+
+        VideoTrackRenderTask * videoTrackRenderTask = new VideoTrackRenderTask(this);
+        glCtx->AddTaskToRenderAndFreeQueue(videoTrackRenderTask);
+        
         return 0;
     }
 

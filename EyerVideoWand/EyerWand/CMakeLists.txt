@@ -91,6 +91,7 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Android")
         EyerVideoFragmentFrameSequential.cpp
 
         WandRenderTask/LayerRenderTask.cpp
+        WandRenderTask/VideoTrackRenderTask.cpp
         )
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     MESSAGE(STATUS "current platform: Darwin")

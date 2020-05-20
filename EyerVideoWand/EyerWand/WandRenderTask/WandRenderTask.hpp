@@ -30,6 +30,20 @@ namespace Eyer {
         int frameIndex = 0;
         int fps = 0;
     };
+
+    class VideoTrackRenderTask : public EyerGLRenderTask
+    {
+    public:
+        VideoTrackRenderTask(EyerVideoTrack * videoTrack);
+        ~VideoTrackRenderTask();
+
+        virtual int Render();
+        virtual int Init();
+        virtual int Destory();
+
+    private:
+        EyerVideoTrack * videoTrack = nullptr;
+    };
 }
 
 #endif
