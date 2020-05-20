@@ -15,6 +15,9 @@ namespace Eyer
         int SetGLCtx(EyerGLContextThread * glCtx);
 
         int RenderFrame(double time);
+        int RenderFrameByIndex(int frameIndex);
+
+        int UpdateScreenWH(int screenW, int screenH);
 
     private:
         EyerGLContextThread * glCtx = nullptr;
@@ -23,9 +26,11 @@ namespace Eyer
         int height = 0;
         int fps = 25;
 
-        Eyer::YUVRenderTask * renderTask = nullptr;
+        int screenW = 0;
+        int screenH = 0;
 
-        Eyer::EyerVideoDecoderLine * decoderLine = nullptr;
+        EyerVideoTrack videoTrack;
+        EyerAudioTrack audioTrack;
     };
 }
 

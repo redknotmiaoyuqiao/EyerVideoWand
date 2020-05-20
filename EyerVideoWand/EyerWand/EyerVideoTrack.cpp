@@ -56,6 +56,13 @@ namespace Eyer
         return AddLayout(layout);
     }
 
+    int EyerVideoTrack::SetTargetVideoWH(int w, int h)
+    {
+        videoW = w;
+        videoH = h;
+        return 0;
+    }
+
     int EyerVideoTrack::GetFrameCount()
     {
         int frameCount = 0;
@@ -78,6 +85,31 @@ namespace Eyer
         return frameCount;
     }
 
+    int EyerVideoTrack::RenderFrame2(int frameIndex, int fps, EyerGLContextThread * glCtx)
+    {
+        for(int i=0;i<layoutList.getLength();i++){
+            EyerVideoLayout * layout = nullptr;
+            layoutList.find(i, layout);
+            if(layout == nullptr){
+                continue;
+            }
+
+            if(frameIndex < layout->GetStartFrameIndex()){
+                continue;
+            }
+            if(frameIndex > layout->GetEndFrameIndex()){
+                continue;
+            }
+
+            EyerLog("Frame !!! , Frame Index: %d\n", frameIndex);
+
+            LayerRenderTask * renderFrameTask = new LayerRenderTask(layout, frameIndex, fps);
+            renderFrameTask->SetScreenWH(glCtx->GetW(), glCtx->GetH());
+            renderFrameTask->SetVideoWH(videoW, videoH);
+            glCtx->AddTaskToRenderAndFreeQueue(renderFrameTask);
+        }
+        return 0;
+    }
 
     int EyerVideoTrack::RenderFrame(int frameIndex, EyerVideoTrackRenderParams * params, int fps)
     {

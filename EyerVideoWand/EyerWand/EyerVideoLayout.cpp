@@ -78,6 +78,16 @@ namespace Eyer
         return videoFragmentList.getLength();
     }
 
+    int EyerVideoLayout::GetVideoFragment(EyerVideoFragment * & fragment, int index)
+    {
+        if(index >= GetVideoFragmentCount()){
+            return -1;
+        }
+        videoFragmentList.find(index, fragment);
+
+        return 0;
+    }
+
     int EyerVideoLayout::GetVideoPanel(EyerVideoPanel * panel, EyerVideoFragment ** fragmentP,int videoFragmentIndex, int layoutFrameIndex, int fps, EyerVideoTrackRenderParams * params)
     {
         EyerVideoFragment * fragment = nullptr;

@@ -10,19 +10,15 @@ add_library(
     EyerWandJniRenderTask.cpp
     EyerWandJniAvReader.cpp
     EyerWandJniContext.cpp
+    EyerWandJniSnapshot.cpp
+    JniUtil.cpp
 )
 
 target_link_libraries (EyerWandJni
-    EyerCrop
-    EyerGLContext
-    EyerGL
-    EyerThread
-    EyerWand
-    EyerGLShader
-    EyerAV
-    EyerCore
-    EyerGL
 
+    EyerWand
+    EyerLib
+    
     avformat
     avcodec
     avutil
@@ -30,6 +26,9 @@ target_link_libraries (EyerWandJni
     swresample
     swscale
     x264
+    freetype
+
+    yuv
 
     log
     z

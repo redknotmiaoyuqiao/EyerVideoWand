@@ -10,33 +10,32 @@ namespace Eyer
         height = h;
         fps = _fps;
 
-        renderTask = new Eyer::YUVRenderTask();
-        decoderLine = new Eyer::EyerVideoDecoderLine("/storage/emulated/0/ST/time_clock_1min_720x1280_30fps.mp4", 0.0);
+        videoTrack.SetTargetVideoWH(width, height);
+
+        EyerVideoFragmentVideo fragmentVideo;
+        fragmentVideo.LoadVideoFile("/storage/emulated/0/ST/time_clock_1min_720x1280_30fps.mp4");
+    
+        EyerVideoLayer layer;
+        layer.SetFrame(0, 100);
+        layer.AddVideoFragment(&fragmentVideo);
+
+        videoTrack.AddLayer(layer);
     }
 
     EyerWandContext::~EyerWandContext()
     {
-        if(renderTask != nullptr){
-            delete renderTask;
-            renderTask = nullptr;
-        }
-        if(decoderLine != nullptr){
-            delete decoderLine;
-            decoderLine = nullptr;
-        }
     }
 
     int EyerWandContext::SetGLCtx(EyerGLContextThread * _glCtx)
     {
         glCtx = _glCtx;
-        glCtx->AddTaskToDestoryQueue(renderTask);
-
         return 0;
     }
 
     int EyerWandContext::RenderFrame(double time)
     {
         if(glCtx != nullptr){
+            /*
             Eyer::EyerAVFrame frame;
             int ret = decoderLine->GetFrame(frame, time);
             if(ret){
@@ -64,8 +63,21 @@ namespace Eyer
             free(y);
             free(u);
             free(v);
+            */
         }
     
+        return 0;
+    }
+
+    int EyerWandContext::RenderFrameByIndex(int frameIndex)
+    {
+        return videoTrack.RenderFrame2(frameIndex, fps, glCtx);
+    }
+
+    int EyerWandContext::UpdateScreenWH(int _screenW, int _screenH)
+    {
+        screenW = _screenW;
+        screenH = _screenH;
         return 0;
     }
 }

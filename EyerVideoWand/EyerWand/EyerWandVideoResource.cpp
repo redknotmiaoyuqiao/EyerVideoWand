@@ -9,6 +9,7 @@ namespace Eyer
 
     EyerWandVideoResource::~EyerWandVideoResource()
     {
+        mut.lock();
         for(int i=0;i<decoderLineList.getLength();i++){
             EyerVideoDecoderLine * decoderLine = nullptr;
             decoderLineList.find(i, decoderLine);
@@ -17,11 +18,38 @@ namespace Eyer
             }
         }
         decoderLineList.clear();
+        mut.unlock();
     }
 
     int EyerWandVideoResource::GetVideoFrame(EyerAVFrame & avFrame, double ts)
     {
+        mut.lock();
         // EyerLog("Deocde Line: %d\n", decoderLineList.getLength());
+        // EyerLog("=============================================Start\n");
+
+        // 将多余的 Decoder Line 删除
+        while(decoderLineList.getLength() > 5){
+            EyerVideoDecoderLine * dl = nullptr;
+            decoderLineList.find(0, dl);
+            if(dl != nullptr){
+                delete dl;
+            }
+            decoderLineList.deleteEle(0);
+        }
+
+        // 统计一下当前一共缓冲了多少帧 Debug 用
+        int cacheFrameCount = 0;
+        for(int i=0;i<decoderLineList.getLength();i++) {
+            EyerVideoDecoderLine * dl = nullptr;
+            decoderLineList.find(i, dl);
+            if(dl != nullptr){
+                cacheFrameCount += dl->GetCacheFrameCount();
+            }
+        }
+
+        // EyerLog("Cache Frame Count: %d\n", cacheFrameCount);
+
+        // 搜索何时的 Decoder Line
         EyerVideoDecoderLine * decoderLine = nullptr;
         for(int i=0;i<decoderLineList.getLength();i++) {
             EyerVideoDecoderLine * dl = nullptr;
@@ -31,12 +59,18 @@ namespace Eyer
             }
         }
 
+        // 搜索不到的情况下新建一个 Decoder Line
         if(decoderLine == nullptr){
+            // EyerLog("new EyerVideoDecoderLine  : %f\n", ts);
             decoderLine = new EyerVideoDecoderLine(resPath, ts);
             decoderLineList.insertBack(decoderLine);
         }
 
         decoderLine->GetFrame(avFrame, ts);
+
+        // EyerLog("=============================================End\n");
+
+        mut.unlock();
 
         return 0;
     }

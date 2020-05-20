@@ -14,11 +14,12 @@ namespace Eyer
 
     EyerVideoFragmentVideo::~EyerVideoFragmentVideo()
     {
+        
         if(videoResource != nullptr){
             delete videoResource;
             videoResource = nullptr;
         }
-
+        
         for(int i=0;i<transKeyList.getLength();i++){
             EyerTransKey * transKey = nullptr;
             transKeyList.find(i, transKey);
@@ -36,6 +37,7 @@ namespace Eyer
             }
         }
         scaleKeyList.clear();
+        
     }
 
     EyerVideoFragmentVideo & EyerVideoFragmentVideo::operator = (const EyerVideoFragmentVideo & fragment)
@@ -95,11 +97,13 @@ namespace Eyer
 
         videoResource->SetPath(path);
 
+        EyerLog("Start GetVideoDuration\n");
         int ret = videoResource->GetVideoDuration(duration);
         if(ret){
-            // RedLog("GetVideoDuration Error\n");
+            EyerLog("GetVideoDuration Error\n");
         }
-        // RedLog("Video Duration:%f\n", duration);
+        EyerLog("End GetVideoDuration\n");
+        EyerLog("Video Duration:%f\n", duration);
 
         SetFrameTime(0.0, duration);
 
