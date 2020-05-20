@@ -8,7 +8,7 @@ namespace Eyer {
     class LayerRenderTask : public EyerGLRenderTask
     {
     public:
-        LayerRenderTask(EyerVideoLayer & layer);
+        LayerRenderTask(EyerVideoLayer * layer, int frameIndex, int fps);
         ~LayerRenderTask();
 
         int SetScreenWH(int w, int h);
@@ -19,13 +19,16 @@ namespace Eyer {
         virtual int Destory();
 
     private:
-        EyerVideoLayer layer;
+        EyerVideoLayer * layer = nullptr;
 
         int screenW = 0;
         int screenH = 0;
 
         int videoW = 0;
         int videoH = 0;
+
+        int frameIndex = 0;
+        int fps = 0;
     };
 }
 

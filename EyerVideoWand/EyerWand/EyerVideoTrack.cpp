@@ -103,7 +103,7 @@ namespace Eyer
 
             EyerLog("Frame !!! , Frame Index: %d\n", frameIndex);
 
-            LayerRenderTask * renderFrameTask = new LayerRenderTask(*layout);
+            LayerRenderTask * renderFrameTask = new LayerRenderTask(layout, frameIndex, fps);
             renderFrameTask->SetScreenWH(glCtx->GetW(), glCtx->GetH());
             renderFrameTask->SetVideoWH(videoW, videoH);
             glCtx->AddTaskToRenderAndFreeQueue(renderFrameTask);

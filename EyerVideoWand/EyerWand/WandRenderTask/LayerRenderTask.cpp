@@ -3,9 +3,11 @@
 
 namespace Eyer
 {
-    LayerRenderTask::LayerRenderTask(EyerVideoLayer & _layer)
+    LayerRenderTask::LayerRenderTask(EyerVideoLayer * _layer, int _frameIndex, int _fps)
     {
         layer = _layer;
+        frameIndex = _frameIndex;
+        fps = _fps;
     }
 
     LayerRenderTask::~LayerRenderTask()
@@ -36,10 +38,10 @@ namespace Eyer
         EyerGLFrameBuffer frameTargetBuffer(videoW, videoH, &frameTargetTexture);
         frameTargetBuffer.Clear(0.0, 0.0, 0.0, 1.0);
 
-        int fragmentCount =  layer.GetVideoFragmentCount();
+        int fragmentCount =  layer->GetVideoFragmentCount();
         for(int fragmentIndex=0;fragmentIndex <fragmentCount;fragmentIndex++){
             EyerVideoFragment * fragment = nullptr;
-            layer.GetVideoFragment(fragment, fragmentIndex);
+            layer->GetVideoFragment(fragment, fragmentIndex);
             if(fragment == nullptr){
                 continue;
             }
@@ -47,7 +49,11 @@ namespace Eyer
             if(fragment->GetType() == EyerVideoFragmentType::VIDEO_FRAGMENT_VIDEO){
                 EyerAVFrame avframe;
                 EyerVideoFragmentVideo * videoFragmentVideo = (EyerVideoFragmentVideo *)fragment;
-                int ret = videoFragmentVideo->GetVideoFrame(avframe, 0.0);
+
+                double time = 1.0 / fps * frameIndex;
+                EyerLog("Time:%f\n", time);
+
+                int ret = videoFragmentVideo->GetVideoFrame(avframe, time);
                 if(ret){
                     EyerLog("GetVideoFrame Error\n");
                     continue;
@@ -82,6 +88,7 @@ namespace Eyer
                 yuv2texture.SetYTexture(&yT);
                 yuv2texture.SetUTexture(&uT);
                 yuv2texture.SetVTexture(&vT);
+                yuv2texture.SetReverseY(1);
 
                 free(y);
                 free(u);
