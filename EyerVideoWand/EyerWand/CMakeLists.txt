@@ -92,6 +92,12 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Android")
 
         WandRenderTask/LayerRenderTask.cpp
         WandRenderTask/VideoTrackRenderTask.cpp
+
+        UIView/WandTimeLine.cpp
+        UIView/WandTimeLineDrawEvent.cpp
+        UIView/WandTimeLineDrawEvent_Rect.cpp
+        UIView/WandTimeLineDrawEvent_Line.cpp
+        UIView/WandTimeLineDrawEventList.cpp
         )
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     MESSAGE(STATUS "current platform: Darwin")

@@ -85,6 +85,17 @@ namespace Eyer
         return frameCount;
     }
 
+    int EyerVideoTrack::GetLayerCount()
+    {
+        return layoutList.getLength();
+    }
+    
+    int EyerVideoTrack::GetLayer(EyerVideoLayout * & layout, int index)
+    {
+        layoutList.find(index, layout);
+        return 0;
+    }
+
     int EyerVideoTrack::RenderFrame2(int frameIndex, int fps, EyerGLContextThread * glCtx)
     {
         /*
@@ -111,7 +122,8 @@ namespace Eyer
         }
         */
 
-        VideoTrackRenderTask * videoTrackRenderTask = new VideoTrackRenderTask(this);
+        VideoTrackRenderTask * videoTrackRenderTask = new VideoTrackRenderTask(this, frameIndex, fps);
+        videoTrackRenderTask->SetScreenWH(glCtx->GetW(), glCtx->GetH());
         glCtx->AddTaskToRenderAndFreeQueue(videoTrackRenderTask);
         
         return 0;
@@ -242,5 +254,15 @@ namespace Eyer
         panelList.clear();
 
         return 0;
+    }
+
+    int EyerVideoTrack::GetVideoW()
+    {
+        return videoW;
+    }
+    
+    int EyerVideoTrack::GetVideoH()
+    {
+        return videoH;
     }
 }

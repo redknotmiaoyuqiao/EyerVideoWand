@@ -1,0 +1,28 @@
+#include "com_eyer_eyer_wand_editor_lib_EyerWandNative.h"
+
+#include "EyerWand/EyerWand.hpp"
+
+JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1timeline_1init
+(JNIEnv *, jclass)
+{
+    Eyer::WandTimeLine * timeline = new Eyer::WandTimeLine();
+    return (jlong)timeline;
+}
+
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1timeline_1uninit
+(JNIEnv *, jclass, jlong timelineP)
+{
+    Eyer::WandTimeLine * timeline = (Eyer::WandTimeLine *)timelineP;
+    delete timeline;
+    return 0;
+}
+
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1timeline_1draw
+(JNIEnv *, jclass, jlong timelineP)
+{
+    Eyer::WandTimeLine * timeline = (Eyer::WandTimeLine *)timelineP;
+
+    Eyer::WandTimeLineDrawEventList eventList;
+    timeline->Draw(eventList);
+    return 0;
+}

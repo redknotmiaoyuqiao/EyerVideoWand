@@ -179,10 +179,16 @@ namespace Eyer {
 
         int GetFrameCount();
 
+        int GetLayerCount();
+        int GetLayer(EyerVideoLayout * & layout, int index);
+
         int RenderFrame(int frameIndex, EyerVideoTrackRenderParams * params, int fps);
         int RenderFrame2(int frameIndex, int fps, EyerGLContextThread * glCtx);
 
         int SetTargetVideoWH(int w, int h);
+
+        int GetVideoW();
+        int GetVideoH();
     private:
         EyerLinkedList<EyerVideoLayout *> layoutList;
 
