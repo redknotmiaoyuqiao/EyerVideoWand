@@ -33,6 +33,10 @@ namespace Eyer {
         ~WandTimeLineDrawEventList();
 
         int AddEvent(WandTimeLineDrawEvent * event);
+
+        int GetEventCount();
+        int GetEvent(WandTimeLineDrawEvent * & event, int index);
+
     private:
         std::vector<WandTimeLineDrawEvent *> eventList;
     };
@@ -53,6 +57,9 @@ namespace Eyer {
         WandTimeLineDrawEvent_Rect();
         ~WandTimeLineDrawEvent_Rect();
 
+        WandTimeLineDrawEvent_Rect(WandTimeLineDrawEvent_Rect & rect);
+        WandTimeLineDrawEvent_Rect & operator = (WandTimeLineDrawEvent_Rect & rect);
+
         WandTimeLineDrawEventType GetType();
     };
 
@@ -61,6 +68,9 @@ namespace Eyer {
     public:
         WandTimeLineDrawEvent_Line();
         ~WandTimeLineDrawEvent_Line();
+
+        WandTimeLineDrawEvent_Line(WandTimeLineDrawEvent_Line & line);
+        WandTimeLineDrawEvent_Line & operator = (WandTimeLineDrawEvent_Line & line);
 
         WandTimeLineDrawEventType GetType();
     };

@@ -15,4 +15,14 @@ namespace Eyer {
     {
         return WandTimeLineDrawEventType::LINE;
     }
+
+    WandTimeLineDrawEvent_Line::WandTimeLineDrawEvent_Line(WandTimeLineDrawEvent_Line & line)
+    {
+        *this = line;
+    }
+
+    WandTimeLineDrawEvent_Line & WandTimeLineDrawEvent_Line::operator = (WandTimeLineDrawEvent_Line & line)
+    {
+        return *this;
+    }
 }
