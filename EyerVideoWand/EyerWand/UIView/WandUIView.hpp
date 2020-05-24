@@ -2,6 +2,7 @@
 #define	EYER_LIB_AV_WAND_UI_VIEW_H
 
 #include <vector>
+#include "EyerCore/EyerCore.hpp"
 
 namespace Eyer {
     class WandTimeLine;
@@ -61,6 +62,11 @@ namespace Eyer {
         WandTimeLineDrawEvent_Rect & operator = (WandTimeLineDrawEvent_Rect & rect);
 
         WandTimeLineDrawEventType GetType();
+
+        int SetRect(float startX, float startY, float endX, float endY);
+    private:
+        EyerVec2 start;
+        EyerVec2 end;
     };
 
     class WandTimeLineDrawEvent_Line : public WandTimeLineDrawEvent
