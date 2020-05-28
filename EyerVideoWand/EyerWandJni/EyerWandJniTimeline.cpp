@@ -49,3 +49,32 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
     Eyer::WandTimeLineDrawEventList * eventList = (Eyer::WandTimeLineDrawEventList *)eventListP;
     return eventList->GetEventCount();
 }
+
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1list_1get_1event_1type
+(JNIEnv *, jclass, jlong eventListP, jint eventIndex)
+{
+    Eyer::WandTimeLineDrawEventList * eventList = (Eyer::WandTimeLineDrawEventList *)eventListP;
+
+    Eyer::WandTimeLineDrawEvent * event = nullptr;
+
+    eventList->GetEvent(event, eventIndex);
+
+    if(event == nullptr){
+        return (int)Eyer::EyerVideoFragmentType::VIDEO_FRAGMENT_UNKNOW;
+    }
+
+    return (int)event->GetType();
+}
+
+
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1list_1get_1event
+(JNIEnv *, jclass, jlong eventListP, jlong eventP, jint eventIndex)
+{
+    Eyer::WandTimeLineDrawEventList * eventList = (Eyer::WandTimeLineDrawEventList *)eventListP;
+
+    Eyer::WandTimeLineDrawEvent * event = (Eyer::WandTimeLineDrawEvent *)eventP;
+
+    // eventList->GetEvent(eventType, event);
+
+    return 0;
+}

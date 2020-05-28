@@ -314,9 +314,10 @@ namespace Eyer {
 
     enum EyerVideoFragmentType
     {
-        VIDEO_FRAGMENT_VIDEO,
-        VIDEO_FRAGMENT_TEXT,
-        VIDEO_FRAGMENT_FRAME_SEQUENTIAL
+        VIDEO_FRAGMENT_UNKNOW = -1,
+        VIDEO_FRAGMENT_VIDEO = 0,
+        VIDEO_FRAGMENT_TEXT = 1,
+        VIDEO_FRAGMENT_FRAME_SEQUENTIAL = 2
     };
 
     class EyerVideoFragment

@@ -32,6 +32,18 @@ namespace Eyer {
     int WandTimeLineDrawEventList::GetEvent(WandTimeLineDrawEvent * & event, int index)
     {
         event = eventList[index];
+        
+        /*
+        WandTimeLineDrawEvent * tempEvent = eventList[index];
+
+        if(event->GetType() == WandTimeLineDrawEventType::LINE){
+            WandTimeLineDrawEvent_Line * line = new WandTimeLineDrawEvent_Line(*(WandTimeLineDrawEvent_Line *)event);
+        }
+        if(event->GetType() == WandTimeLineDrawEventType::RECT){
+            WandTimeLineDrawEvent_Rect * rect = new WandTimeLineDrawEvent_Rect(*(WandTimeLineDrawEvent_Rect *)event);
+        }
+        */
+
         return 0;
     }
 }
