@@ -13,8 +13,7 @@ namespace Eyer
         ~EyerWandContext();
 
         int SetGLCtx(EyerGLContextThread * glCtx);
-
-        int RenderFrame(double time);
+        
         int RenderFrameByIndex(int frameIndex);
 
         int UpdateScreenWH(int screenW, int screenH);

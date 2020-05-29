@@ -30,13 +30,6 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
     return 0;
 }
 
-JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1context_1render_1frame
-(JNIEnv *, jclass, jlong ctx, jdouble time)
-{
-    Eyer::EyerWandContext * wandCtx = (Eyer::EyerWandContext *)ctx;
-    return wandCtx->RenderFrame(time);
-}
-
 JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1context_1render_1frame_1index
 (JNIEnv *, jclass, jlong ctx, jint frame_index)
 {

@@ -4,5 +4,6 @@
 #include "EyerWandAV.hpp"
 #include "EyerWandContext.hpp"
 #include "WandRenderTask/WandRenderTask.hpp"
+#include "UIView/WandUIView.hpp"
 
 #endif

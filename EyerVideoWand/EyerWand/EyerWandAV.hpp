@@ -179,10 +179,16 @@ namespace Eyer {
 
         int GetFrameCount();
 
+        int GetLayerCount();
+        int GetLayer(EyerVideoLayout * & layout, int index);
+
         int RenderFrame(int frameIndex, EyerVideoTrackRenderParams * params, int fps);
         int RenderFrame2(int frameIndex, int fps, EyerGLContextThread * glCtx);
 
         int SetTargetVideoWH(int w, int h);
+
+        int GetVideoW();
+        int GetVideoH();
     private:
         EyerLinkedList<EyerVideoLayout *> layoutList;
 
@@ -308,9 +314,10 @@ namespace Eyer {
 
     enum EyerVideoFragmentType
     {
-        VIDEO_FRAGMENT_VIDEO,
-        VIDEO_FRAGMENT_TEXT,
-        VIDEO_FRAGMENT_FRAME_SEQUENTIAL
+        VIDEO_FRAGMENT_UNKNOW = -1,
+        VIDEO_FRAGMENT_VIDEO = 0,
+        VIDEO_FRAGMENT_TEXT = 1,
+        VIDEO_FRAGMENT_FRAME_SEQUENTIAL = 2
     };
 
     class EyerVideoFragment
