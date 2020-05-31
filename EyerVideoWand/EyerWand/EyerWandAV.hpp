@@ -5,6 +5,7 @@
 #include "EyerCore/EyerCore.hpp"
 #include "EyerAV/EyerAV.hpp"
 #include "EyerGL/EyerGLCustomComponent/EyerGLCustomComponent.hpp"
+#include "EyerVideoTweenAnimation/EyerVideoTweenAnimation.hpp"
 
 #define EYER_WAND_VERSION "EyerWand 1.0.0"
 
@@ -180,7 +181,10 @@ namespace Eyer {
         int GetFrameCount();
 
         int RenderFrame(int frameIndex, EyerVideoTrackRenderParams * params, int fps);
+
+#ifdef EYER_PLATFORM_ANDROID
         int RenderFrame2(int frameIndex, int fps, EyerGLContextThread * glCtx);
+#endif
 
         int SetTargetVideoWH(int w, int h);
     private:
@@ -343,7 +347,6 @@ namespace Eyer {
 
         int AddTransKey(double t, float x, float y, float z);
         int AddScaleKey(double t, float x, float y, float z);
-        int GetLinearValue(EyerVideoChangeType type, double t, float & x, float & y, float & z);
 
         double GetDuration();
 
@@ -354,6 +357,9 @@ namespace Eyer {
         int GetVideoFrame(EyerAVFrame & avFrame, double ts);
 
         virtual EyerVideoFragmentType GetType() const;
+
+        EyerVideoTweenAnimation * transAnimation = nullptr;
+        EyerVideoTweenAnimation * scaleAnimation = nullptr;
     private:
         EyerString path;
 
@@ -365,9 +371,6 @@ namespace Eyer {
         double duration = 0.0;
 
         Eyer::EyerWandVideoResource * videoResource = nullptr;
-
-        Eyer::EyerLinkedList<EyerTransKey *> transKeyList;
-        Eyer::EyerLinkedList<EyerTransKey *> scaleKeyList;
 
     };
 

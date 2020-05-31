@@ -4,7 +4,8 @@ namespace Eyer
 {
     EyerVideoFragmentVideo::EyerVideoFragmentVideo()
     {
-
+        transAnimation = new EyerVideoTweenAnimation();
+        scaleAnimation = new EyerVideoTweenAnimation();
     }
 
     EyerVideoFragmentVideo::EyerVideoFragmentVideo(const EyerVideoFragmentVideo & fragment)
@@ -19,24 +20,16 @@ namespace Eyer
             delete videoResource;
             videoResource = nullptr;
         }
-        
-        for(int i=0;i<transKeyList.getLength();i++){
-            EyerTransKey * transKey = nullptr;
-            transKeyList.find(i, transKey);
-            if(transKey != nullptr){
-                delete transKey;
-            }
-        }
-        transKeyList.clear();
 
-        for(int i=0; i<scaleKeyList.getLength(); i++){
-            EyerTransKey * scaleKey = nullptr;
-            scaleKeyList.find(i, scaleKey);
-            if(scaleKey != nullptr){
-                delete scaleKey;
-            }
+        if(scaleAnimation != nullptr){
+            delete scaleAnimation;
+            scaleAnimation = nullptr;
         }
-        scaleKeyList.clear();
+
+        if(transAnimation != nullptr){
+            delete transAnimation;
+            transAnimation = nullptr;
+        }
         
     }
 
@@ -54,23 +47,8 @@ namespace Eyer
 
         videoResource = nullptr;
 
-        for(int i=0;i<fragment.transKeyList.getLength();i++){
-            EyerTransKey * transKey = nullptr;
-            fragment.transKeyList.find(i, transKey);
-            if(transKey != nullptr){
-                EyerTransKey * tk = new EyerTransKey(*transKey);
-                transKeyList.insertBack(tk);
-            }
-        }
-
-        for(int i=0; i<fragment.scaleKeyList.getLength(); i++){
-            EyerTransKey * scaleKey = nullptr;
-            fragment.scaleKeyList.find(i, scaleKey);
-            if(scaleKey != nullptr){
-                EyerTransKey * sk = new EyerTransKey(*scaleKey);
-                scaleKeyList.insertBack(sk);
-            }
-        }
+        scaleAnimation = fragment.scaleAnimation;
+        transAnimation = fragment.transAnimation;
 
         return *this;
     }
@@ -156,90 +134,14 @@ namespace Eyer
 
     int EyerVideoFragmentVideo::AddTransKey(double t, float x, float y, float z)
     {
-        EyerTransKey * transKey = new EyerTransKey();
-        transKey->x = x;
-        transKey->y = y;
-        transKey->z = z;
-        transKey->t = t;
-        transKeyList.insertBack(transKey);
-
-        return 0;
+        EyerVideoAnimationKey transAnimationKey(t, x, y, z);
+        return transAnimation->AddKey(transAnimationKey);
     }
 
     int EyerVideoFragmentVideo::AddScaleKey(double t, float x, float y, float z)
     {
-        EyerTransKey * scaleKey = new EyerTransKey();
-        scaleKey->x = x;
-        scaleKey->y = y;
-        scaleKey->z = z;
-        scaleKey->t = t;
-        scaleKeyList.insertBack(scaleKey);
-        return 0;
-    }
-
-    int EyerVideoFragmentVideo::GetLinearValue(EyerVideoChangeType type, double t, float & x, float & y, float & z)
-    {
-        Eyer::EyerLinkedList<EyerTransKey *> * changeKeyList = new Eyer::EyerLinkedList<EyerTransKey *>();
-        if(type == EyerVideoChangeType::VIDEO_FRAGMENT_CHANGE_TRANS){
-            *changeKeyList = transKeyList;
-        }else if(type == EyerVideoChangeType::VIDEO_FRAGMENT_CHANGE_SCALE){
-            *changeKeyList = scaleKeyList;
-        }
-        
-        if(changeKeyList->getLength() == 0){
-            x = 0;
-            y = 0;
-            z = 0;
-            return 0;
-        }
-
-        EyerLinkedEle<Eyer::EyerTransKey *> * currentEle = changeKeyList->head;
-        for(int i=0; i< changeKeyList->getLength()-1; i++){
-            EyerLinkedEle<Eyer::EyerTransKey *> * temp = currentEle->next;
-            while (temp != nullptr){
-                if(temp->data->t < currentEle->data->t){
-                    Eyer::EyerTransKey * data = currentEle->data;
-                    currentEle->data = temp->data;
-                    temp->data = data;
-                }
-                temp = temp->next;
-            }
-            if(currentEle->next != nullptr){
-                currentEle = currentEle->next;
-            }
-        }
-
-        Eyer::EyerTransKey * firstdata = nullptr;
-        Eyer::EyerTransKey * lastdata = nullptr;
-        changeKeyList->find(0, firstdata);
-        changeKeyList->find(changeKeyList->getLength()-1, lastdata);
-
-        if(t < firstdata->t){
-            x = firstdata->x;
-            y = firstdata->y;
-            z = firstdata->z;
-            return 0;
-        }else if(t > lastdata->t){
-            x = lastdata->x;
-            y = lastdata->y;
-            z = lastdata->z;
-            return 0;
-        }
-
-        for(int i=0; i<changeKeyList->getLength()-1; i++){
-            changeKeyList->find(i, firstdata);
-            changeKeyList->find(i+1, lastdata);
-
-            if(t >= firstdata->t && t < lastdata->t){
-                double tPart = (t - firstdata->t)/(lastdata->t - firstdata->t);
-                x = tPart * (lastdata->x - firstdata->x) + firstdata->x;
-                y = tPart * (lastdata->y - firstdata->y) + firstdata->y;
-                z = tPart * (lastdata->z - firstdata->z) + firstdata->z;
-                return 0;
-            }
-        }
-
-        return 0;
+        EyerVideoAnimationKey scaleAnimationKey(t, x, y, z);
+        return scaleAnimation->AddKey(scaleAnimationKey);
     }
 
     EyerVideoFragmentType EyerVideoFragmentVideo::GetType() const

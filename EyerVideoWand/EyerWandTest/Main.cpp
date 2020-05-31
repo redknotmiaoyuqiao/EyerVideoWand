@@ -207,6 +207,7 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     videoFragment2.AddTransKey(6.8, 10.0, 10.0, 0.0);
     videoFragment2.AddTransKey(6.9, 0.0, 0.0, 0.0);
 
+
     videoFragment2.Print();
 
 
@@ -288,6 +289,7 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
 
 
 TEST(EyerVideoBuild, EyerVideoBuild_Test){
+    /*
     int fps = 30;
 
     Eyer::EyerWandBuilder builder("./time_clock_1h_1920x1080_60fps.mp4");
@@ -309,15 +311,63 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
     builder.AddVideoTrack(videoTrack);
     builder.AddAudioTrack(audioTrack);
     builder.Process();
+    */
 }
 
 TEST(EyerBuilder, EyerBuilder){
-    /*
-    Eyer::EyerWandBuilder builder("./builder_mp4.mp4");
+    int fps = 30;
+
+    Eyer::EyerWandBuilder builder("./yao_test.mp4");
+    builder.SetVideoWH(1920, 1080);
+    builder.SetVideoFPS(fps);
+
+    // 视频
+    Eyer::EyerVideoTrack videoTrack;
+
+    Eyer::EyerVideoLayout layer1;
+    // layer1.SetFrame(0, fps * 60 * 60 * 4);
+    layer1.SetFrame(0, fps * 3);
+    Eyer::EyerVideoFragmentVideo videoFragmentImage2;
+    videoFragmentImage2.LoadVideoFile("./M_1280_720.mp4");
+    videoFragmentImage2.AddTransKey(0.0, 300.0, 0.0, 0.0);
+
+    videoFragmentImage2.AddScaleKey(0.0, 100.0, 100.0, 0.0);
+    videoFragmentImage2.AddScaleKey(3.0, 200.0, 200.0, 0.0);
+    videoFragmentImage2.AddTransKey(3.0, 0.0, 0.0, 0.0);
+
+    layer1.AddVideoFragment(&videoFragmentImage2);
+    videoTrack.AddLayer(layer1);
+
+    // 音频
+    Eyer::EyerAudioTrack audioTrack;
+
+    builder.AddVideoTrack(videoTrack);
+    builder.AddAudioTrack(audioTrack);
+    builder.Process();
+
+    /*Eyer::EyerWandBuilder builder("./builder_mp4.mp4");
     builder.SetVideoWH(1280, 720);
-    builder.SetVideoFPS(60);
-    */
-    // builder.Process();
+    builder.SetVideoFPS(25);
+
+    Eyer::EyerVideoTrack videoTrack;
+    Eyer::EyerVideoLayout layer;
+    layer.SetFrame(0, 25*5);
+
+    Eyer::EyerVideoFragmentVideo videoFragment;
+    videoFragment.LoadVideoFile("./M_1280_720.mp4");
+    videoFragment.AddTransKey(0.0, 5.0, 0.0, 0.0);
+    videoFragment.AddTransKey(0.1, -5.0, 0.0, 0.0);
+    videoFragment.AddTransKey(0.2, 3.0, 0.0, 0.0);
+    videoFragment.AddTransKey(0.3, -3.0, 0.0, 0.0);
+
+    videoFragment.AddScaleKey(0.0, 1920.0, 1080.0, 0.0);
+    videoFragment.AddScaleKey(5.0, 1920.0 / 2, 1080.0 / 2, 0.0);
+
+    layer.AddVideoFragment(&videoFragment);
+    videoTrack.AddLayout(layer);
+
+    builder.AddVideoTrack(videoTrack);
+    builder.Process();*/
 }
 
 int main(int argc,char **argv)

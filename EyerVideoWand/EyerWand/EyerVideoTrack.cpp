@@ -85,6 +85,8 @@ namespace Eyer
         return frameCount;
     }
 
+#ifdef EYER_PLATFORM_ANDROID
+
     int EyerVideoTrack::RenderFrame2(int frameIndex, int fps, EyerGLContextThread * glCtx)
     {
         for(int i=0;i<layoutList.getLength();i++){
@@ -110,6 +112,8 @@ namespace Eyer
         }
         return 0;
     }
+
+#endif
 
     int EyerVideoTrack::RenderFrame(int frameIndex, EyerVideoTrackRenderParams * params, int fps)
     {
