@@ -152,6 +152,7 @@ IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
     target_link_libraries (EyerWand EyerType)
     target_link_libraries (EyerWand EyerGLShader)
     target_link_libraries (EyerWand EyerImg)
+    target_link_libraries (EyerWand EyerVideoTweenAnimation)
 
     target_link_libraries (EyerWand avformat)
     target_link_libraries (EyerWand avdevice)

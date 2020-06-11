@@ -227,21 +227,14 @@ namespace Eyer
             pip.Go(&yuv2rgbTexture, &panel->targetTexture, width, height);
 
             {
-                float x = 0.0;
-                float y = 0.0;
-                float z = 0.0;
+                EyerVideoAnimationKey transAnimationKey(ts, 0.0, 0.0, 0.0);
 
-                vfv->GetLinearValue(EyerVideoChangeType::VIDEO_FRAGMENT_CHANGE_TRANS, ts, x, y, z);
-                trans.SetTrans(x, y, z);
+                vfv->transAnimation->GetLinearValue(transAnimationKey);
+                trans.SetTrans(transAnimationKey.x, transAnimationKey.y, transAnimationKey.z);
 
-                float scale_x = 0.0;
-                float scale_y = 0.0;
-                float scale_z = 0.0;
-                
-                vfv->GetLinearValue(EyerVideoChangeType::VIDEO_FRAGMENT_CHANGE_SCALE, ts, scale_x, scale_y, scale_z);
-                
-                scale.SetScale(scale_x / 2, scale_y / 2, scale_z / 2);
-                // scale.SetScale(1920.0 / 2, 1080.0 / 2, scale_z);
+                EyerVideoAnimationKey scaleAnimationKey(ts, 0.0, 0.0, 0.0);
+                vfv->scaleAnimation->GetLinearValue(scaleAnimationKey);
+                scale.SetScale(scaleAnimationKey.x / 2, scaleAnimationKey.y / 2, scaleAnimationKey.z / 2);
 
                 panel->mvp = ortho * trans * scale ;
             }

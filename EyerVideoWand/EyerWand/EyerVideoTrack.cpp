@@ -96,6 +96,7 @@ namespace Eyer
         return 0;
     }
 
+#ifdef EYER_PLATFORM_ANDROID
     int EyerVideoTrack::RenderFrame2(int frameIndex, int fps, EyerGLContextThread * glCtx)
     {
         /*
@@ -128,6 +129,8 @@ namespace Eyer
         
         return 0;
     }
+
+#endif
 
     int EyerVideoTrack::RenderFrame(int frameIndex, EyerVideoTrackRenderParams * params, int fps)
     {
