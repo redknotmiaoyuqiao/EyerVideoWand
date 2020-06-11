@@ -113,3 +113,11 @@ JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wa
 
     return color.w();
 }
+
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1line_1get_1strokewidth
+(JNIEnv *, jclass, jlong lineP)
+{
+    Eyer::WandTimeLineDrawEvent_Line * line = (Eyer::WandTimeLineDrawEvent_Line *)lineP;
+
+    return line->GetStrokeWidth();
+}

@@ -33,6 +33,10 @@ namespace Eyer {
     
         int SetWH(float w, float h);
 
+        int OnTouchUp(float x, float y);
+        int OnTouchDown(float x, float y);
+        int OnTouchMove(float x, float y);
+
         int Draw(WandTimeLineDrawEventList & eventList);
 
     private:
@@ -113,11 +117,16 @@ namespace Eyer {
         int GetLine(EyerVec2 & start, EyerVec2 & end);
         int GetColor(EyerVec4 & color);
 
+        int SetStrokeWidth(int strokeWidth);
+        int GetStrokeWidth();
+
     private:
         EyerVec2 start;
         EyerVec2 end;
 
         EyerVec4 color;
+
+        int strokeWidth = 1;
     };
 }
 

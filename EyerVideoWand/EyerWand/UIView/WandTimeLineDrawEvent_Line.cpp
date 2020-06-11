@@ -26,6 +26,7 @@ namespace Eyer {
         start = line.start;
         end = line.end;
         color = line.color;
+        strokeWidth = line.strokeWidth;
         return *this;
     }
 
@@ -66,6 +67,17 @@ namespace Eyer {
     {
         _color = color;
         return 0;
+    }
+
+    int WandTimeLineDrawEvent_Line::SetStrokeWidth(int _strokeWidth)
+    {
+        strokeWidth = _strokeWidth;
+        return 0;
+    }
+
+    int WandTimeLineDrawEvent_Line::GetStrokeWidth()
+    {
+        return strokeWidth;
     }
 
 }

@@ -132,3 +132,33 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
 {
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1timeline_1on_1touch_1up
+(JNIEnv *, jclass, jlong timelineP, jfloat x, jfloat y)
+{
+    Eyer::WandTimeLine * timeline = (Eyer::WandTimeLine *)timelineP;
+    return timeline->OnTouchUp(x, y);
+}
+
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1timeline_1on_1touch_1down
+(JNIEnv *, jclass, jlong timelineP, jfloat x, jfloat y)
+{
+    Eyer::WandTimeLine * timeline = (Eyer::WandTimeLine *)timelineP;
+    return timeline->OnTouchDown(x, y);
+}
+
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1timeline_1on_1touch_1move
+(JNIEnv *, jclass, jlong timelineP, jfloat x, jfloat y)
+{
+    Eyer::WandTimeLine * timeline = (Eyer::WandTimeLine *)timelineP;
+    return timeline->OnTouchMove(x, y);
+}
