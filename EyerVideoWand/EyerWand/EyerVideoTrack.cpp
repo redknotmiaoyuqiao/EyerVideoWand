@@ -85,10 +85,21 @@ namespace Eyer
         return frameCount;
     }
 
-#ifdef EYER_PLATFORM_ANDROID
+    int EyerVideoTrack::GetLayerCount()
+    {
+        return layoutList.getLength();
+    }
+    
+    int EyerVideoTrack::GetLayer(EyerVideoLayout * & layout, int index)
+    {
+        layoutList.find(index, layout);
+        return 0;
+    }
 
+#ifdef EYER_PLATFORM_ANDROID
     int EyerVideoTrack::RenderFrame2(int frameIndex, int fps, EyerGLContextThread * glCtx)
     {
+        /*
         for(int i=0;i<layoutList.getLength();i++){
             EyerVideoLayout * layout = nullptr;
             layoutList.find(i, layout);
@@ -110,6 +121,12 @@ namespace Eyer
             renderFrameTask->SetVideoWH(videoW, videoH);
             glCtx->AddTaskToRenderAndFreeQueue(renderFrameTask);
         }
+        */
+
+        VideoTrackRenderTask * videoTrackRenderTask = new VideoTrackRenderTask(this, frameIndex, fps);
+        videoTrackRenderTask->SetScreenWH(glCtx->GetW(), glCtx->GetH());
+        glCtx->AddTaskToRenderAndFreeQueue(videoTrackRenderTask);
+        
         return 0;
     }
 
@@ -240,5 +257,15 @@ namespace Eyer
         panelList.clear();
 
         return 0;
+    }
+
+    int EyerVideoTrack::GetVideoW()
+    {
+        return videoW;
+    }
+    
+    int EyerVideoTrack::GetVideoH()
+    {
+        return videoH;
     }
 }

@@ -62,8 +62,6 @@ namespace Eyer
                 int frameW = avframe.GetWidth();
                 int frameH = avframe.GetHeight();
 
-                // EyerLog("W:%d, H:%d\n", frameW, frameH);
-
                 // 先讲视频帧渲染到一个 texture 上面，这里的长宽应该是视频帧的长宽
                 EyerGLTexture frameTexture;
                 EyerGLFrameBuffer frameTextureTargetBuffer(frameW, frameH, &frameTexture);

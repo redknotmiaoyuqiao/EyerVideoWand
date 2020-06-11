@@ -3,6 +3,7 @@
 
 #include "EyerWandAV.hpp"
 #include "WandRenderTask/WandRenderTask.hpp"
+#include "UIView/WandUIView.hpp"
 
 #ifdef EYER_PLATFORM_ANDROID
 #include "EyerWandContext.hpp"
