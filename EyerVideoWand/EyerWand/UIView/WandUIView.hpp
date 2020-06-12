@@ -9,6 +9,7 @@ namespace Eyer {
     class WandTimeLineDrawEvent;
     class WandTimeLineDrawEvent_Rect;
     class WandTimeLineDrawEvent_Line;
+    class WandTimeLineDrawEvent_Bitmap;
     class WandTimeLineDrawEventList;
 
     /**
@@ -16,9 +17,11 @@ namespace Eyer {
      */ 
     enum WandTimeLineDrawEventType
     {
-        UNKNOW = -1,
-        RECT = 0,
-        LINE = 1
+        UNKNOW      = -1,
+        RECT        = 0,
+        LINE        = 1,
+        BITMAP      = 2,
+        TEXT        = 3
     };
 
     /**
@@ -41,6 +44,18 @@ namespace Eyer {
 
     private:
         EyerVec2 wh;
+
+        int isMove = 0;
+        float lastX = -1;
+
+        // 绘制 时间标尺
+        double time = 120.0; // 120 秒
+        // 当前时间指针指向的时间
+        double nowTime = 0;
+        // 显示 mark 的时间间隔
+        double markDTime = 1.0;
+        // 两个 mark 之间的距离
+        double markD = 200.0f;
     };
 
     /**
@@ -127,6 +142,28 @@ namespace Eyer {
         EyerVec4 color;
 
         int strokeWidth = 1;
+    };
+
+
+    class WandTimeLineDrawEvent_Bitmap : public WandTimeLineDrawEvent
+    {
+    public:
+        WandTimeLineDrawEvent_Bitmap();
+        ~WandTimeLineDrawEvent_Bitmap();
+
+        WandTimeLineDrawEvent_Bitmap(WandTimeLineDrawEvent_Bitmap & bitmap);
+        WandTimeLineDrawEvent_Bitmap & operator = (WandTimeLineDrawEvent_Bitmap & bitmap);
+
+        WandTimeLineDrawEventType GetType();
+
+        int GetRect(EyerVec2 & srcStart, EyerVec2 & srcEnd, EyerVec2 & distStart, EyerVec2 & distEnd);
+
+    private:
+        EyerVec2 srcStart;
+        EyerVec2 srcEnd;
+
+        EyerVec2 distStart;
+        EyerVec2 distEnd;
     };
 }
 
