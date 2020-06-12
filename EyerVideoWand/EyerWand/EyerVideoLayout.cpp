@@ -139,9 +139,7 @@ namespace Eyer
 
             EyerGLYUV2TextureComponent * yuv2texture = new EyerGLYUV2TextureComponent();
 
-            unsigned char * yData = nullptr;
-            unsigned char * uData = nullptr;
-            unsigned char * vData = nullptr;
+            
             EyerGLTexture * y = new EyerGLTexture();
             EyerGLTexture * u = new EyerGLTexture();
             EyerGLTexture * v = new EyerGLTexture();
@@ -154,41 +152,26 @@ namespace Eyer
                 colorRange = EyerGLYUV2TextureComponentColorRange::COLOR_RANGE_JPEG;
             }
 
-            if(avFrame.GetPixFormat() == EyerAVPixelFormat::Eyer_AV_PIX_FMT_YUV420P || avFrame.GetPixFormat() == EyerAVPixelFormat::Eyer_AV_PIX_FMT_YUVJ420P){
-                yData = (unsigned char *)malloc(width * height);
-                avFrame.GetYData(yData);
-                uData = (unsigned char *)malloc(width / 2 * height / 2);
-                avFrame.GetUData(uData);
-                vData = (unsigned char *)malloc(width / 2 * height / 2);
-                avFrame.GetVData(vData);
+            EyerYUVLen memLen;
+            EyerAVTool::GetYUVLen(width, height, memLen, avFrame.GetPixFormat());
 
-                y->SetDataRedChannel(yData, width, height);
-                u->SetDataRedChannel(uData, width / 2, height / 2);
-                v->SetDataRedChannel(vData, width / 2, height / 2);
 
-                yuv2texture->SetColoRange(colorRange);
-                yuv2texture->SetYTexture(y);
-                yuv2texture->SetUTexture(u);
-                yuv2texture->SetVTexture(v);
-            }
+            unsigned char * yData = (unsigned char *)malloc(memLen.yLen);
+            unsigned char * uData = (unsigned char *)malloc(memLen.uLen);
+            unsigned char * vData = (unsigned char *)malloc(memLen.vLen);
 
-            if(avFrame.GetPixFormat() == EyerAVPixelFormat::Eyer_AV_PIX_FMT_YUV444P || avFrame.GetPixFormat() == EyerAVPixelFormat::Eyer_AV_PIX_FMT_YUVJ444P){
-                yData = (unsigned char *)malloc(width * height);
-                avFrame.GetYData(yData);
-                uData = (unsigned char *)malloc(width * height);
-                avFrame.GetUData(uData);
-                vData = (unsigned char *)malloc(width * height);
-                avFrame.GetVData(vData);
+            avFrame.GetYData(yData);
+            avFrame.GetUData(uData);
+            avFrame.GetVData(vData);
 
-                y->SetDataRedChannel(yData, width, height);
-                u->SetDataRedChannel(uData, width, height);
-                v->SetDataRedChannel(vData, width, height);
+            y->SetDataRedChannel(yData, memLen.yWidth, memLen.yHeight);
+            u->SetDataRedChannel(uData, memLen.uWidth, memLen.uHeight);
+            v->SetDataRedChannel(vData, memLen.vWidth, memLen.vHeight);
 
-                yuv2texture->SetColoRange(colorRange);
-                yuv2texture->SetYTexture(y);
-                yuv2texture->SetUTexture(u);
-                yuv2texture->SetVTexture(v);
-            }
+            yuv2texture->SetColoRange(colorRange);
+            yuv2texture->SetYTexture(y);
+            yuv2texture->SetUTexture(u);
+            yuv2texture->SetVTexture(v);
 
 
             frameBuffer->Clear();
