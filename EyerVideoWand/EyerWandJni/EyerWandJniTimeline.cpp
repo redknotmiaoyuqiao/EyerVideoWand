@@ -9,11 +9,30 @@ JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wan
     return (jlong)timeline;
 }
 
+/**
+ * 释放 TimeLine
+ */ 
 JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1timeline_1uninit
 (JNIEnv *, jclass, jlong timelineP)
 {
     Eyer::WandTimeLine * timeline = (Eyer::WandTimeLine *)timelineP;
-    delete timeline;
+    if(timeline != nullptr){
+        delete timeline;
+        timeline = nullptr;
+    }
+    
+    return 0;
+}
+
+
+/**
+ * 设置画布宽高
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1timeline_1set_1wh
+(JNIEnv *, jclass, jlong timelineP, jfloat w, jfloat h)
+{
+    Eyer::WandTimeLine * timeline = (Eyer::WandTimeLine *)timelineP;
+    timeline->SetWH(w, h);
     return 0;
 }
 
@@ -60,21 +79,86 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
     eventList->GetEvent(event, eventIndex);
 
     if(event == nullptr){
-        return (int)Eyer::EyerVideoFragmentType::VIDEO_FRAGMENT_UNKNOW;
+        return (int)Eyer::WandTimeLineDrawEventType::UNKNOW;
     }
 
     return (int)event->GetType();
 }
 
 
-JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1list_1get_1event
-(JNIEnv *, jclass, jlong eventListP, jlong eventP, jint eventIndex)
+
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1list_1get_1rect_1event
+(JNIEnv *, jclass, jlong eventListP, jlong rectP, jint index)
 {
     Eyer::WandTimeLineDrawEventList * eventList = (Eyer::WandTimeLineDrawEventList *)eventListP;
 
-    Eyer::WandTimeLineDrawEvent * event = (Eyer::WandTimeLineDrawEvent *)eventP;
+    Eyer::WandTimeLineDrawEvent_Rect * rect = (Eyer::WandTimeLineDrawEvent_Rect *)rectP;
 
-    // eventList->GetEvent(eventType, event);
+    // 验证类型是否正确
+    Eyer::WandTimeLineDrawEvent * tempEvent = nullptr;
+    eventList->GetEvent(tempEvent, index);
+
+    if(tempEvent == nullptr){
+        return -1;
+    }
+
+    *rect = *((Eyer::WandTimeLineDrawEvent_Rect *)tempEvent);
 
     return 0;
+}
+
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1list_1get_1line_1event
+(JNIEnv *, jclass, jlong eventListP, jlong lineP, jint index)
+{
+
+    Eyer::WandTimeLineDrawEventList * eventList = (Eyer::WandTimeLineDrawEventList *)eventListP;
+
+    Eyer::WandTimeLineDrawEvent_Line * line = (Eyer::WandTimeLineDrawEvent_Line *)lineP;
+
+    // 验证类型是否正确
+    Eyer::WandTimeLineDrawEvent * tempEvent = nullptr;
+    eventList->GetEvent(tempEvent, index);
+
+    if(tempEvent == nullptr){
+        return -1;
+    }
+
+    *line = *((Eyer::WandTimeLineDrawEvent_Line *)tempEvent);
+    return 0;
+}
+
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1list_1get_1text_1event
+(JNIEnv *, jclass, jlong, jlong, jint index)
+{
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1timeline_1on_1touch_1up
+(JNIEnv *, jclass, jlong timelineP, jfloat x, jfloat y)
+{
+    Eyer::WandTimeLine * timeline = (Eyer::WandTimeLine *)timelineP;
+    return timeline->OnTouchUp(x, y);
+}
+
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1timeline_1on_1touch_1down
+(JNIEnv *, jclass, jlong timelineP, jfloat x, jfloat y)
+{
+    Eyer::WandTimeLine * timeline = (Eyer::WandTimeLine *)timelineP;
+    return timeline->OnTouchDown(x, y);
+}
+
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1timeline_1on_1touch_1move
+(JNIEnv *, jclass, jlong timelineP, jfloat x, jfloat y)
+{
+    Eyer::WandTimeLine * timeline = (Eyer::WandTimeLine *)timelineP;
+    return timeline->OnTouchMove(x, y);
 }

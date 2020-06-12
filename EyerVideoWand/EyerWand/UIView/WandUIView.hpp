@@ -11,22 +11,41 @@ namespace Eyer {
     class WandTimeLineDrawEvent_Line;
     class WandTimeLineDrawEventList;
 
+    /**
+     * 绘制界面类型的枚举类
+     */ 
     enum WandTimeLineDrawEventType
     {
-        UNKNOW = 0,
-        RECT = 1,
-        LINE = 2
+        UNKNOW = -1,
+        RECT = 0,
+        LINE = 1
     };
 
+    /**
+     * TimeLine 的主要绘制逻辑
+     */ 
     class WandTimeLine
     {
     public:
         WandTimeLine();
         ~WandTimeLine();
 
-        int Draw(WandTimeLineDrawEventList & eventList);
-    };
     
+        int SetWH(float w, float h);
+
+        int OnTouchUp(float x, float y);
+        int OnTouchDown(float x, float y);
+        int OnTouchMove(float x, float y);
+
+        int Draw(WandTimeLineDrawEventList & eventList);
+
+    private:
+        EyerVec2 wh;
+    };
+
+    /**
+     * 事件队列
+     */ 
     class WandTimeLineDrawEventList
     {
     public:
@@ -42,7 +61,9 @@ namespace Eyer {
         std::vector<WandTimeLineDrawEvent *> eventList;
     };
 
-
+    /**
+     * 绘制事件的父类
+     */ 
     class WandTimeLineDrawEvent
     {
     public:
@@ -64,9 +85,16 @@ namespace Eyer {
         WandTimeLineDrawEventType GetType();
 
         int SetRect(float startX, float startY, float endX, float endY);
+
+        int SetColor(EyerVec4 color);
+        int SetColor(float red, float green, float blue, float alpha);
+
+        int GetRect(EyerVec2 & start, EyerVec2 & end);
+        int GetColor(EyerVec4 & color);
     private:
         EyerVec2 start;
         EyerVec2 end;
+        EyerVec4 color;
     };
 
     class WandTimeLineDrawEvent_Line : public WandTimeLineDrawEvent
@@ -79,6 +107,26 @@ namespace Eyer {
         WandTimeLineDrawEvent_Line & operator = (WandTimeLineDrawEvent_Line & line);
 
         WandTimeLineDrawEventType GetType();
+
+
+        int SetLine(float startX, float startY, float endX, float endY);
+
+        int SetColor(EyerVec4 color);
+        int SetColor(float red, float green, float blue, float alpha);
+
+        int GetLine(EyerVec2 & start, EyerVec2 & end);
+        int GetColor(EyerVec4 & color);
+
+        int SetStrokeWidth(int strokeWidth);
+        int GetStrokeWidth();
+
+    private:
+        EyerVec2 start;
+        EyerVec2 end;
+
+        EyerVec4 color;
+
+        int strokeWidth = 1;
     };
 }
 
