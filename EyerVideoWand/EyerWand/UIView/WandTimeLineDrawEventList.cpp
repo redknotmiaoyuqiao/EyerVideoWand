@@ -21,7 +21,7 @@ namespace Eyer {
             WandTimeLineDrawEvent_Rect * rect = new WandTimeLineDrawEvent_Rect(*(WandTimeLineDrawEvent_Rect *)event);
             eventList.push_back(rect);
         }
-        if(event->GetType() == WandTimeLineDrawEventType::RECT){
+        if(event->GetType() == WandTimeLineDrawEventType::BITMAP){
             WandTimeLineDrawEvent_Bitmap * bitmap = new WandTimeLineDrawEvent_Bitmap(*(WandTimeLineDrawEvent_Bitmap *)event);
             eventList.push_back(bitmap);
         }

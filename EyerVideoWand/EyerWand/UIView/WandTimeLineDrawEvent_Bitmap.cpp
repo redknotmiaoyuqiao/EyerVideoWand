@@ -31,7 +31,7 @@ namespace Eyer {
         srcEnd          = bitmap.srcEnd;
         distStart       = bitmap.distStart;
         distEnd         = bitmap.distEnd;
-
+        
         return *this;
     }
 

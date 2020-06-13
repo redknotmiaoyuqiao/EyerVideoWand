@@ -14,6 +14,8 @@ add_library(
     EyerWandJniTimeline.cpp
     EyerWandJniDrawEventRect.cpp
     EyerWandJniDrawEventLine.cpp
+
+    EyerWandJniVec.cpp
     JniUtil.cpp
 )
 
