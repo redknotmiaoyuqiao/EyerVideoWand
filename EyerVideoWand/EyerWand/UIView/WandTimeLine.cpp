@@ -16,7 +16,7 @@ namespace Eyer {
 
     int WandTimeLine::Draw(WandTimeLineDrawEventList & eventList)
     {
-        EyerLog("TimeLine draw\n");
+        // EyerLog("TimeLine draw\n");
 
         float canvasW = wh.x();
         float canvasH = wh.y();
@@ -56,21 +56,48 @@ namespace Eyer {
         }
 
         // 绘制 Layer
-        int layerHeight = canvasH * 0.15;
-        WandTimeLineDrawEvent_Rect layerRect;
-        double layerStartTime = 0.0f;
-        double layerEndTime = 8.0f;
+        {
+            int layerHeight = canvasH * 0.2;
+            WandTimeLineDrawEvent_Rect layerRect;
+            double layerStartTime = 0.0f;
+            double layerEndTime = 8.0f;
 
-        float layerStartX = 0.0 + layerStartTime / markDTime * markD + offsetX;
-        float layerEndX = 0.0 + layerEndTime / markDTime * markD + offsetX;
+            float layerStartX = 0.0 + layerStartTime / markDTime * markD + offsetX;
+            float layerEndX = 0.0 + layerEndTime / markDTime * markD + offsetX;
 
-        layerRect.SetRect(layerStartX, canvasH * 0.5 - layerHeight * 0.5, layerEndX, canvasH * 0.5 + layerHeight * 0.5);
-        layerRect.SetColor(layerColor);
+            float layerStartY = canvasH * 0.5 - layerHeight * 0.5;
+            float layerEndY = canvasH * 0.5 + layerHeight * 0.5;
 
-        eventList.AddEvent(&layerRect);
+            layerRect.SetRect(layerStartX, layerStartY, layerEndX, layerEndY);
+            layerRect.SetColor(layerColor);
 
-        WandTimeLineDrawEvent_Bitmap bitmap;
-        eventList.AddEvent(&bitmap);
+            eventList.AddEvent(&layerRect);
+
+            // 计算要绘制的缩略图的宽度
+            int imgW = layerHeight;
+            int imgCount = (layerEndX - layerStartX) / imgW;
+            for(int imgIndex = 0; imgIndex < imgCount; imgIndex++){
+                WandTimeLineDrawEvent_Bitmap bitmap;
+
+                float x1 = imgIndex * imgW + layerStartX;
+                float y1 = layerStartY;
+
+                float x2 = imgIndex * imgW + imgW + layerStartX;
+                float y2 = layerEndY;
+
+                if(x1 > canvasW){
+                    continue;
+                }
+                if(x2 < 0){
+                    continue;
+                }
+
+                bitmap.SetDist(x1, y1, x2, y2);
+                eventList.AddEvent(&bitmap);
+            }            
+        }
+        
+        
 
         // 绘制时间针
         WandTimeLineDrawEvent_Line timePointer;

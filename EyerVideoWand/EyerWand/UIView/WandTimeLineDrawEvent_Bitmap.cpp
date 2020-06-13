@@ -3,17 +3,7 @@
 namespace Eyer {
     WandTimeLineDrawEvent_Bitmap::WandTimeLineDrawEvent_Bitmap()
     {
-        srcStart.SetX(0.0);
-        srcStart.SetY(0.0);
-
-        srcEnd.SetX(100.0);
-        srcEnd.SetY(100.0);
-
-        distStart.SetX(0.0);
-        distStart.SetY(0.0);
-
-        distEnd.SetX(100.0);
-        distEnd.SetY(100.0);
+        
     }
 
     WandTimeLineDrawEvent_Bitmap::~WandTimeLineDrawEvent_Bitmap()
@@ -27,10 +17,8 @@ namespace Eyer {
     }
     WandTimeLineDrawEvent_Bitmap & WandTimeLineDrawEvent_Bitmap::operator = (WandTimeLineDrawEvent_Bitmap & bitmap)
     {
-        srcStart        = bitmap.srcStart;
-        srcEnd          = bitmap.srcEnd;
-        distStart       = bitmap.distStart;
-        distEnd         = bitmap.distEnd;
+        src        = bitmap.src;
+        dist       = bitmap.dist;
         
         return *this;
     }
@@ -40,12 +28,35 @@ namespace Eyer {
         return WandTimeLineDrawEventType::BITMAP;
     }
 
-    int WandTimeLineDrawEvent_Bitmap::GetRect(EyerVec2 & _srcStart, EyerVec2 & _srcEnd, EyerVec2 & _distStart, EyerVec2 & _distEnd)
+    int WandTimeLineDrawEvent_Bitmap::GetRect(EyerVec4 & _src, EyerVec4 & _dist)
     {
-        _srcStart       = srcStart;
-        _srcEnd         = srcEnd;
-        _distStart      = distStart;
-        _distEnd        = distEnd;
+        src = _src;
+        dist = _dist;
+        return 0;
+    }
+
+    int WandTimeLineDrawEvent_Bitmap::GetSrc(EyerVec4 & _src)
+    {
+        _src = src;
+        return 0;
+    }
+
+    int WandTimeLineDrawEvent_Bitmap::GetDist(EyerVec4 & _dist)
+    {
+        _dist = dist;
+        return 0;
+    }
+
+    int WandTimeLineDrawEvent_Bitmap::SetSrc(float x1, float y1, float x2, float y2)
+    {
+        src.SetXY1(x1, y1);
+        src.SetXY2(x2, y2);
+        return 0;
+    }
+    int WandTimeLineDrawEvent_Bitmap::SetDist(float x1, float y1, float x2, float y2)
+    {
+        dist.SetXY1(x1, y1);
+        dist.SetXY2(x2, y2);
         return 0;
     }
 }

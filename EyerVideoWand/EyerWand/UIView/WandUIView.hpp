@@ -156,14 +156,17 @@ namespace Eyer {
 
         WandTimeLineDrawEventType GetType();
 
-        int GetRect(EyerVec2 & srcStart, EyerVec2 & srcEnd, EyerVec2 & distStart, EyerVec2 & distEnd);
+        int GetRect(EyerVec4 & src, EyerVec4 & dist);
+
+        int GetSrc(EyerVec4 & src);
+        int GetDist(EyerVec4 & dist);
+
+        int SetSrc(float x1, float y1, float x2, float y2);
+        int SetDist(float x1, float y1, float x2, float y2);
 
     private:
-        EyerVec2 srcStart;
-        EyerVec2 srcEnd;
-
-        EyerVec2 distStart;
-        EyerVec2 distEnd;
+        EyerVec4 src;
+        EyerVec4 dist;
     };
 }
 

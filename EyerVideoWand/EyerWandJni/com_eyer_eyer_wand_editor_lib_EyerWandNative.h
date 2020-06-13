@@ -537,35 +537,19 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
 
 /*
  * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
- * Method:    wand_view_draw_event_bitmap_src_start_x
- * Signature: (J)F
+ * Method:    wand_view_draw_event_bitmap_get_src
+ * Signature: (JJ)I
  */
-JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1bitmap_1src_1start_1x
-  (JNIEnv *, jclass, jlong);
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1bitmap_1get_1src
+  (JNIEnv *, jclass, jlong, jlong);
 
 /*
  * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
- * Method:    wand_view_draw_event_bitmap_src_start_y
- * Signature: (J)F
+ * Method:    wand_view_draw_event_bitmap_get_dist
+ * Signature: (JJ)I
  */
-JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1bitmap_1src_1start_1y
-  (JNIEnv *, jclass, jlong);
-
-/*
- * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
- * Method:    wand_view_draw_event_bitmap_src_end_x
- * Signature: (J)F
- */
-JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1bitmap_1src_1end_1x
-  (JNIEnv *, jclass, jlong);
-
-/*
- * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
- * Method:    wand_view_draw_event_bitmap_src_end_y
- * Signature: (J)F
- */
-JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1bitmap_1src_1end_1y
-  (JNIEnv *, jclass, jlong);
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1bitmap_1get_1dist
+  (JNIEnv *, jclass, jlong, jlong);
 
 /*
  * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative

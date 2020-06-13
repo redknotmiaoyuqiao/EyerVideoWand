@@ -39,7 +39,9 @@ JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wa
 
 
 
-
+/**
+ * Vec3
+ */
 JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1vec3_1init
 (JNIEnv *, jclass)
 {
@@ -79,6 +81,10 @@ JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wa
 
 
 
+
+/**
+ * Vec4
+ */
 JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1vec4_1init
 (JNIEnv *, jclass)
 {
