@@ -113,6 +113,7 @@ namespace Eyer
 
 
         if(fragment->GetType() == EyerVideoFragmentType::VIDEO_FRAGMENT_VIDEO){
+            EyerLog("before EyerVideoFragmentVideo fragment=======================================\n");
             EyerVideoFragmentVideo * vfv = (EyerVideoFragmentVideo *)fragment;
 
             EyerAVFrame avFrame;
@@ -212,11 +213,11 @@ namespace Eyer
             {
                 EyerVideoAnimationKey transAnimationKey(ts, 0.0, 0.0, 0.0);
 
-                vfv->transAnimation->GetLinearValue(transAnimationKey);
+                vfv->transAnimation.GetLinearValue(transAnimationKey);
                 trans.SetTrans(transAnimationKey.x, transAnimationKey.y, transAnimationKey.z);
 
                 EyerVideoAnimationKey scaleAnimationKey(ts, 0.0, 0.0, 0.0);
-                vfv->scaleAnimation->GetLinearValue(scaleAnimationKey);
+                vfv->scaleAnimation.GetLinearValue(scaleAnimationKey);
                 scale.SetScale(scaleAnimationKey.x / 2, scaleAnimationKey.y / 2, scaleAnimationKey.z / 2);
 
                 panel->mvp = ortho * trans * scale ;

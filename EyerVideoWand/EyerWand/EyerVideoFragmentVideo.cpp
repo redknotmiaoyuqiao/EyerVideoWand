@@ -4,8 +4,7 @@ namespace Eyer
 {
     EyerVideoFragmentVideo::EyerVideoFragmentVideo()
     {
-        transAnimation = new EyerVideoTweenAnimation();
-        scaleAnimation = new EyerVideoTweenAnimation();
+        
     }
 
     EyerVideoFragmentVideo::EyerVideoFragmentVideo(const EyerVideoFragmentVideo & fragment)
@@ -20,17 +19,6 @@ namespace Eyer
             delete videoResource;
             videoResource = nullptr;
         }
-
-        if(scaleAnimation != nullptr){
-            delete scaleAnimation;
-            scaleAnimation = nullptr;
-        }
-
-        if(transAnimation != nullptr){
-            delete transAnimation;
-            transAnimation = nullptr;
-        }
-        
     }
 
     EyerVideoFragmentVideo & EyerVideoFragmentVideo::operator = (const EyerVideoFragmentVideo & fragment)
@@ -135,13 +123,13 @@ namespace Eyer
     int EyerVideoFragmentVideo::AddTransKey(double t, float x, float y, float z)
     {
         EyerVideoAnimationKey transAnimationKey(t, x, y, z);
-        return transAnimation->AddKey(transAnimationKey);
+        return transAnimation.AddKey(transAnimationKey);
     }
 
     int EyerVideoFragmentVideo::AddScaleKey(double t, float x, float y, float z)
     {
         EyerVideoAnimationKey scaleAnimationKey(t, x, y, z);
-        return scaleAnimation->AddKey(scaleAnimationKey);
+        return scaleAnimation.AddKey(scaleAnimationKey);
     }
 
     EyerVideoFragmentType EyerVideoFragmentVideo::GetType() const

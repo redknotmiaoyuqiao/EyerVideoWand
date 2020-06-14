@@ -365,8 +365,8 @@ namespace Eyer {
 
         virtual EyerVideoFragmentType GetType() const;
 
-        EyerVideoTweenAnimation * transAnimation = nullptr;
-        EyerVideoTweenAnimation * scaleAnimation = nullptr;
+        EyerVideoTweenAnimation transAnimation;
+        EyerVideoTweenAnimation scaleAnimation;
     private:
         EyerString path;
 
