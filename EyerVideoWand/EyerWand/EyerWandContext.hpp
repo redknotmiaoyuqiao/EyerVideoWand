@@ -2,7 +2,7 @@
 #define	EYER_LIB_AV_WAND_CONTEXT_H
 
 #include "EyerGLContext/EyerGLContext.hpp"
-#include "EyerWand.hpp"
+#include "EyerWandAV.hpp"
 
 namespace Eyer
 {
@@ -17,6 +17,13 @@ namespace Eyer
         int RenderFrameByIndex(int frameIndex);
 
         int UpdateScreenWH(int screenW, int screenH);
+
+
+
+        int GetLayerCount();
+        int GetLayer(EyerVideoLayer & layer, int index);
+
+        int GetFPS();
 
     private:
         EyerGLContextThread * glCtx = nullptr;
