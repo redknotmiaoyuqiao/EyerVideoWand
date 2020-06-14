@@ -1,4 +1,5 @@
 #include "EyerWandContext.hpp"
+#include "EyerWandAV.hpp"
 
 namespace Eyer
 {
@@ -15,7 +16,7 @@ namespace Eyer
             fragmentVideo.LoadVideoFile("/storage/emulated/0/ST/time_clock_1min_720x1280_30fps.mp4");
         
             EyerVideoLayer layer;
-            layer.SetFrame(0, 100);
+            layer.SetFrame(0, 200);
             layer.AddVideoFragment(&fragmentVideo);
 
             videoTrack.AddLayer(layer);
@@ -26,7 +27,7 @@ namespace Eyer
             fragmentVideo.LoadVideoFile("/storage/emulated/0/ST/time_clock_1min_1280x720_30fps.mp4");
         
             EyerVideoLayer layer;
-            layer.SetFrame(50, 200);
+            layer.SetFrame(200, 800);
             layer.AddVideoFragment(&fragmentVideo);
 
             videoTrack.AddLayer(layer);
@@ -36,6 +37,11 @@ namespace Eyer
 
     EyerWandContext::~EyerWandContext()
     {
+    }
+
+    int EyerWandContext::GetFPS()
+    {
+        return fps;
     }
 
     int EyerWandContext::SetGLCtx(EyerGLContextThread * _glCtx)
@@ -53,6 +59,24 @@ namespace Eyer
     {
         screenW = _screenW;
         screenH = _screenH;
+        return 0;
+    }
+
+    int EyerWandContext::GetLayerCount()
+    {
+        return videoTrack.GetLayerCount();
+    }
+
+    int EyerWandContext::GetLayer(EyerVideoLayer & layer, int index)
+    {
+        EyerVideoLayout * l = nullptr;
+        videoTrack.GetLayer(l, index);
+        if(l == nullptr){
+            return -1;
+        }
+
+        layer = *l;
+
         return 0;
     }
 }

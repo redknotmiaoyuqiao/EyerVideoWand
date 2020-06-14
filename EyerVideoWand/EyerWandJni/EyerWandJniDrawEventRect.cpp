@@ -2,7 +2,7 @@
 
 #include "EyerCrop/EyerCrop.hpp"
 #include "EyerAV/EyerAV.hpp"
-#include "EyerWand/EyerWandContext.hpp"
+#include "EyerWand/EyerWand.hpp"
 
 JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1rect_1init
 (JNIEnv *, jclass)

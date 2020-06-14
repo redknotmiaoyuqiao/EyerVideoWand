@@ -99,30 +99,6 @@ namespace Eyer
 #ifdef EYER_PLATFORM_ANDROID
     int EyerVideoTrack::RenderFrame2(int frameIndex, int fps, EyerGLContextThread * glCtx)
     {
-        /*
-        for(int i=0;i<layoutList.getLength();i++){
-            EyerVideoLayout * layout = nullptr;
-            layoutList.find(i, layout);
-            if(layout == nullptr){
-                continue;
-            }
-
-            if(frameIndex < layout->GetStartFrameIndex()){
-                continue;
-            }
-            if(frameIndex > layout->GetEndFrameIndex()){
-                continue;
-            }
-
-            EyerLog("Frame !!! , Frame Index: %d\n", frameIndex);
-
-            LayerRenderTask * renderFrameTask = new LayerRenderTask(layout, frameIndex, fps);
-            renderFrameTask->SetScreenWH(glCtx->GetW(), glCtx->GetH());
-            renderFrameTask->SetVideoWH(videoW, videoH);
-            glCtx->AddTaskToRenderAndFreeQueue(renderFrameTask);
-        }
-        */
-
         VideoTrackRenderTask * videoTrackRenderTask = new VideoTrackRenderTask(this, frameIndex, fps);
         videoTrackRenderTask->SetScreenWH(glCtx->GetW(), glCtx->GetH());
         glCtx->AddTaskToRenderAndFreeQueue(videoTrackRenderTask);

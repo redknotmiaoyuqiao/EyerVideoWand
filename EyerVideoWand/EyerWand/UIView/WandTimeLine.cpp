@@ -14,15 +14,25 @@ namespace Eyer {
         
     }
 
+    int WandTimeLine::SetWandCtx(Eyer::EyerWandContext * _ctx)
+    {
+        ctx = _ctx;
+        return 0;
+    }
+
     int WandTimeLine::Draw(WandTimeLineDrawEventList & eventList)
     {
         // EyerLog("TimeLine draw\n");
+        if(ctx == nullptr){
+            return 0;
+        }
 
         float canvasW = wh.x();
         float canvasH = wh.y();
 
-        EyerVec4 backgroundColor            (0.3f, 0.3f, 0.3f, 1.0f);       // 绘制背景底色
-        EyerVec4 markColor                  (1.0f, 1.0f, 1.0f, 1.0f);       // 标尺颜色
+        // EyerVec4 backgroundColor            (0.3f, 0.3f, 0.3f, 1.0f);       // 绘制背景底色
+        EyerVec4 backgroundColor            (0.0f, 0.0f, 0.0f, 1.0f);       // 绘制背景底色
+        EyerVec4 markColor                  (0.4f, 0.4f, 0.4f, 1.0f);       // 标尺颜色
         EyerVec4 timePointerColor           (1.0f, 1.0f, 1.0f, 1.0f);       // 绘制时间针颜色
         EyerVec4 layerColor                 (0.8f, 0.8f, 0.8f, 0.8f);       // Layer颜色
 
@@ -35,8 +45,27 @@ namespace Eyer {
         
         double offsetX = -(nowTime / markDTime * markD) + canvasW / 2;
 
+
+
+        int layerCount = ctx->GetLayerCount();
+        int fps = ctx->GetFPS();
+        int maxFrameIndex = 0;
+        for(int layerIndex=0; layerIndex<layerCount; layerIndex++){
+            EyerVideoLayer layer;
+            int ret = ctx->GetLayer(layer, layerIndex);
+            if(ret){
+                continue;
+            }
+            if(layer.GetEndFrameIndex() >= maxFrameIndex){
+                maxFrameIndex = layer.GetEndFrameIndex();
+            }
+        }
+
+        time = maxFrameIndex * 1.0 / fps;
+        // EyerLog("%f\n", time);
+
         // 绘制时间标尺
-        int timeMartCount = (int)(time / markDTime);
+        int timeMartCount = (int)(time / markDTime) + 1;
         for(int markIndex=0;markIndex<timeMartCount;markIndex++){
             WandTimeLineDrawEvent_Line line;
             line.SetColor(markColor);
@@ -55,18 +84,32 @@ namespace Eyer {
             eventList.AddEvent(&line);
         }
 
+
         // 绘制 Layer
-        {
+        for(int layerIndex=0; layerIndex<layerCount; layerIndex++){
+            EyerVideoLayer layer;
+            int ret = ctx->GetLayer(layer, layerIndex);
+            if(ret){
+                continue;
+            }
+
+            // EyerLog("Start Frame Index: %d\n", layer.GetStartFrameIndex());
+            // EyerLog("End Frame Index: %d\n", layer.GetEndFrameIndex());
+
+            double layerStartTime = layer.GetStartFrameIndex() * 1.0 / fps;
+            double layerEndTime = layer.GetEndFrameIndex() * 1.0 / fps;
+
             int layerHeight = canvasH * 0.2;
             WandTimeLineDrawEvent_Rect layerRect;
-            double layerStartTime = 0.0f;
-            double layerEndTime = 8.0f;
+            
+            float layerStartX   = 0.0 + layerStartTime / markDTime * markD + offsetX;
+            float layerEndX     = 0.0 + layerEndTime / markDTime * markD + offsetX;
 
-            float layerStartX = 0.0 + layerStartTime / markDTime * markD + offsetX;
-            float layerEndX = 0.0 + layerEndTime / markDTime * markD + offsetX;
+            float layerStartY   = canvasH * 0.5 - layerHeight * 0.5;
+            float layerEndY     = canvasH * 0.5 + layerHeight * 0.5;
 
-            float layerStartY = canvasH * 0.5 - layerHeight * 0.5;
-            float layerEndY = canvasH * 0.5 + layerHeight * 0.5;
+            layerStartX     = layerStartX   +   25;
+            layerEndX       = layerEndX     -   25;
 
             layerRect.SetRect(layerStartX, layerStartY, layerEndX, layerEndY);
             layerRect.SetColor(layerColor);
@@ -94,11 +137,9 @@ namespace Eyer {
 
                 bitmap.SetDist(x1, y1, x2, y2);
                 eventList.AddEvent(&bitmap);
-            }            
+            }
         }
         
-        
-
         // 绘制时间针
         WandTimeLineDrawEvent_Line timePointer;
         timePointer.SetColor(timePointerColor);
@@ -107,6 +148,12 @@ namespace Eyer {
         timePointer.SetStrokeWidth(10);
 
         eventList.AddEvent(&timePointer);
+
+        if(lastRenderFrameIndex != nowTime * fps){
+            ctx->RenderFrameByIndex(nowTime * fps);
+            lastRenderFrameIndex = nowTime * fps;
+        }
+        
 
         return 0;
     }
