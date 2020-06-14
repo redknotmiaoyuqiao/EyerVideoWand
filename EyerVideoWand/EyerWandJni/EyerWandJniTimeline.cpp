@@ -25,6 +25,18 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
 }
 
 
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1timeline_1set_1wand_1ctx
+(JNIEnv *, jclass, jlong timelineP, jlong ctx)
+{
+    Eyer::WandTimeLine * timeline = (Eyer::WandTimeLine *)timelineP;
+    Eyer::EyerWandContext * wandCtx = (Eyer::EyerWandContext *)ctx;
+
+    timeline->SetWandCtx(wandCtx);
+
+    return 0;
+}
+
+
 /**
  * 设置画布宽高
  */

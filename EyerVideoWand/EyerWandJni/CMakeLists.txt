@@ -15,6 +15,7 @@ add_library(
     EyerWandJniDrawEventRect.cpp
     EyerWandJniDrawEventLine.cpp
     EyerWandJniDrawEventBitmap.cpp
+    EyerWandJniLayer.cpp
 
     EyerWandJniVec.cpp
     JniUtil.cpp

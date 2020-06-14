@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "EyerCore/EyerCore.hpp"
+#include "EyerWand/EyerWandContext.hpp"
 
 namespace Eyer {
     class WandTimeLine;
@@ -33,6 +34,8 @@ namespace Eyer {
         WandTimeLine();
         ~WandTimeLine();
 
+        int SetWandCtx(Eyer::EyerWandContext * ctx);
+
     
         int SetWH(float w, float h);
 
@@ -43,6 +46,8 @@ namespace Eyer {
         int Draw(WandTimeLineDrawEventList & eventList);
 
     private:
+        Eyer::EyerWandContext * ctx = nullptr;
+
         EyerVec2 wh;
 
         int isMove = 0;
@@ -56,6 +61,8 @@ namespace Eyer {
         double markDTime = 1.0;
         // 两个 mark 之间的距离
         double markD = 200.0f;
+
+        int lastRenderFrameIndex = -1;
     };
 
     /**
