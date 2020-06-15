@@ -12,7 +12,12 @@ add_library(
     EyerWandJniContext.cpp
     EyerWandJniSnapshot.cpp
     EyerWandJniTimeline.cpp
-    EyerWandJniDrawEvent.cpp
+    EyerWandJniDrawEventRect.cpp
+    EyerWandJniDrawEventLine.cpp
+    EyerWandJniDrawEventBitmap.cpp
+    EyerWandJniLayer.cpp
+
+    EyerWandJniVec.cpp
     JniUtil.cpp
 )
 

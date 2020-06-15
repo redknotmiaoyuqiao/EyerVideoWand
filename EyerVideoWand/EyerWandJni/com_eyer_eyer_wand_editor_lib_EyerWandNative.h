@@ -193,6 +193,46 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
 
 /*
  * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_context_add_layer
+ * Signature: (JLjava/lang/String;II)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1context_1add_1layer
+  (JNIEnv *, jclass, jlong, jstring, jint, jint);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_context_get_layer_count
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1context_1get_1layer_1count
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_coutext_get_layer
+ * Signature: (JJI)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1coutext_1get_1layer
+  (JNIEnv *, jclass, jlong, jlong, jint);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_layer_init
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1layer_1init
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_layer_uninit
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1layer_1uninit
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
  * Method:    wand_snapshot_init
  * Signature: (Ljava/lang/String;)J
  */
@@ -233,11 +273,51 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
 
 /*
  * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_timeline_set_wand_ctx
+ * Signature: (JJ)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1timeline_1set_1wand_1ctx
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_timeline_set_wh
+ * Signature: (JFF)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1timeline_1set_1wh
+  (JNIEnv *, jclass, jlong, jfloat, jfloat);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
  * Method:    wand_view_timeline_draw
  * Signature: (JJ)I
  */
 JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1timeline_1draw
   (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_timeline_on_touch_up
+ * Signature: (JFF)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1timeline_1on_1touch_1up
+  (JNIEnv *, jclass, jlong, jfloat, jfloat);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_timeline_on_touch_down
+ * Signature: (JFF)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1timeline_1on_1touch_1down
+  (JNIEnv *, jclass, jlong, jfloat, jfloat);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_timeline_on_touch_move
+ * Signature: (JFF)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1timeline_1on_1touch_1move
+  (JNIEnv *, jclass, jlong, jfloat, jfloat);
 
 /*
  * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
@@ -273,34 +353,370 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
 
 /*
  * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
- * Method:    wand_view_draw_event_list_get_event
+ * Method:    wand_view_draw_event_list_get_rect_event
  * Signature: (JJI)I
  */
-JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1list_1get_1event
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1list_1get_1rect_1event
   (JNIEnv *, jclass, jlong, jlong, jint);
 
 /*
  * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
- * Method:    wand_view_draw_event_init
+ * Method:    wand_view_draw_event_list_get_line_event
+ * Signature: (JJI)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1list_1get_1line_1event
+  (JNIEnv *, jclass, jlong, jlong, jint);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_list_get_text_event
+ * Signature: (JJI)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1list_1get_1text_1event
+  (JNIEnv *, jclass, jlong, jlong, jint);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_list_get_bitmap_event
+ * Signature: (JJI)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1list_1get_1bitmap_1event
+  (JNIEnv *, jclass, jlong, jlong, jint);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_rect_init
  * Signature: ()J
  */
-JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1init
+JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1rect_1init
   (JNIEnv *, jclass);
 
 /*
  * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
- * Method:    wand_view_draw_event_uninit
+ * Method:    wand_view_draw_event_rect_uninit
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1uninit
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1rect_1uninit
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
- * Method:    wand_view_draw_event_get_type
+ * Method:    wand_view_draw_event_rect_get_start_x
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1rect_1get_1start_1x
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_rect_get_start_y
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1rect_1get_1start_1y
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_rect_get_end_x
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1rect_1get_1end_1x
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_rect_get_end_y
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1rect_1get_1end_1y
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_rect_get_color_r
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1rect_1get_1color_1r
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_rect_get_color_g
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1rect_1get_1color_1g
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_rect_get_color_b
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1rect_1get_1color_1b
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_rect_get_color_a
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1rect_1get_1color_1a
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_line_init
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1line_1init
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_line_uninit
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1get_1type
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1line_1uninit
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_line_get_start_x
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1line_1get_1start_1x
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_line_get_start_y
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1line_1get_1start_1y
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_line_get_end_x
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1line_1get_1end_1x
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_line_get_end_y
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1line_1get_1end_1y
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_line_get_color_r
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1line_1get_1color_1r
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_line_get_color_g
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1line_1get_1color_1g
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_line_get_color_b
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1line_1get_1color_1b
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_line_get_color_a
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1line_1get_1color_1a
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_line_get_strokewidth
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1line_1get_1strokewidth
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_text_init
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1text_1init
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_text_uninit
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1text_1uninit
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_bitmap_init
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1bitmap_1init
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_bitmap_uninit
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1bitmap_1uninit
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_bitmap_get_src
+ * Signature: (JJ)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1bitmap_1get_1src
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_bitmap_get_dist
+ * Signature: (JJ)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1bitmap_1get_1dist
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_vec2_init
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1vec2_1init
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_vec2_uninit
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1vec2_1uninit
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_vec2_get_x
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1vec2_1get_1x
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_vec2_get_y
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1vec2_1get_1y
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_vec3_init
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1vec3_1init
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_vec3_uninit
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1vec3_1uninit
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_vec3_get_x
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1vec3_1get_1x
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_vec3_get_y
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1vec3_1get_1y
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_vec3_get_z
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1vec3_1get_1z
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_vec4_init
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1vec4_1init
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_vec4_uninit
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1vec4_1uninit
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_vec4_get_x
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1vec4_1get_1x
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_vec4_get_y
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1vec4_1get_1y
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_vec4_get_z
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1vec4_1get_1z
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_vec4_get_w
+ * Signature: (J)F
+ */
+JNIEXPORT jfloat JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1vec4_1get_1w
   (JNIEnv *, jclass, jlong);
 
 #ifdef __cplusplus

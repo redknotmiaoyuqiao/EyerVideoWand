@@ -97,6 +97,7 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Android")
         UIView/WandTimeLineDrawEvent.cpp
         UIView/WandTimeLineDrawEvent_Rect.cpp
         UIView/WandTimeLineDrawEvent_Line.cpp
+        UIView/WandTimeLineDrawEvent_Bitmap.cpp
         UIView/WandTimeLineDrawEventList.cpp
         )
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
