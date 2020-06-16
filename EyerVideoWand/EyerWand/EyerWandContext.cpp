@@ -10,18 +10,22 @@ namespace Eyer
         fps = _fps;
 
         videoTrack.SetTargetVideoWH(width, height);
-
+        
         {
             EyerVideoFragmentVideo fragmentVideo;
             fragmentVideo.LoadVideoFile("/storage/emulated/0/ST/time_clock_1min_720x1280_30fps.mp4");
-        
+
+            videoTrack.VideoLayer_AddVideoFragment(fragmentVideo);
+            /*
             EyerVideoLayer layer;
             layer.SetFrame(0, 200);
             layer.AddVideoFragment(&fragmentVideo);
 
             videoTrack.AddLayer(layer);
+            */
         }
 
+        /*
         {
             EyerVideoFragmentVideo fragmentVideo;
             fragmentVideo.LoadVideoFile("/storage/emulated/0/ST/time_clock_1min_1280x720_30fps.mp4");
@@ -32,6 +36,30 @@ namespace Eyer
 
             videoTrack.AddLayer(layer);
         }
+
+        {
+            EyerVideoFragmentVideo fragmentVideo;
+            fragmentVideo.LoadVideoFile("/storage/emulated/0/ST/ads.mp4");
+        
+            EyerVideoLayer layer;
+            layer.SetFrame(800, 1000);
+            layer.AddVideoFragment(&fragmentVideo);
+
+            videoTrack.AddLayer(layer);
+        }
+
+
+        {
+            EyerVideoFragmentVideo fragmentVideo;
+            fragmentVideo.LoadVideoFile("/storage/emulated/0/ST/fashi.mp4");
+        
+            EyerVideoLayer layer;
+            layer.SetFrame(1000, 2000);
+            layer.AddVideoFragment(&fragmentVideo);
+
+            videoTrack.AddLayer(layer);
+        }
+        */
         
     }
 

@@ -42,6 +42,8 @@ namespace Eyer {
 
     class EyerAudioLayer;
 
+    class EyerVideoFragmentVideo;
+
     class EyerWand {
     public:
         EyerWand();
@@ -154,7 +156,6 @@ namespace Eyer {
     /**
      * 视频轨
      */
-
     class EyerVideoTrackRenderParams
     {
     public:
@@ -162,42 +163,6 @@ namespace Eyer {
         int videoH = 0;
         Eyer::EyerGLFrameBuffer * frameBuffer = nullptr;
         Eyer::EyerGLTextDraw * titleTextDraw = nullptr;
-    };
-
-    /**
-     * 视频轨
-     */
-    class EyerVideoTrack : public EyerTrack {
-    public:
-        EyerVideoTrack();
-        ~EyerVideoTrack();
-
-        EyerVideoTrack(const EyerVideoTrack &track);
-        EyerVideoTrack & operator = (const EyerVideoTrack &track);
-
-        int AddLayout(const EyerVideoLayout &layout);
-        int AddLayer(const EyerVideoLayout &layout);
-
-        int GetFrameCount();
-
-        int GetLayerCount();
-        int GetLayer(EyerVideoLayout * & layout, int index);
-
-        int RenderFrame(int frameIndex, EyerVideoTrackRenderParams * params, int fps);
-
-#ifdef EYER_PLATFORM_ANDROID
-        int RenderFrame2(int frameIndex, int fps, EyerGLContextThread * glCtx);
-#endif
-
-        int SetTargetVideoWH(int w, int h);
-
-        int GetVideoW();
-        int GetVideoH();
-    private:
-        EyerLinkedList<EyerVideoLayout *> layoutList;
-
-        int videoW = 0;
-        int videoH = 0;
     };
 
     /**
@@ -248,7 +213,7 @@ namespace Eyer {
         EyerLinkedList<EyerAudioFragment *> audioFragmentList;
     };
 
-    class EyerVideoLayout {
+    typedef class EyerVideoLayout {
     public:
         EyerVideoLayout();
 
@@ -275,7 +240,7 @@ namespace Eyer {
         int endFrameIndex = 0;
 
         EyerLinkedList<EyerVideoFragment *> videoFragmentList;
-    };
+    } EyerVideoLayer;
 
     class EyerAudioFragment
     {
@@ -457,6 +422,51 @@ namespace Eyer {
         float fps = 10;
     };
 
+
+
+    /**
+     * 视频轨
+     */
+    class EyerVideoTrack : public EyerTrack {
+    public:
+        EyerVideoTrack();
+        ~EyerVideoTrack();
+
+        EyerVideoTrack(const EyerVideoTrack &track);
+        EyerVideoTrack & operator = (const EyerVideoTrack &track);
+
+        int AddLayout(const EyerVideoLayout &layout);
+        int AddLayer(const EyerVideoLayout &layout);
+
+        int GetFrameCount();
+
+        int GetLayerCount();
+        int GetLayer(EyerVideoLayout * & layout, int index);
+
+        int RenderFrame(int frameIndex, EyerVideoTrackRenderParams * params, int fps);
+
+#ifdef EYER_PLATFORM_ANDROID
+        int RenderFrame2(int frameIndex, int fps, EyerGLContextThread * glCtx);
+#endif
+
+        int SetTargetVideoWH(int w, int h);
+
+        int GetVideoW();
+        int GetVideoH();
+
+        int VideoLayer_AddVideoFragment(EyerVideoFragmentVideo & fragmentVideo);
+        int VideoLayer_GetFragmentCount();
+        int VideoLayer_GetFragment(EyerVideoFragment * & fragment, int index);
+    private:
+        EyerLinkedList<EyerVideoLayout *> layoutList;
+
+        int videoW = 0;
+        int videoH = 0;
+
+        EyerVideoLayer videoLayer;
+    };
+
+
     class EyerWandBuilder
     {
     public:
@@ -485,9 +495,6 @@ namespace Eyer {
         EyerVideoTrack videoTrack;
         EyerAudioTrack audioTrack;
     };
-
-
-    typedef EyerVideoLayout EyerVideoLayer;
 
     class EyerWandDebug
     {

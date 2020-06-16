@@ -69,7 +69,8 @@ namespace Eyer
                     EyerAVFrame avframe;
                     EyerVideoFragmentVideo * videoFragmentVideo = (EyerVideoFragmentVideo *)fragment;
 
-                    double time = 1.0 / fps * frameIndex;
+                    int localFrameIndex = frameIndex - layer->GetStartFrameIndex();
+                    double time = 1.0 / fps * localFrameIndex;
                     // EyerLog("Time:%f\n", time);
 
                     int ret = videoFragmentVideo->GetVideoFrame(avframe, time);

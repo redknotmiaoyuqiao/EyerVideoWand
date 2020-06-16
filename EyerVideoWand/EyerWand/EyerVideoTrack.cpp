@@ -244,4 +244,19 @@ namespace Eyer
     {
         return videoH;
     }
+
+    int EyerVideoTrack::VideoLayer_AddVideoFragment(EyerVideoFragmentVideo & fragmentVideo)
+    {
+        return videoLayer.AddVideoFragment(&fragmentVideo);
+    }
+
+    int EyerVideoTrack::VideoLayer_GetFragmentCount()
+    {
+        return videoLayer.GetVideoFragmentCount();
+    }
+
+    int EyerVideoTrack::VideoLayer_GetFragment(EyerVideoFragment * & fragment, int index)
+    {
+        return videoLayer.GetVideoFragment(fragment, index);
+    }
 }

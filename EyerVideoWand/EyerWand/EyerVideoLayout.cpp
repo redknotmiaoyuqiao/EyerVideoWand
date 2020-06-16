@@ -6,7 +6,7 @@ namespace Eyer
 {
     EyerVideoLayout::EyerVideoLayout()
     {
-
+        SetFrame(-1, -1);
     }
 
     EyerVideoLayout::~EyerVideoLayout()

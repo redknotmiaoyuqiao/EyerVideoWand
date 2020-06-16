@@ -73,16 +73,6 @@ namespace Eyer
 
         SetFrameTime(0.0, duration);
 
-        // TODO DEBUG
-        /*
-        EyerAVFrame frame;
-        ret = videoResource.GetVideoFrame(frame, 34.00);
-        if(ret){
-            EyerLog("Docoder Error");
-        }
-        EyerLog("Frame TS:%lld\n", frame.GetPTS());
-        */
-
         return 0;
     }
 
