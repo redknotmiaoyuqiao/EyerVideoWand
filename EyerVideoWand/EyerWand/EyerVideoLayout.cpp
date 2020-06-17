@@ -22,14 +22,7 @@ namespace Eyer
         videoFragmentList.clear();
     }
 
-    int EyerVideoLayout::SetFrame(int _startFrameIndex, int _endFrameIndex)
-    {
-        startFrameIndex = _startFrameIndex;
-        endFrameIndex = _endFrameIndex;
-        return 0;
-    }
-
-    EyerVideoLayout::EyerVideoLayout(const EyerVideoLayout & layout)
+    EyerVideoLayout::EyerVideoLayout(const EyerVideoLayout & layout) : EyerVideoLayout()
     {
         *this = layout;
     }
@@ -55,6 +48,24 @@ namespace Eyer
         return *this;
     }
 
+    int EyerVideoLayout::SetFrame(int _startFrameIndex, int _endFrameIndex)
+    {
+        startFrameIndex = _startFrameIndex;
+        endFrameIndex = _endFrameIndex;
+        return 0;
+    }
+
+    int EyerVideoLayout::SetFPS(int _fps)
+    {
+        fps = _fps;
+        return 0;
+    }
+
+    int EyerVideoLayout::GetFPS()
+    {
+        return fps;
+    }
+
     int EyerVideoLayout::GetStartFrameIndex()
     {
         return startFrameIndex;
@@ -69,6 +80,30 @@ namespace Eyer
     {
         EyerVideoFragment * f = EyerVideoFragment::CopyFragment(fragment);
         videoFragmentList.insertBack(f);
+
+
+        pFrameIndex = 0;
+
+        for(int i=0;i<videoFragmentList.getLength();i++){
+            EyerVideoFragment * vf = nullptr;
+            videoFragmentList.find(i, vf);
+
+            if(vf != nullptr){
+                if(vf->GetType() == EyerVideoFragmentType::VIDEO_FRAGMENT_VIDEO){
+                    EyerVideoFragmentVideo * vfv = (EyerVideoFragmentVideo *)vf;
+                    int frameCount = (vfv->GetEndTime() - vfv->GetStartTime()) * fps;
+
+                    int sIndex = pFrameIndex;
+                    pFrameIndex += frameCount;
+                    int eIndex = pFrameIndex;
+                    pFrameIndex += 1;
+
+                    vfv->SetFrameIndex(sIndex, eIndex);
+                }
+            }
+        }
+
+        SetFrame(0, pFrameIndex);
 
         return 0;
     }

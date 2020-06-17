@@ -7,14 +7,13 @@ namespace Eyer
         
     }
 
-    EyerVideoFragmentVideo::EyerVideoFragmentVideo(const EyerVideoFragmentVideo & fragment)
+    EyerVideoFragmentVideo::EyerVideoFragmentVideo(const EyerVideoFragmentVideo & fragment) : EyerVideoFragmentVideo()
     {
         *this = fragment;
     }
 
     EyerVideoFragmentVideo::~EyerVideoFragmentVideo()
     {
-        
         if(videoResource != nullptr){
             delete videoResource;
             videoResource = nullptr;
@@ -28,10 +27,14 @@ namespace Eyer
         }
 
         path = fragment.path;
+
         startIndex = fragment.startIndex;
         endIndex = fragment.endIndex;
+
         startTime = fragment.startTime;
         endTime = fragment.endTime;
+
+        duration = fragment.duration;
 
         videoResource = nullptr;
 
@@ -54,7 +57,6 @@ namespace Eyer
     int EyerVideoFragmentVideo::LoadVideoFile(EyerString _path)
     {
         // TODO 验证资源
-
         path = _path;
 
         if(videoResource == nullptr){
@@ -84,6 +86,23 @@ namespace Eyer
         return 0;
     }
 
+    int EyerVideoFragmentVideo::SetFrameTime(double _startTime, double _endTime)
+    {
+        startTime = _startTime;
+        endTime = _endTime;
+        return 0;
+    }
+
+    double EyerVideoFragmentVideo::GetStartTime()
+    {
+        return startTime;
+    }
+
+    double EyerVideoFragmentVideo::GetEndTime()
+    {
+        return endTime;
+    }
+
     double EyerVideoFragmentVideo::GetDuration()
     {
         return duration;
@@ -96,19 +115,20 @@ namespace Eyer
         return 0;
     }
 
-    int EyerVideoFragmentVideo::SetFrameTime(double _startTime, double _endTime)
+    int EyerVideoFragmentVideo::GetStartIndex()
     {
-        startTime = _startTime;
-        endTime = _endTime;
-        return 0;
+        return startIndex;
+    }
+
+    int EyerVideoFragmentVideo::GetEndIndex()
+    {
+        return endIndex;
     }
 
     EyerString EyerVideoFragmentVideo::GetPath()
     {
-        // EyerLog("%s\n", path.str);
         return path;
     }
-
 
     int EyerVideoFragmentVideo::AddTransKey(double t, float x, float y, float z)
     {

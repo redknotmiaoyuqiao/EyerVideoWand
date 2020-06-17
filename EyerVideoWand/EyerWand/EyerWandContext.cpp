@@ -10,19 +10,22 @@ namespace Eyer
         fps = _fps;
 
         videoTrack.SetTargetVideoWH(width, height);
+        videoTrack.SetTargetVideoFPS(fps);
         
         {
-            EyerVideoFragmentVideo fragmentVideo;
-            fragmentVideo.LoadVideoFile("/storage/emulated/0/ST/time_clock_1min_720x1280_30fps.mp4");
+            EyerVideoFragmentVideo fragmentVideo1;
+            fragmentVideo1.LoadVideoFile("/storage/emulated/0/ST/time_clock_1min_720x1280_30fps.mp4");
 
-            videoTrack.VideoLayer_AddVideoFragment(fragmentVideo);
-            /*
-            EyerVideoLayer layer;
-            layer.SetFrame(0, 200);
-            layer.AddVideoFragment(&fragmentVideo);
+            EyerVideoFragmentVideo fragmentVideo2;
+            fragmentVideo2.LoadVideoFile("/storage/emulated/0/ST/fashi.mp4");
 
-            videoTrack.AddLayer(layer);
-            */
+            EyerVideoFragmentVideo fragmentVideo3;
+            fragmentVideo3.LoadVideoFile("/storage/emulated/0/ST/ads.mp4");
+
+            videoTrack.VideoLayer_AddVideoFragment(fragmentVideo3);
+            videoTrack.VideoLayer_AddVideoFragment(fragmentVideo1);
+            videoTrack.VideoLayer_AddVideoFragment(fragmentVideo2);
+            
         }
 
         /*
@@ -90,21 +93,9 @@ namespace Eyer
         return 0;
     }
 
-    int EyerWandContext::GetLayerCount()
+    int EyerWandContext::GetVideoTrack(EyerVideoTrack & _videoTrack)
     {
-        return videoTrack.GetLayerCount();
-    }
-
-    int EyerWandContext::GetLayer(EyerVideoLayer & layer, int index)
-    {
-        EyerVideoLayout * l = nullptr;
-        videoTrack.GetLayer(l, index);
-        if(l == nullptr){
-            return -1;
-        }
-
-        layer = *l;
-
+        _videoTrack = videoTrack;
         return 0;
     }
 }

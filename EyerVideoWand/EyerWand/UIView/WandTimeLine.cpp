@@ -45,24 +45,28 @@ namespace Eyer {
         
         double offsetX = -(nowTime / markDTime * markD) + canvasW / 2;
 
-
-
-        int layerCount = ctx->GetLayerCount();
         int fps = ctx->GetFPS();
-        int maxFrameIndex = 0;
-        for(int layerIndex=0; layerIndex<layerCount; layerIndex++){
-            EyerVideoLayer layer;
-            int ret = ctx->GetLayer(layer, layerIndex);
-            if(ret){
+
+        EyerVideoTrack videoTrack;
+        ctx->GetVideoTrack(videoTrack);
+
+
+
+        time = 0.0;
+        // 统计 Layer 总时间
+        int videoFragmentCount = videoTrack.VideoLayer_GetFragmentCount();
+        for(int videoFragmentIndex = 0; videoFragmentIndex < videoFragmentCount; videoFragmentIndex++){
+            EyerVideoFragment * fragment = nullptr;
+            videoTrack.VideoLayer_GetFragment(fragment, videoFragmentIndex);
+            if(fragment == nullptr){
                 continue;
             }
-            if(layer.GetEndFrameIndex() >= maxFrameIndex){
-                maxFrameIndex = layer.GetEndFrameIndex();
+            if(fragment->GetType() != EyerVideoFragmentType::VIDEO_FRAGMENT_VIDEO){
+                continue;
             }
+            EyerVideoFragmentVideo * vf = (EyerVideoFragmentVideo *)fragment;
+            time += vf->GetDuration();
         }
-
-        time = maxFrameIndex * 1.0 / fps;
-        // EyerLog("%f\n", time);
 
         // 绘制时间标尺
         int timeMartCount = (int)(time / markDTime) + 1;
@@ -84,24 +88,28 @@ namespace Eyer {
             eventList.AddEvent(&line);
         }
 
-
-        // 绘制 Layer
-        for(int layerIndex=0; layerIndex<layerCount; layerIndex++){
-            EyerVideoLayer layer;
-            int ret = ctx->GetLayer(layer, layerIndex);
-            if(ret){
+        double offsetTime = 0.0;
+        // 绘制 Video Fragment Layer
+        for(int videoFragmentIndex = 0; videoFragmentIndex < videoFragmentCount; videoFragmentIndex++){
+            EyerVideoFragment * fragment = nullptr;
+            videoTrack.VideoLayer_GetFragment(fragment, videoFragmentIndex);
+            if(fragment == nullptr){
                 continue;
             }
+            if(fragment->GetType() != EyerVideoFragmentType::VIDEO_FRAGMENT_VIDEO){
+                continue;
+            }
+            EyerVideoFragmentVideo * vf = (EyerVideoFragmentVideo *)fragment;
 
-            // EyerLog("Start Frame Index: %d\n", layer.GetStartFrameIndex());
-            // EyerLog("End Frame Index: %d\n", layer.GetEndFrameIndex());
+            double layerStartTime = offsetTime + vf->GetStartTime();
+            double layerEndTime = offsetTime + vf->GetEndTime();
 
-            double layerStartTime = layer.GetStartFrameIndex() * 1.0 / fps;
-            double layerEndTime = layer.GetEndFrameIndex() * 1.0 / fps;
+            offsetTime += (vf->GetEndTime() - vf->GetStartTime());
 
             int layerHeight = canvasH * 0.2;
+
             WandTimeLineDrawEvent_Rect layerRect;
-            
+
             float layerStartX   = 0.0 + layerStartTime / markDTime * markD + offsetX;
             float layerEndX     = 0.0 + layerEndTime / markDTime * markD + offsetX;
 
@@ -116,7 +124,6 @@ namespace Eyer {
 
             eventList.AddEvent(&layerRect);
 
-            // 计算要绘制的缩略图的宽度
             int imgW = layerHeight;
             int imgCount = (layerEndX - layerStartX) / imgW;
             for(int imgIndex = 0; imgIndex < imgCount; imgIndex++){
