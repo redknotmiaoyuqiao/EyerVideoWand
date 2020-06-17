@@ -175,6 +175,33 @@ namespace Eyer {
         EyerVec4 src;
         EyerVec4 dist;
     };
+
+     class WandTimeLineDrawEvent_Text : public WandTimeLineDrawEvent
+    {
+    public:
+        WandTimeLineDrawEvent_Text();
+        ~WandTimeLineDrawEvent_Text();
+
+        WandTimeLineDrawEvent_Text(WandTimeLineDrawEvent_Text & rect);
+        WandTimeLineDrawEvent_Text & operator = (WandTimeLineDrawEvent_Text & rect);
+
+        WandTimeLineDrawEventType GetType();
+
+        int SetText(EyerString text, float size, float startX, float startY, EyerString fontStyle);
+
+        int SetColor(EyerVec4 color);
+        int SetColor(float red, float green, float blue, float alpha);
+
+        int GetText(EyerString & _text, float & _size, EyerVec2 & _start, EyerString & fontStyle);
+        int GetColor(EyerVec4 & color);
+    private:
+        EyerVec2 start;
+        EyerVec4 color;
+        EyerString text;
+        EyerString fontStyle;
+        float size = 10.0;
+
+    };
 }
 
 #endif
