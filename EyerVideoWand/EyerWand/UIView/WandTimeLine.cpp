@@ -35,6 +35,7 @@ namespace Eyer {
         EyerVec4 markColor                  (0.4f, 0.4f, 0.4f, 1.0f);       // 标尺颜色
         EyerVec4 timePointerColor           (1.0f, 1.0f, 1.0f, 1.0f);       // 绘制时间针颜色
         EyerVec4 layerColor                 (0.8f, 0.8f, 0.8f, 0.8f);       // Layer颜色
+        EyerVec4 textColor                  (1.0f, 0.0f, 0.0f, 1.0f);       // text颜色
 
         WandTimeLineDrawEvent_Rect rect;
         rect.SetRect(0.0f, 0.0f, canvasW, canvasH);
@@ -153,6 +154,13 @@ namespace Eyer {
             ctx->RenderFrameByIndex(nowTime * fps);
             lastRenderFrameIndex = nowTime * fps;
         }
+
+        //绘制文字
+        WandTimeLineDrawEvent_Text text;
+        text.SetColor(textColor);
+        text.SetText("咪咪 么么哒", 75.0, 10, 100, "");
+
+        eventList.AddEvent(&text);
         
 
         return 0;
