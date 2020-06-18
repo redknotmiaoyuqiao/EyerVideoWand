@@ -140,8 +140,19 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
 }
 
 JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1list_1get_1text_1event
-(JNIEnv *, jclass, jlong, jlong, jint index)
+(JNIEnv *, jclass, jlong eventListP, jlong textP, jint index)
 {
+    Eyer::WandTimeLineDrawEventList * eventList = (Eyer::WandTimeLineDrawEventList *)eventListP;
+    Eyer::WandTimeLineDrawEvent_Text * text = (Eyer::WandTimeLineDrawEvent_Text *)textP;
+    // 验证类型是否正确
+    Eyer::WandTimeLineDrawEvent * tempEvent = nullptr;
+    eventList->GetEvent(tempEvent, index);
+
+    if(tempEvent == nullptr){
+        return -1;
+    }
+
+    *text = *((Eyer::WandTimeLineDrawEvent_Text *)tempEvent);
     return 0;
 }
 
