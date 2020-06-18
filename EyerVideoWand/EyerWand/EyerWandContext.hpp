@@ -18,10 +18,7 @@ namespace Eyer
 
         int UpdateScreenWH(int screenW, int screenH);
 
-
-
-        int GetLayerCount();
-        int GetLayer(EyerVideoLayer & layer, int index);
+        int GetVideoTrack(EyerVideoTrack & videoTrack);
 
         int GetFPS();
 

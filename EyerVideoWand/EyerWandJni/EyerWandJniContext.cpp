@@ -43,19 +43,3 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
     Eyer::EyerWandContext * wandCtx = (Eyer::EyerWandContext *)ctx;
     return wandCtx->UpdateScreenWH(screenW, screenH);
 }
-
-
-JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1context_1get_1layer_1count
-(JNIEnv *, jclass, jlong ctx)
-{
-    Eyer::EyerWandContext * wandCtx = (Eyer::EyerWandContext *)ctx;
-    return wandCtx->GetLayerCount();
-}
-
-JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1coutext_1get_1layer
-(JNIEnv *, jclass, jlong ctx, jlong layerP, jint index)
-{
-    Eyer::EyerWandContext * wandCtx = (Eyer::EyerWandContext *)ctx;
-
-    return 0;
-}

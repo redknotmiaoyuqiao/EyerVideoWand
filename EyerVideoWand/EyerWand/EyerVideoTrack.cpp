@@ -5,7 +5,7 @@ namespace Eyer
 {
     EyerVideoTrack::EyerVideoTrack()
     {
-
+        SetTargetVideoFPS(30);
     }
 
     EyerVideoTrack::~EyerVideoTrack()
@@ -21,7 +21,7 @@ namespace Eyer
         layoutList.clear();
     }
 
-    EyerVideoTrack::EyerVideoTrack(const EyerVideoTrack & track)
+    EyerVideoTrack::EyerVideoTrack(const EyerVideoTrack & track) : EyerVideoTrack()
     {
         *this = track;
     }
@@ -40,6 +40,8 @@ namespace Eyer
                 layoutList.insertBack(_l);
             }
         }
+
+        videoLayer = track.videoLayer;
 
         return *this;
     }
@@ -63,6 +65,23 @@ namespace Eyer
         return 0;
     }
 
+    int EyerVideoTrack::SetTargetVideoFPS(int _fps)
+    {
+        fps = _fps;
+
+        videoLayer.SetFPS(fps);
+
+        for(int i=0;i<layoutList.getLength();i++){
+            EyerVideoLayout * l = nullptr;
+            layoutList.find(i, l);
+            if(l != nullptr){
+                l->SetFPS(fps);
+            }
+        }
+
+        return 0;
+    }
+
     int EyerVideoTrack::GetFrameCount()
     {
         int frameCount = 0;
@@ -78,6 +97,10 @@ namespace Eyer
                     maxFrameIndex = endFrameIndex;
                 }
             }
+        }
+
+        if(videoLayer.GetEndFrameIndex() >= maxFrameIndex){
+            maxFrameIndex = videoLayer.GetEndFrameIndex();
         }
 
         frameCount = maxFrameIndex;
@@ -243,5 +266,36 @@ namespace Eyer
     int EyerVideoTrack::GetVideoH()
     {
         return videoH;
+    }
+
+    int EyerVideoTrack::GetFPS()
+    {
+        return fps;
+    }
+
+    int EyerVideoTrack::VideoLayer_AddVideoFragment(EyerVideoFragmentVideo & fragmentVideo)
+    {
+        return videoLayer.AddVideoFragment(&fragmentVideo);
+    }
+
+    int EyerVideoTrack::VideoLayer_GetFragmentCount()
+    {
+        return videoLayer.GetVideoFragmentCount();
+    }
+
+    int EyerVideoTrack::VideoLayer_GetFragment(EyerVideoFragment * & fragment, int index)
+    {
+        return videoLayer.GetVideoFragment(fragment, index);
+    }
+
+    int EyerVideoTrack::GetVideoLayer_Copy(EyerVideoLayer & _videoLayer)
+    {
+        _videoLayer = videoLayer;
+        return 0;
+    }
+
+    EyerVideoLayer * EyerVideoTrack::GetVideoLayer_Ptr()
+    {
+        return &videoLayer;
     }
 }

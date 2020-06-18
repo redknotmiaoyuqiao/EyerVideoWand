@@ -37,12 +37,20 @@ namespace Eyer
         EyerGLFrameBuffer frameTargetBuffer(videoW, videoH, &frameTargetTexture);
         frameTargetBuffer.Clear(0.0, 0.0, 0.0, 1.0);
 
-
+        // VideoLayer
+        // videoTrack->VideoLayer_GetFragmentCount();
         // 遍历 Layer
-        int layerCount = videoTrack->GetLayerCount();
+        // int layerCount = videoTrack->GetLayerCount();
+        int layerCount = 1;
         for(int layerIndex=0;layerIndex<layerCount;layerIndex++){
             EyerVideoLayer * layer = nullptr;
-            videoTrack->GetLayer(layer, layerIndex);
+            // videoTrack->GetLayer(layer, layerIndex);
+            if(layerIndex == 0){
+                layer = videoTrack->GetVideoLayer_Ptr();
+            }
+
+            // EyerLog("Layer %d-%d\n", layer->GetStartFrameIndex(), layer->GetEndFrameIndex());
+
             if(layer == nullptr){
                 continue;
             }
@@ -53,9 +61,8 @@ namespace Eyer
                 continue;
             }
 
-            // EyerLog("Render Layer!!!!!!!!!!\n");
-
-            int fragmentCount =  layer->GetVideoFragmentCount();
+            // EyerLog("Render Layer, Frame Index: %d\n", frameIndex);
+            int fragmentCount = layer->GetVideoFragmentCount();
             for(int fragmentIndex=0;fragmentIndex <fragmentCount;fragmentIndex++){
                 EyerVideoFragment * fragment = nullptr;
                 layer->GetVideoFragment(fragment, fragmentIndex);
@@ -63,15 +70,24 @@ namespace Eyer
                     continue;
                 }
 
-                // EyerLog("Render Fragment!!!!!!!!!!\n");
-
                 if(fragment->GetType() == EyerVideoFragmentType::VIDEO_FRAGMENT_VIDEO){
                     EyerAVFrame avframe;
                     EyerVideoFragmentVideo * videoFragmentVideo = (EyerVideoFragmentVideo *)fragment;
 
-                    double time = 1.0 / fps * frameIndex;
-                    // EyerLog("Time:%f\n", time);
+                    // EyerLog("Render Fragment, Fragment %d-%d   %d\n", videoFragmentVideo->GetStartIndex(), videoFragmentVideo->GetEndIndex(), frameIndex);
 
+                    if(frameIndex < videoFragmentVideo->GetStartIndex()){
+                        continue;
+                    }
+                    if(frameIndex > videoFragmentVideo->GetEndIndex()){
+                        continue;
+                    }
+
+                    int localFrameIndex = frameIndex - videoFragmentVideo->GetStartIndex();
+                    double time = 1.0 / fps * localFrameIndex;
+
+                    time = 14.800000;
+                    EyerLog("Time:%f\n", time);
                     int ret = videoFragmentVideo->GetVideoFrame(avframe, time);
                     if(ret){
                         EyerLog("GetVideoFrame Error\n");

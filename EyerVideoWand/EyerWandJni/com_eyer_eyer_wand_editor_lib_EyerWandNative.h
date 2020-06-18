@@ -193,30 +193,6 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
 
 /*
  * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
- * Method:    wand_context_add_layer
- * Signature: (JLjava/lang/String;II)I
- */
-JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1context_1add_1layer
-  (JNIEnv *, jclass, jlong, jstring, jint, jint);
-
-/*
- * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
- * Method:    wand_context_get_layer_count
- * Signature: (J)I
- */
-JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1context_1get_1layer_1count
-  (JNIEnv *, jclass, jlong);
-
-/*
- * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
- * Method:    wand_coutext_get_layer
- * Signature: (JJI)I
- */
-JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1coutext_1get_1layer
-  (JNIEnv *, jclass, jlong, jlong, jint);
-
-/*
- * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
  * Method:    wand_layer_init
  * Signature: ()J
  */

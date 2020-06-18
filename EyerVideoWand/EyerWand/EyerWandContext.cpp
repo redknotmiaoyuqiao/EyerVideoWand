@@ -10,18 +10,25 @@ namespace Eyer
         fps = _fps;
 
         videoTrack.SetTargetVideoWH(width, height);
-
-        {
-            EyerVideoFragmentVideo fragmentVideo;
-            fragmentVideo.LoadVideoFile("/storage/emulated/0/ST/time_clock_1min_720x1280_30fps.mp4");
+        videoTrack.SetTargetVideoFPS(fps);
         
-            EyerVideoLayer layer;
-            layer.SetFrame(0, 200);
-            layer.AddVideoFragment(&fragmentVideo);
+        {
+            EyerVideoFragmentVideo fragmentVideo1;
+            fragmentVideo1.LoadVideoFile("/storage/emulated/0/ST/time_clock_1min_720x1280_30fps.mp4");
 
-            videoTrack.AddLayer(layer);
+            EyerVideoFragmentVideo fragmentVideo2;
+            fragmentVideo2.LoadVideoFile("/storage/emulated/0/ST/fashi.mp4");
+
+            EyerVideoFragmentVideo fragmentVideo3;
+            fragmentVideo3.LoadVideoFile("/storage/emulated/0/ST/ads.mp4");
+
+            videoTrack.VideoLayer_AddVideoFragment(fragmentVideo3);
+            videoTrack.VideoLayer_AddVideoFragment(fragmentVideo1);
+            videoTrack.VideoLayer_AddVideoFragment(fragmentVideo2);
+            
         }
 
+        /*
         {
             EyerVideoFragmentVideo fragmentVideo;
             fragmentVideo.LoadVideoFile("/storage/emulated/0/ST/time_clock_1min_1280x720_30fps.mp4");
@@ -32,6 +39,30 @@ namespace Eyer
 
             videoTrack.AddLayer(layer);
         }
+
+        {
+            EyerVideoFragmentVideo fragmentVideo;
+            fragmentVideo.LoadVideoFile("/storage/emulated/0/ST/ads.mp4");
+        
+            EyerVideoLayer layer;
+            layer.SetFrame(800, 1000);
+            layer.AddVideoFragment(&fragmentVideo);
+
+            videoTrack.AddLayer(layer);
+        }
+
+
+        {
+            EyerVideoFragmentVideo fragmentVideo;
+            fragmentVideo.LoadVideoFile("/storage/emulated/0/ST/fashi.mp4");
+        
+            EyerVideoLayer layer;
+            layer.SetFrame(1000, 2000);
+            layer.AddVideoFragment(&fragmentVideo);
+
+            videoTrack.AddLayer(layer);
+        }
+        */
         
     }
 
@@ -62,21 +93,9 @@ namespace Eyer
         return 0;
     }
 
-    int EyerWandContext::GetLayerCount()
+    int EyerWandContext::GetVideoTrack(EyerVideoTrack & _videoTrack)
     {
-        return videoTrack.GetLayerCount();
-    }
-
-    int EyerWandContext::GetLayer(EyerVideoLayer & layer, int index)
-    {
-        EyerVideoLayout * l = nullptr;
-        videoTrack.GetLayer(l, index);
-        if(l == nullptr){
-            return -1;
-        }
-
-        layer = *l;
-
+        _videoTrack = videoTrack;
         return 0;
     }
 }
