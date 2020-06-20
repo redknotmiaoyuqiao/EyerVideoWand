@@ -157,10 +157,8 @@ namespace Eyer {
 
         eventList.AddEvent(&timePointer);
 
-        if(lastRenderFrameIndex != nowTime * fps){
-            ctx->RenderFrameByIndex(nowTime * fps);
-            lastRenderFrameIndex = nowTime * fps;
-        }
+
+
 
         //绘制文字
         WandTimeLineDrawEvent_Text text;
@@ -168,6 +166,16 @@ namespace Eyer {
         text.SetText("咪咪 么么哒", 75.0, 10, 100, "");
 
         eventList.AddEvent(&text);
+
+
+        
+
+        if(lastRenderFrameIndex != nowTime * fps){
+            ctx->RenderFrameByIndex(nowTime * fps);
+            lastRenderFrameIndex = nowTime * fps;
+        }
+
+        
         
 
         return 0;

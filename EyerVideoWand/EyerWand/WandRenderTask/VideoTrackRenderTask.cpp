@@ -86,8 +86,9 @@ namespace Eyer
                     int localFrameIndex = frameIndex - videoFragmentVideo->GetStartIndex();
                     double time = 1.0 / fps * localFrameIndex;
 
-                    time = 14.800000;
-                    EyerLog("Time:%f\n", time);
+                    // time = 14.800000;
+                    // time = 15.033333;
+                    // EyerLog("Time:%f\n", time);
                     int ret = videoFragmentVideo->GetVideoFrame(avframe, time);
                     if(ret){
                         EyerLog("GetVideoFrame Error\n");

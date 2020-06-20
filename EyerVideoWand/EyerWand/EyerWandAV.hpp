@@ -75,7 +75,7 @@ namespace Eyer {
         int GetCacheFrameCount();
     private:
         int ReadFrame();
-        int SelectFrameInList(EyerAVFrame * & frame, double ts);
+        int SelectFrameInList(EyerAVFrame & frame, double ts);
 
         int fileEndFlag = 0;
 
