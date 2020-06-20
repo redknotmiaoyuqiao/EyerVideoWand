@@ -1,4 +1,5 @@
 #include "EyerWandAV.hpp"
+#include <math.h>
 
 namespace Eyer
 {
@@ -6,8 +7,6 @@ namespace Eyer
     {
         initStart = _initStart;
         resPath = _resPath;
-
-
         reader = new EyerAVReader(resPath);
         int ret = reader->Open();
         if(ret){
@@ -61,25 +60,34 @@ namespace Eyer
         frameList.clear();
     }
 
+    int EyerVideoDecoderLine::GetCacheFrameCount()
+    {
+        return frameList.getLength();
+    }
+
     int EyerVideoDecoderLine::GetFrame(EyerAVFrame & frame, double ts)
     {
-        int finalRet = 0;
+        EyerLog("Path: %s\n", resPath.str);
         if(ts < GetStartTime()){
-            finalRet = -1;
-            return finalRet;
+            // EyerLog("ts < initStart\n");
+            // EyerLog("ts:%f, initStart:%f", ts, initStart);
+            return -1;
         }
+
+        int isSetFrame = 0;
 
         while(1){
             int ret = SelectFrameInList(frame, ts);
             if(ret){
-                // EyerLog("Find Error\n");
+                isSetFrame = 0;
+                // 先判断是否已经读取到文件末尾
+                EyerLog("Frame End\n");
                 if(fileEndFlag){
-                    // EyerLog("Find Error=======Size:%d\n", frameList.getLength());
+                    EyerLog("Frame End Flag\n");
                     int length = frameList.getLength();
                     // 已经到了末尾，取最后一帧，退出
                     if(frameList.getLength() <= 0){
-                        finalRet = -2;
-                        break;
+                        continue;
                     }
                     int lastInex = frameList.getLength() - 1;
 
@@ -87,26 +95,34 @@ namespace Eyer
                     frameList.find(lastInex, pFrame);
                     if(pFrame != nullptr){
                         frame = *pFrame;
-                        finalRet = 0;
-                        break;
+                        isSetFrame = 1;
                     }
+
+                    break;
                 }
                 ReadFrame();
                 continue;
             }
-            else{
-                // EyerLog("Find Ok\n");
-                finalRet = 0;
-                break;
-            }
+
+            // 读取成功
+            isSetFrame = 1;
+            break;
         }
+
+        if(!isSetFrame){
+            return -1;
+        }
+        
 
         Eyer::EyerAVRational streamTimebase;
         reader->GetStreamTimeBase(streamTimebase, videoStreamIndex);
 
         double t = frame.GetPTS() * 1.0 * streamTimebase.num / streamTimebase.den;
 
-        return finalRet;
+        // EyerLog("Target TS: %f, Frame TS: %f, D: %f\n", ts, t, t - ts);
+        // EyerLog("List Size: %d\n", frameList.getLength());
+
+        return 0;
     }
 
     double EyerVideoDecoderLine::GetStartTime()
@@ -129,21 +145,70 @@ namespace Eyer
         return t;
     }
 
-    int EyerVideoDecoderLine::GetCacheFrameCount()
+    int EyerVideoDecoderLine::SelectFrameInList(EyerAVFrame & frame, double ts)
     {
-        return frameList.getLength();
+        EyerAVFrame * ff = nullptr;
+        for(int i=0;i<frameList.getLength();i++){
+            
+            EyerAVFrame * f = nullptr;
+            frameList.find(i, f);
+            if(f != nullptr){
+                Eyer::EyerAVRational streamTimebase;
+                reader->GetStreamTimeBase(streamTimebase, videoStreamIndex);
+
+                double t = f->GetPTS() * 1.0 * streamTimebase.num / streamTimebase.den;
+
+                EyerLog("t: %f ts: %f\n", t, ts);
+                if(t > ts){
+                    if(i <= 1){
+                        ff = f;
+                    }
+                    else{
+                        // 向前检索一帧进行比较
+                        EyerAVFrame * lastF = nullptr;
+                        frameList.find(i - 1, lastF);
+
+                        double lastFT = lastF->GetPTS() * 1.0 * streamTimebase.num / streamTimebase.den;
+
+                        if(abs(lastFT - ts) < abs(t - ts)){
+                            ff = lastF;
+                        }
+                        else{
+                            ff = f;
+                        }
+                    }
+
+                    break;
+                }
+                if(t == ts){
+                    ff = f;
+                    break;
+                }
+            }
+        }
+
+        if(ff == nullptr){
+            frame = *ff;
+        }
+
+        // 无论成功还是失败，都要丢帧
+        while(frameList.getLength() > 5){
+            EyerAVFrame * f = nullptr;
+            frameList.find(0, f);
+            if(f != nullptr){
+                delete f;
+            }
+            frameList.deleteEle(0);
+        }
+
+        if(ff == nullptr){
+            return -1;
+        }
+
+        // frame = *ff;
+
+        return 0;
     }
-
-
-
-
-
-
-
-
-
-
-
 
     int EyerVideoDecoderLine::ReadFrame()
     {
@@ -152,8 +217,14 @@ namespace Eyer
         }
         EyerAVPacket pkt;
         int ret = reader->Read(&pkt);
+        // EyerLog("Read Frame: %d\n", ret);
+        if(pkt.GetStreamId() != videoStreamIndex){
+            return -1;
+        }
 
+        
         if(ret){
+            // 清空解码器
             decoder->SendPacket(nullptr);
             while(1){
                 EyerAVFrame * frame = new EyerAVFrame();
@@ -162,16 +233,18 @@ namespace Eyer
                     delete frame;
                     break;
                 }
-                // EyerLog("Frame %d %d\n", frame->GetWidth(), frame->GetHeight());
+
+                EyerLog("Frame %d %d\n", frame->GetWidth(), frame->GetHeight());
+
                 frameList.insertBack(frame);
+
+                EyerLog("Empty Decoder FFF\n");
             }
+
+            EyerLog("Empty Decoder ReadFrame\n");
             fileEndFlag = 1;
         }
         else{
-            if(pkt.GetStreamId() != videoStreamIndex){
-                return -1;
-            }
-
             decoder->SendPacket(&pkt);
             while(1){
                 EyerAVFrame * frame = new EyerAVFrame();
@@ -186,71 +259,5 @@ namespace Eyer
         }
         
         return 0;
-    }
-    int EyerVideoDecoderLine::SelectFrameInList(EyerAVFrame & frame, double ts)
-    {
-        EyerAVFrame * ff = nullptr;
-
-        for(int i=0;i<frameList.getLength();i++){   
-            EyerAVFrame * f = nullptr;
-            frameList.find(i, f);
-            if(f == nullptr){
-                continue;
-            }
-
-            Eyer::EyerAVRational streamTimebase;
-            reader->GetStreamTimeBase(streamTimebase, videoStreamIndex);
-
-            double t = f->GetPTS() * 1.0 * streamTimebase.num / streamTimebase.den;
-
-            // EyerLog("t: %f ts: %f\n", t, ts);
-
-            if(t > ts){
-                if(i <= 1){
-                    ff = f;
-                }
-                else{
-                    // 向前检索一帧进行比较
-                    EyerAVFrame * lastF = nullptr;
-                    frameList.find(i - 1, lastF);
-                    if(lastF == nullptr){
-                        break;
-                    }
-
-                    double lastFT = lastF->GetPTS() * 1.0 * streamTimebase.num / streamTimebase.den;
-
-                    if(abs(lastFT - ts) < abs(t - ts)){
-                        ff = lastF;
-                    }
-                    else{
-                        ff = f;
-                    }
-                }
-
-                break;
-            }
-            if(t == ts){
-                ff = f;
-                break;
-            }
-        }
-
-        int isError = -1;
-        if(ff != nullptr){
-            frame = *ff;
-            isError = 0;
-        }
-
-        // 无论成功还是失败，都要丢帧
-        while(frameList.getLength() > 5){
-            EyerAVFrame * f = nullptr;
-            frameList.find(0, f);
-            if(f != nullptr){
-                delete f;
-            }
-            frameList.deleteEle(0);
-        }
-
-        return isError;
     }
 }
