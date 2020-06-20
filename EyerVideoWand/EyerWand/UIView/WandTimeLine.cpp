@@ -87,6 +87,20 @@ namespace Eyer {
             line.SetLine(x, 0.0f, x, 40.0f);
             line.SetStrokeWidth(6);
             eventList.AddEvent(&line);
+
+            WandTimeLineDrawEvent_Text text;
+            text.SetColor(markColor);
+
+            char s[32];
+            int intTime = markIndex * markDTime;
+            int min = intTime / 60 % 60;
+            int sec = intTime % 60;
+            sprintf(s, "%02d:%02d", min, sec);
+
+            EyerString timeStr(s);
+            text.SetText(timeStr, 40.0, x - 50.0, 80.0f, "");
+
+            eventList.AddEvent(&text);
         }
 
         double offsetTime = 0.0;
@@ -161,12 +175,13 @@ namespace Eyer {
 
 
         //绘制文字
+        /*
         WandTimeLineDrawEvent_Text text;
         text.SetColor(textColor);
         text.SetText("咪咪 么么哒", 75.0, 10, 100, "");
 
         eventList.AddEvent(&text);
-
+        */
 
         
 
