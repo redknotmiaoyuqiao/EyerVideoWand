@@ -163,7 +163,7 @@ namespace Eyer {
                 }
 
                 bitmapSnapshot.SetPath  (vf->GetPath());
-                bitmapSnapshot.SetTime  (imgIndex * 1.0 / markD * markDTime);
+                bitmapSnapshot.SetTime  (imgIndex * imgW * 1.0 / markD * markDTime);
                 bitmapSnapshot.SetDist  (x1, y1, x2, y2);
                 bitmapSnapshot.SetSrc   (0, 0, vf->GetW(), vf->GetH());
                 eventList.AddEvent(&bitmapSnapshot);
