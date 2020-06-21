@@ -177,6 +177,28 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
 }
 
 
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1list_1get_1bitmap_1snapshot_1event
+(JNIEnv *, jclass, jlong eventListP, jlong bitmapSnapshotP, jint index)
+{
+    Eyer::WandTimeLineDrawEventList * eventList = (Eyer::WandTimeLineDrawEventList *)eventListP;
+
+    Eyer::WandTimeLineDrawEvent_BitmapSnapshot * bitmapSnapshot = (Eyer::WandTimeLineDrawEvent_BitmapSnapshot *)bitmapSnapshotP;
+
+    // 验证类型是否正确
+
+    // 验证类型是否正确
+    Eyer::WandTimeLineDrawEvent * tempEvent = nullptr;
+    eventList->GetEvent(tempEvent, index);
+
+    if(tempEvent == nullptr){
+        return -1;
+    }
+
+    *bitmapSnapshot = *((Eyer::WandTimeLineDrawEvent_BitmapSnapshot *)tempEvent);
+
+    return 0;
+}
+
 
 
 

@@ -41,6 +41,9 @@ namespace Eyer
         scaleAnimation = fragment.scaleAnimation;
         transAnimation = fragment.transAnimation;
 
+        w = fragment.w;
+        h = fragment.h;
+
         return *this;
     }
 
@@ -74,6 +77,9 @@ namespace Eyer
         EyerLog("Video Duration:%f\n", duration);
 
         SetFrameTime(0.0, duration);
+
+        w = videoResource->GetW();
+        h = videoResource->GetH();
 
         return 0;
     }
@@ -145,5 +151,28 @@ namespace Eyer
     EyerVideoFragmentType EyerVideoFragmentVideo::GetType() const
     {
         return EyerVideoFragmentType::VIDEO_FRAGMENT_VIDEO;
+    }
+
+
+    int EyerVideoFragmentVideo::GetW()
+    {
+        /*
+        if(videoResource == nullptr){
+            return -1;
+        }
+        return videoResource->GetW();
+        */
+        return w;
+    }
+
+    int EyerVideoFragmentVideo::GetH()
+    {
+        /*
+        if(videoResource == nullptr){
+            return -1;
+        }
+        return videoResource->GetH();
+        */
+       return h;
     }
 }

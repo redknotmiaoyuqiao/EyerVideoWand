@@ -361,6 +361,14 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
 
 /*
  * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_list_get_bitmap_snapshot_event
+ * Signature: (JJI)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1list_1get_1bitmap_1snapshot_1event
+  (JNIEnv *, jclass, jlong, jlong, jint);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
  * Method:    wand_view_draw_event_rect_init
  * Signature: ()J
  */
@@ -646,6 +654,54 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
  */
 JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1bitmap_1get_1dist
   (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_bitmap_snapshot_init
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1bitmap_1snapshot_1init
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_bitmap_snapshot_uninit
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1bitmap_1snapshot_1uninit
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_bitmap_snapshot_get_src
+ * Signature: (JJ)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1bitmap_1snapshot_1get_1src
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_bitmap_snapshot_get_dist
+ * Signature: (JJ)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1bitmap_1snapshot_1get_1dist
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_bitmap_snapshot_get_path
+ * Signature: (J)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1bitmap_1snapshot_1get_1path
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_view_draw_event_bitmap_snapshot_get_time
+ * Signature: (J)D
+ */
+JNIEXPORT jdouble JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1view_1draw_1event_1bitmap_1snapshot_1get_1time
+  (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative

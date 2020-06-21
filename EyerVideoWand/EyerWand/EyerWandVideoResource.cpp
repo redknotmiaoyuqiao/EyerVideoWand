@@ -117,9 +117,23 @@ namespace Eyer
         finalRet = 0;
         duration = avStream.GetDuration();
 
+        w = avStream.GetWidth();
+        h = avStream.GetHeight();
+
     END:
         ret = reader.Close();
 
         return finalRet;
+    }
+
+
+    int EyerWandVideoResource::GetW()
+    {
+        return w;
+    }
+
+    int EyerWandVideoResource::GetH()
+    {
+        return h;
     }
 }

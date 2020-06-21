@@ -131,8 +131,8 @@ namespace Eyer {
             float layerStartY   = canvasH * 0.5 - layerHeight * 0.5;
             float layerEndY     = canvasH * 0.5 + layerHeight * 0.5;
 
-            layerStartX     = layerStartX   +   25;
-            layerEndX       = layerEndX     -   25;
+            layerStartX         = layerStartX   +   25;
+            layerEndX           = layerEndX     -   25;
 
             layerRect.SetRect(layerStartX, layerStartY, layerEndX, layerEndY);
             layerRect.SetColor(layerColor);
@@ -140,9 +140,14 @@ namespace Eyer {
             eventList.AddEvent(&layerRect);
 
             int imgW = layerHeight;
+            int imgH = layerHeight;
+            imgW = vf->GetW() * 1.0 / vf->GetH() * imgH;
+
+            // EyerLog("W:%d, H:%d\n", vf->GetW(), vf->GetH());
+
             int imgCount = (layerEndX - layerStartX) / imgW;
             for(int imgIndex = 0; imgIndex < imgCount; imgIndex++){
-                WandTimeLineDrawEvent_Bitmap bitmap;
+                WandTimeLineDrawEvent_BitmapSnapshot bitmapSnapshot;
 
                 float x1 = imgIndex * imgW + layerStartX;
                 float y1 = layerStartY;
@@ -157,8 +162,11 @@ namespace Eyer {
                     continue;
                 }
 
-                bitmap.SetDist(x1, y1, x2, y2);
-                eventList.AddEvent(&bitmap);
+                bitmapSnapshot.SetPath  (vf->GetPath());
+                bitmapSnapshot.SetTime  (imgIndex * 1.0 / markD * markDTime);
+                bitmapSnapshot.SetDist  (x1, y1, x2, y2);
+                bitmapSnapshot.SetSrc   (0, 0, vf->GetW(), vf->GetH());
+                eventList.AddEvent(&bitmapSnapshot);
             }
         }
         
@@ -171,27 +179,10 @@ namespace Eyer {
 
         eventList.AddEvent(&timePointer);
 
-
-
-
-        //绘制文字
-        /*
-        WandTimeLineDrawEvent_Text text;
-        text.SetColor(textColor);
-        text.SetText("咪咪 么么哒", 75.0, 10, 100, "");
-
-        eventList.AddEvent(&text);
-        */
-
-        
-
         if(lastRenderFrameIndex != nowTime * fps){
             ctx->RenderFrameByIndex(nowTime * fps);
             lastRenderFrameIndex = nowTime * fps;
         }
-
-        
-        
 
         return 0;
     }

@@ -29,6 +29,10 @@ namespace Eyer {
             WandTimeLineDrawEvent_Text * text = new WandTimeLineDrawEvent_Text(*(WandTimeLineDrawEvent_Text *)event);
             eventList.push_back(text);
         }
+        if(event->GetType() == WandTimeLineDrawEventType::BITMAP_SNAPSHOT){
+            WandTimeLineDrawEvent_BitmapSnapshot * bitmapSnapshot = new WandTimeLineDrawEvent_BitmapSnapshot(*(WandTimeLineDrawEvent_BitmapSnapshot *)event);
+            eventList.push_back(bitmapSnapshot);
+        }
         return 0;
     }
 

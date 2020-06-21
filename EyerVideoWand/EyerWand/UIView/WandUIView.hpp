@@ -11,6 +11,7 @@ namespace Eyer {
     class WandTimeLineDrawEvent_Rect;
     class WandTimeLineDrawEvent_Line;
     class WandTimeLineDrawEvent_Bitmap;
+    class WandTimeLineDrawEvent_BitmapSnapshot;
     class WandTimeLineDrawEventList;
 
     /**
@@ -18,11 +19,12 @@ namespace Eyer {
      */ 
     enum WandTimeLineDrawEventType
     {
-        UNKNOW      = -1,
-        RECT        = 0,
-        LINE        = 1,
-        BITMAP      = 2,
-        TEXT        = 3
+        UNKNOW                  = -1,
+        RECT                    = 0,
+        LINE                    = 1,
+        BITMAP                  = 2,
+        TEXT                    = 3,
+        BITMAP_SNAPSHOT         = 4
     };
 
     /**
@@ -104,7 +106,7 @@ namespace Eyer {
         WandTimeLineDrawEvent_Rect(WandTimeLineDrawEvent_Rect & rect);
         WandTimeLineDrawEvent_Rect & operator = (WandTimeLineDrawEvent_Rect & rect);
 
-        WandTimeLineDrawEventType GetType();
+        virtual WandTimeLineDrawEventType GetType();
 
         int SetRect(float startX, float startY, float endX, float endY);
 
@@ -128,7 +130,7 @@ namespace Eyer {
         WandTimeLineDrawEvent_Line(WandTimeLineDrawEvent_Line & line);
         WandTimeLineDrawEvent_Line & operator = (WandTimeLineDrawEvent_Line & line);
 
-        WandTimeLineDrawEventType GetType();
+        virtual WandTimeLineDrawEventType GetType();
 
 
         int SetLine(float startX, float startY, float endX, float endY);
@@ -161,7 +163,7 @@ namespace Eyer {
         WandTimeLineDrawEvent_Bitmap(WandTimeLineDrawEvent_Bitmap & bitmap);
         WandTimeLineDrawEvent_Bitmap & operator = (WandTimeLineDrawEvent_Bitmap & bitmap);
 
-        WandTimeLineDrawEventType GetType();
+        virtual WandTimeLineDrawEventType GetType();
 
         int GetRect(EyerVec4 & src, EyerVec4 & dist);
 
@@ -176,7 +178,38 @@ namespace Eyer {
         EyerVec4 dist;
     };
 
-     class WandTimeLineDrawEvent_Text : public WandTimeLineDrawEvent
+    class WandTimeLineDrawEvent_BitmapSnapshot : public WandTimeLineDrawEvent
+    {
+    public:
+        WandTimeLineDrawEvent_BitmapSnapshot();
+        ~WandTimeLineDrawEvent_BitmapSnapshot();
+
+        WandTimeLineDrawEvent_BitmapSnapshot(WandTimeLineDrawEvent_BitmapSnapshot & bitmapSnapshot);
+        WandTimeLineDrawEvent_BitmapSnapshot & operator = (WandTimeLineDrawEvent_BitmapSnapshot & bitmapSnapshot);
+
+        virtual WandTimeLineDrawEventType GetType();
+
+        int             SetPath         (EyerString path);
+        EyerString      GetPath         ();
+
+        int             SetTime         (double time);
+        double          GetTime         ();
+
+        int             GetSrc          (EyerVec4 & src);
+        int             GetDist         (EyerVec4 & dist);
+
+        int             SetSrc          (float x1, float y1, float x2, float y2);
+        int             SetDist         (float x1, float y1, float x2, float y2);
+
+    private:
+        EyerString path;
+        double time = 0.0;
+
+        EyerVec4 src;
+        EyerVec4 dist;
+    };
+
+    class WandTimeLineDrawEvent_Text : public WandTimeLineDrawEvent
     {
     public:
         WandTimeLineDrawEvent_Text();
@@ -185,7 +218,7 @@ namespace Eyer {
         WandTimeLineDrawEvent_Text(WandTimeLineDrawEvent_Text & rect);
         WandTimeLineDrawEvent_Text & operator = (WandTimeLineDrawEvent_Text & rect);
 
-        WandTimeLineDrawEventType GetType();
+        virtual WandTimeLineDrawEventType GetType();
 
         int SetText(EyerString text, float size, float startX, float startY, EyerString fontStyle);
 
