@@ -11,9 +11,7 @@
 
 
 #ifdef EYER_PLATFORM_ANDROID
-// #include "EyerWandContext.hpp"
 #include "EyerGLContext/EyerGLContext.hpp"
-
 #else
 #include "EyerGLWindow/EyerGLWindow.hpp"
 #include "EyerImg/stb_image.h"
@@ -97,8 +95,13 @@ namespace Eyer {
         int GetVideoDuration(double & duration);
         int GetVideoFrame(EyerAVFrame & avFrame, double ts);
 
+        int GetW();
+        int GetH();
     private:
         EyerLinkedList<EyerVideoDecoderLine *> decoderLineList;
+
+        int w = -1;
+        int h = -1;
 
         std::mutex mut;
     };
@@ -338,6 +341,11 @@ namespace Eyer {
 
         EyerVideoTweenAnimation transAnimation;
         EyerVideoTweenAnimation scaleAnimation;
+
+
+
+        int GetW();
+        int GetH();
     private:
         EyerString path;
 
@@ -351,6 +359,8 @@ namespace Eyer {
 
         Eyer::EyerWandVideoResource * videoResource = nullptr;
 
+        int w = -1;
+        int h = -1;
     };
 
     class EyerVideoFragmentText : public EyerVideoFragment
