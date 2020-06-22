@@ -88,7 +88,7 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
     frame.GetVData(yuv420_v);
 
     Eyer::EyerYUV yuvUtil;
-    yuvUtil.I420_TO_RGBA(w, h, yuv420_y, yuv420_u, yuv420_v, rgba8888);
+    yuvUtil.I420_TO_RGBA(w, h, yuv420_y, yuv420_v, yuv420_u, rgba8888);
 
     AndroidBitmapInfo info;
     int result = AndroidBitmap_getInfo(env, bitmap, &info);
