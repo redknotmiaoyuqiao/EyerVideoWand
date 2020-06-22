@@ -15,6 +15,9 @@ JNIEXPORT jlong JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wan
     Eyer::EyerWandVideoResource * videoRes = new Eyer::EyerWandVideoResource();
     videoRes->SetPath(urlString);
 
+    double duration = 0.0;
+    videoRes->GetVideoDuration(duration);
+
     free(urlChar);
     return (jlong)videoRes;
 }
@@ -26,6 +29,21 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
     if(videoRes != NULL){
         delete videoRes;
     }
+    return 0;
+}
+
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1snapshot_1get_1wh
+(JNIEnv *, jclass, jlong videoResP, jlong vec2P)
+{
+    Eyer::EyerWandVideoResource * videoRes = (Eyer::EyerWandVideoResource *)videoResP;
+    Eyer::EyerVec2 * vec2 = (Eyer::EyerVec2 *)vec2P;
+
+    int w = videoRes->GetW();
+    int h = videoRes->GetH();
+
+    vec2->SetX(w);
+    vec2->SetY(h);
+
     return 0;
 }
 
@@ -43,7 +61,7 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
     int w = frame.GetWidth();
     int h = frame.GetHeight();
 
-    EyerLog("Frame  W: %d   H: %d\n", w, h);
+    // EyerLog("Frame  W: %d   H: %d\n", w, h);
 
     unsigned char * yuv420_y = (unsigned char *)malloc(w * h);
     unsigned char * yuv420_u = (unsigned char *)malloc(w / 2 * h / 2);
@@ -93,7 +111,7 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
     AndroidBitmapInfo info;
     int result = AndroidBitmap_getInfo(env, bitmap, &info);
     if (result != ANDROID_BITMAP_RESULT_SUCCESS) {
-        EyerLog("AndroidBitmap_getInfo failed, result: %d", result);
+        // EyerLog("AndroidBitmap_getInfo failed, result: %d", result);
 
         free(yuv420_y);
         free(yuv420_u);
@@ -101,7 +119,7 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
         free(rgba8888);
         return -1;
     }
-    EyerLog("bitmap width: %d, height: %d, format: %d, stride: %d", info.width, info.height, info.format, info.stride);
+    // EyerLog("bitmap width: %d, height: %d, format: %d, stride: %d", info.width, info.height, info.format, info.stride);
 
     int bitmapW = info.width;
     int bitmapH = info.height;

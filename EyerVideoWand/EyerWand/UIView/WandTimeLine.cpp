@@ -36,6 +36,7 @@ namespace Eyer {
         EyerVec4 timePointerColor           (1.0f, 1.0f, 1.0f, 1.0f);       // 绘制时间针颜色
         EyerVec4 layerColor                 (0.8f, 0.8f, 0.8f, 0.8f);       // Layer颜色
         EyerVec4 textColor                  (1.0f, 0.0f, 0.0f, 1.0f);       // text颜色
+        EyerVec4 fragmentBoxColor           (1.0f, 1.0f, 0.0f, 1.0f);       // fragmentBoxColor
 
         WandTimeLineDrawEvent_Rect rect;
         rect.SetRect(0.0f, 0.0f, canvasW, canvasH);
@@ -168,6 +169,59 @@ namespace Eyer {
                 bitmapSnapshot.SetSrc   (0, 0, vf->GetW(), vf->GetH());
                 eventList.AddEvent(&bitmapSnapshot);
             }
+
+            
+            int lastSnapshotW = (int)(layerEndX - layerStartX) % imgW;
+            if(lastSnapshotW > 0){
+                WandTimeLineDrawEvent_BitmapSnapshot bitmapSnapshot;
+
+                float x1 = (imgCount - 0) * imgW + layerStartX;
+                float y1 = layerStartY;
+
+                float x2 = (imgCount - 0) * imgW + lastSnapshotW + layerStartX;
+                float y2 = layerEndY;
+
+                if(x1 < canvasW && x2 > 0){
+                    bitmapSnapshot.SetPath  (vf->GetPath());
+                    bitmapSnapshot.SetTime  ((imgCount - 1) * imgW * 1.0 / markD * markDTime);
+                    bitmapSnapshot.SetDist  (x1, y1, x2, y2);
+                    bitmapSnapshot.SetSrc   (0, 0, vf->GetW(), vf->GetH());
+                    eventList.AddEvent(&bitmapSnapshot);
+                }
+            }
+
+
+
+            if(nowTime >= layerStartTime && nowTime <= layerEndTime){
+                {
+                    WandTimeLineDrawEvent_Line line;
+                    line.SetColor(fragmentBoxColor);
+                    line.SetStrokeWidth(5);
+                    line.SetLine(layerStartX, layerStartY, layerEndX, layerStartY);
+                    eventList.AddEvent(&line);
+                }
+                {
+                    WandTimeLineDrawEvent_Line line;
+                    line.SetColor(fragmentBoxColor);
+                    line.SetStrokeWidth(5);
+                    line.SetLine(layerStartX, layerEndY, layerEndX, layerEndY);
+                    eventList.AddEvent(&line);
+                }
+                {
+                    WandTimeLineDrawEvent_Line line;
+                    line.SetColor(fragmentBoxColor);
+                    line.SetStrokeWidth(5);
+                    line.SetLine(layerStartX, layerStartY, layerStartX, layerEndY);
+                    eventList.AddEvent(&line);
+                }
+                {
+                    WandTimeLineDrawEvent_Line line;
+                    line.SetColor(fragmentBoxColor);
+                    line.SetStrokeWidth(5);
+                    line.SetLine(layerEndX, layerStartY, layerEndX, layerEndY);
+                    eventList.AddEvent(&line);
+                }
+            }
         }
         
         // 绘制时间针
@@ -175,7 +229,7 @@ namespace Eyer {
         timePointer.SetColor(timePointerColor);
         int h = canvasH * 0.5;
         timePointer.SetLine(canvasW / 2, canvasH * 0.5 - h * 0.5, canvasW / 2, canvasH * 0.5 + h * 0.5);
-        timePointer.SetStrokeWidth(10);
+        timePointer.SetStrokeWidth(7);
 
         eventList.AddEvent(&timePointer);
 

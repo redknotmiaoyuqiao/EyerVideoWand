@@ -225,6 +225,14 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
 
 /*
  * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
+ * Method:    wand_snapshot_get_wh
+ * Signature: (JJ)I
+ */
+JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand_1snapshot_1get_1wh
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     com_eyer_eyer_wand_editor_lib_EyerWandNative
  * Method:    wand_snapshot_bitmap
  * Signature: (JDLandroid/graphics/Bitmap;)I
  */
