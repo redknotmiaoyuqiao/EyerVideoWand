@@ -61,65 +61,17 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
     int w = frame.GetWidth();
     int h = frame.GetHeight();
 
-    // EyerLog("Frame  W: %d   H: %d\n", w, h);
-
-    unsigned char * yuv420_y = (unsigned char *)malloc(w * h);
-    unsigned char * yuv420_u = (unsigned char *)malloc(w / 2 * h / 2);
-    unsigned char * yuv420_v = (unsigned char *)malloc(w / 2 * h / 2);
-    unsigned char * rgba8888 = (unsigned char *)malloc(w * h * 4);
-
-    if(yuv420_y == NULL){
-        EyerLog("malloc fail!!!!\n");
-        free(yuv420_y);
-        free(yuv420_u);
-        free(yuv420_v);
-        free(rgba8888);
-        return -1;
+    Eyer::EyerAVFrame rgbaFrame;
+    ret = frame.Scale(rgbaFrame, w, h, Eyer::EyerAVPixelFormat::Eyer_AV_PIX_FMT_RGBA);
+    if(ret){
+        return -2;
     }
-    if(yuv420_u == NULL){
-        EyerLog("malloc fail!!!!\n");
-        free(yuv420_y);
-        free(yuv420_u);
-        free(yuv420_v);
-        free(rgba8888);
-        return -1;
-    }
-    if(yuv420_v == NULL){
-        EyerLog("malloc fail!!!!\n");
-        free(yuv420_y);
-        free(yuv420_u);
-        free(yuv420_v);
-        free(rgba8888);
-        return -1;
-    }
-    if(rgba8888 == NULL){
-        EyerLog("malloc fail!!!!\n");
-        free(yuv420_y);
-        free(yuv420_u);
-        free(yuv420_v);
-        free(rgba8888);
-        return -1;
-    }
-
-    frame.GetYData(yuv420_y);
-    frame.GetUData(yuv420_u);
-    frame.GetVData(yuv420_v);
-
-    Eyer::EyerYUV yuvUtil;
-    yuvUtil.I420_TO_RGBA(w, h, yuv420_y, yuv420_v, yuv420_u, rgba8888);
 
     AndroidBitmapInfo info;
     int result = AndroidBitmap_getInfo(env, bitmap, &info);
     if (result != ANDROID_BITMAP_RESULT_SUCCESS) {
-        // EyerLog("AndroidBitmap_getInfo failed, result: %d", result);
-
-        free(yuv420_y);
-        free(yuv420_u);
-        free(yuv420_v);
-        free(rgba8888);
-        return -1;
+        return -3;
     }
-    // EyerLog("bitmap width: %d, height: %d, format: %d, stride: %d", info.width, info.height, info.format, info.stride);
 
     int bitmapW = info.width;
     int bitmapH = info.height;
@@ -127,22 +79,18 @@ JNIEXPORT jint JNICALL Java_com_eyer_eyer_1wand_1editor_1lib_EyerWandNative_wand
     unsigned char * buf = nullptr;
     if (ANDROID_BITMAP_RESULT_SUCCESS != AndroidBitmap_lockPixels(env, bitmap, (void **)&buf)) {
         EyerLog("lock src bitmap failed");
-
-        free(yuv420_y);
-        free(yuv420_u);
-        free(yuv420_v);
-        free(rgba8888);
         return -1;
     }
+
+    unsigned char * rgba8888 = (unsigned char *)malloc(w * h * 4);
+
+    rgbaFrame.GetRGBAData(rgba8888);
 
     memcpy(buf, rgba8888, stride * bitmapH);
 
     AndroidBitmap_unlockPixels(env, bitmap);
 
-
-    free(yuv420_y);
-    free(yuv420_u);
-    free(yuv420_v);
     free(rgba8888);
+
     return 0;
 }
