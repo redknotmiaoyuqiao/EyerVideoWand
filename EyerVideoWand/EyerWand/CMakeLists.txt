@@ -107,13 +107,14 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     MESSAGE(STATUS "current platform: Darwin")
     add_library(
         EyerWand
-        SHARED
+        # SHARED
 
         EyerWand.cpp
         EyerWandResource.cpp
         EyerWandVideoResource.cpp
         EyerWandAudioResource.cpp
-        EyerWandBuilder.cpp
+        # EyerWandBuilder.cpp
+        EyerWandContext.cpp
         EyerVideoTrack.cpp
         EyerVideoLayout.cpp
 
@@ -130,6 +131,19 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
         EyerVideoFragment.cpp
         EyerTransKey.cpp
         EyerVideoFragmentFrameSequential.cpp
+
+        WandRenderTask/LayerRenderTask.cpp
+        WandRenderTask/VideoTrackRenderTask.cpp
+
+        UIView/WandTimeLine.cpp
+        UIView/WandTimeLineDrawEvent.cpp
+        UIView/WandTimeLineDrawEvent_Rect.cpp
+        UIView/WandTimeLineDrawEvent_Line.cpp
+        UIView/WandTimeLineDrawEvent_Bitmap.cpp
+        UIView/WandTimeLineDrawEvent_Text.cpp
+        UIView/WandTimeLineDrawEvent_BitmapSnapshot.cpp
+
+        UIView/WandTimeLineDrawEventList.cpp
         
         )
 ELSE ()
