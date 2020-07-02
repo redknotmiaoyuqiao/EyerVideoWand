@@ -60,8 +60,8 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     )
     
     ADD_SUBDIRECTORY(EyerWand)
-    ADD_SUBDIRECTORY(EyerWandTest)
-    ADD_SUBDIRECTORY(EyerWandTest_C)
+    # ADD_SUBDIRECTORY(EyerWandTest)
+    # ADD_SUBDIRECTORY(EyerWandTest_C)
 
     ADD_SUBDIRECTORY(googletest)
 

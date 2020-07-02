@@ -314,6 +314,12 @@ ELSE ()
     MESSAGE(STATUS "other platform: ${CMAKE_SYSTEM_NAME}")
 ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 
+INSTALL(FILES EyerWand.hpp DESTINATION include/EyerWand)
+INSTALL(FILES EyerWandAV.hpp DESTINATION include/EyerWand)
+INSTALL(FILES EyerWandContext.hpp DESTINATION include/EyerWand)
+INSTALL(FILES WandRenderTask/WandRenderTask.hpp DESTINATION include/EyerWand/WandRenderTask/)
+INSTALL(FILES UIView/WandUIView.hpp DESTINATION include/EyerWand/UIView/)
+
 INSTALL(
         TARGETS EyerWand
         RUNTIME DESTINATION bin

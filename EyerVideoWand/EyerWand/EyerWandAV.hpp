@@ -1,8 +1,6 @@
 #ifndef	EYER_LIB_AV_EYER_WAND_AV_H
 #define	EYER_LIB_AV_EYER_WAND_AV_H
 
-#include "EyerGL/EyerGL.hpp"
-#include "EyerCore/EyerCore.hpp"
 #include "EyerAV/EyerAV.hpp"
 #include "EyerGL/EyerGLCustomComponent/EyerGLCustomComponent.hpp"
 #include "EyerVideoTweenAnimation/EyerVideoTweenAnimation.hpp"
@@ -10,13 +8,13 @@
 #define EYER_WAND_VERSION "EyerWand 1.0.0"
 
 
-#ifdef EYER_PLATFORM_ANDROID
+// #ifdef EYER_PLATFORM_ANDROID
 #include "EyerGLContext/EyerGLContext.hpp"
-#else
+// #else
 #include "EyerGLWindow/EyerGLWindow.hpp"
-#include "EyerImg/stb_image.h"
-#define STB_IMAGE_IMPLEMENTATION
-#endif
+// #include "EyerImg/stb_image.h"
+// #define STB_IMAGE_IMPLEMENTATION
+// #endif
 
 namespace Eyer {
     class EyerWand;
@@ -462,9 +460,9 @@ namespace Eyer {
 
 
         int RenderFrame(int frameIndex, EyerVideoTrackRenderParams * params, int fps);
-#ifdef EYER_PLATFORM_ANDROID
+// #ifdef EYER_PLATFORM_ANDROID
         int RenderFrame2(int frameIndex, int fps, EyerGLContextThread * glCtx);
-#endif
+// #endif
 
         int SetTargetVideoWH(int w, int h);
         int SetTargetVideoFPS(int fps);

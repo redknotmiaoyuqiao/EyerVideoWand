@@ -54,6 +54,7 @@ namespace Eyer {
 
 
 
+        
         time = 0.0;
         // 统计 Layer 总时间
         int videoFragmentCount = videoTrack.VideoLayer_GetFragmentCount();
@@ -69,6 +70,8 @@ namespace Eyer {
             EyerVideoFragmentVideo * vf = (EyerVideoFragmentVideo *)fragment;
             time += vf->GetDuration();
         }
+
+        
 
         // 绘制时间标尺
         int timeMartCount = (int)(time / markDTime) + 1;
@@ -103,6 +106,8 @@ namespace Eyer {
 
             eventList.AddEvent(&text);
         }
+
+        
 
         double offsetTime = 0.0;
         // 绘制 Video Fragment Layer
@@ -237,6 +242,7 @@ namespace Eyer {
             ctx->RenderFrameByIndex(nowTime * fps);
             lastRenderFrameIndex = nowTime * fps;
         }
+        
 
         return 0;
     }
