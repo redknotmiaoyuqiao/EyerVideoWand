@@ -47,6 +47,10 @@ namespace Eyer {
 
         int Draw(WandTimeLineDrawEventList & eventList);
 
+
+
+        int DrawTimePointer(WandTimeLineDrawEventList & eventList, float canvasW, float canvasH, EyerVec4 & timePointerColor);
+
     private:
         Eyer::EyerWandContext * ctx = nullptr;
 
