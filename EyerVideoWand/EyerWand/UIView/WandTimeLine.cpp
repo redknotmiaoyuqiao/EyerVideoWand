@@ -22,14 +22,6 @@ namespace Eyer {
 
     int WandTimeLine::Draw(WandTimeLineDrawEventList & eventList)
     {
-        // EyerLog("TimeLine draw\n");
-        if(ctx == nullptr){
-            return 0;
-        }
-
-        float canvasW = wh.x();
-        float canvasH = wh.y();
-
         // EyerVec4 backgroundColor            (0.3f, 0.3f, 0.3f, 1.0f);       // 绘制背景底色
         EyerVec4 backgroundColor            (0.0f, 0.0f, 0.0f, 1.0f);       // 绘制背景底色
         EyerVec4 markColor                  (0.4f, 0.4f, 0.4f, 1.0f);       // 标尺颜色
@@ -37,6 +29,15 @@ namespace Eyer {
         EyerVec4 layerColor                 (0.8f, 0.8f, 0.8f, 0.8f);       // Layer颜色
         EyerVec4 textColor                  (1.0f, 0.0f, 0.0f, 1.0f);       // text颜色
         EyerVec4 fragmentBoxColor           (1.0f, 1.0f, 0.0f, 1.0f);       // fragmentBoxColor
+
+
+        // EyerLog("TimeLine draw\n");
+        if(ctx == nullptr){
+            return 0;
+        }
+
+        float canvasW = wh.x();
+        float canvasH = wh.y();
 
         WandTimeLineDrawEvent_Rect rect;
         rect.SetRect(0.0f, 0.0f, canvasW, canvasH);
@@ -54,6 +55,7 @@ namespace Eyer {
 
 
 
+        
         time = 0.0;
         // 统计 Layer 总时间
         int videoFragmentCount = videoTrack.VideoLayer_GetFragmentCount();
@@ -69,6 +71,8 @@ namespace Eyer {
             EyerVideoFragmentVideo * vf = (EyerVideoFragmentVideo *)fragment;
             time += vf->GetDuration();
         }
+
+        
 
         // 绘制时间标尺
         int timeMartCount = (int)(time / markDTime) + 1;
@@ -115,12 +119,11 @@ namespace Eyer {
             if(fragment->GetType() != EyerVideoFragmentType::VIDEO_FRAGMENT_VIDEO){
                 continue;
             }
+
             EyerVideoFragmentVideo * vf = (EyerVideoFragmentVideo *)fragment;
 
-            double layerStartTime = offsetTime + vf->GetStartTime();
-            double layerEndTime = offsetTime + vf->GetEndTime();
-
-            offsetTime += (vf->GetEndTime() - vf->GetStartTime());
+            double layerStartTime       = vf->GetStartIndex()       *       1.0  /  fps;
+            double layerEndTime         = vf->GetEndIndex()         *       1.0  /  fps;
 
             int layerHeight = canvasH * 0.2;
 
@@ -132,8 +135,10 @@ namespace Eyer {
             float layerStartY   = canvasH * 0.5 - layerHeight * 0.5;
             float layerEndY     = canvasH * 0.5 + layerHeight * 0.5;
 
+            /*
             layerStartX         = layerStartX   +   25;
             layerEndX           = layerEndX     -   25;
+            */
 
             layerRect.SetRect(layerStartX, layerStartY, layerEndX, layerEndY);
             layerRect.SetColor(layerColor);
@@ -224,6 +229,14 @@ namespace Eyer {
             }
         }
         
+        DrawTimePointer(eventList, canvasW, canvasH, timePointerColor);
+
+        return 0;
+    }
+
+    int WandTimeLine::DrawTimePointer(WandTimeLineDrawEventList & eventList, float canvasW, float canvasH, EyerVec4 & timePointerColor){
+        int fps = ctx->GetFPS();
+
         // 绘制时间针
         WandTimeLineDrawEvent_Line timePointer;
         timePointer.SetColor(timePointerColor);
@@ -237,6 +250,7 @@ namespace Eyer {
             ctx->RenderFrameByIndex(nowTime * fps);
             lastRenderFrameIndex = nowTime * fps;
         }
+        
 
         return 0;
     }

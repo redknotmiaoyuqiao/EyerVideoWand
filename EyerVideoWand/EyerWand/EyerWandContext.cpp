@@ -12,6 +12,7 @@ namespace Eyer
         videoTrack.SetTargetVideoWH(width, height);
         videoTrack.SetTargetVideoFPS(fps);
         
+        /*
         {
             EyerVideoFragmentVideo fragmentVideo1;
             fragmentVideo1.LoadVideoFile("/storage/emulated/0/ST/time_clock_1min_720x1280_30fps.mp4");
@@ -21,6 +22,23 @@ namespace Eyer
 
             EyerVideoFragmentVideo fragmentVideo3;
             fragmentVideo3.LoadVideoFile("/storage/emulated/0/ST/ads.mp4");
+
+            videoTrack.VideoLayer_AddVideoFragment(fragmentVideo3);
+            videoTrack.VideoLayer_AddVideoFragment(fragmentVideo1);
+            videoTrack.VideoLayer_AddVideoFragment(fragmentVideo2);
+            
+        }
+        */
+
+       {
+            EyerVideoFragmentVideo fragmentVideo1;
+            fragmentVideo1.LoadVideoFile("/Users/lichi/Desktop/time_clock_1min_1280x720_30fps.mp4");
+
+            EyerVideoFragmentVideo fragmentVideo2;
+            fragmentVideo2.LoadVideoFile("/Users/lichi/Desktop/time_clock_1min_720x1280_30fps.mp4");
+
+            EyerVideoFragmentVideo fragmentVideo3;
+            fragmentVideo3.LoadVideoFile("/Users/lichi/Desktop/time_clock_1min_720x1280_30fps.mp4");
 
             videoTrack.VideoLayer_AddVideoFragment(fragmentVideo3);
             videoTrack.VideoLayer_AddVideoFragment(fragmentVideo1);
