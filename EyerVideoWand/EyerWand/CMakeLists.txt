@@ -68,10 +68,7 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Android")
         # SHARED
 
         EyerWand.cpp
-        EyerWandResource.cpp
-        EyerWandVideoResource.cpp
         EyerWandAudioResource.cpp
-        # EyerWandBuilder.cpp
         EyerWandContext.cpp
         EyerVideoTrack.cpp
         EyerVideoLayout.cpp
@@ -79,7 +76,6 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Android")
         EyerVideoPanel.cpp
         InterfaceC.cpp
         InterfaceCSharp.cpp
-        EyerVideoDecoderLine.cpp
         EyerAudioTrack.cpp
         EyerAudioLayer.cpp
         EyerAudioFragment.cpp

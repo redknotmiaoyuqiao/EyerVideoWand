@@ -10,6 +10,8 @@ SET(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/install/)
 
 include_directories (googletest/googletest/include)
 include_directories (${CMAKE_SOURCE_DIR}/../../Lib/EyerLib/include)
+include_directories (${CMAKE_SOURCE_DIR}/../../Lib/EyerLib/include/EyerAV)
+include_directories (${CMAKE_SOURCE_DIR}/../../Lib/EyerLib/include/EyerGL)
 
 link_directories (${CMAKE_SOURCE_DIR}/../../Lib/EyerLib/lib)
 link_directories (${CMAKE_SOURCE_DIR}/../../Lib/ffmpeg_install/lib)
