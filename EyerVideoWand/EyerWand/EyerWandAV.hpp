@@ -11,7 +11,7 @@
 // #ifdef EYER_PLATFORM_ANDROID
 #include "EyerGLContext/EyerGLContext.hpp"
 // #else
-#include "EyerGLWindow/EyerGLWindow.hpp"
+// #include "EyerGLWindow/EyerGLWindow.hpp"
 // #include "EyerImg/stb_image.h"
 // #define STB_IMAGE_IMPLEMENTATION
 // #endif
