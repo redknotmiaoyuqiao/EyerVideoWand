@@ -1,7 +1,7 @@
 #include "com_eyer_eyer_wand_editor_lib_EyerWandNative.h"
 
 #include "EyerGLContext/EyerGLContext.hpp"
-#include "EyerGL/EyerGLRenderTask/EyerGLRenderTask.hpp"
+#include "EyerGLRenderTask/EyerGLRenderTask.hpp"
 #include "EyerWand/EyerWandContext.hpp"
 
 

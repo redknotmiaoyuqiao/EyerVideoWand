@@ -2,7 +2,7 @@
 #define	EYER_LIB_AV_EYER_WAND_AV_H
 
 #include "EyerAV/EyerAV.hpp"
-#include "EyerGL/EyerGLCustomComponent/EyerGLCustomComponent.hpp"
+#include "EyerGLCustomComponent/EyerGLCustomComponent.hpp"
 #include "EyerVideoTweenAnimation/EyerVideoTweenAnimation.hpp"
 
 #define EYER_WAND_VERSION "EyerWand 1.0.0"
@@ -45,63 +45,6 @@ namespace Eyer {
         EyerWand();
 
         ~EyerWand();
-    };
-
-    class EyerWandResource {
-    public:
-        EyerString resPath;
-    public:
-        EyerWandResource();
-
-        ~EyerWandResource();
-
-        int SetPath(EyerString resPath);
-    };
-
-    class EyerVideoDecoderLine
-    {
-    public:
-        EyerVideoDecoderLine(EyerString resPath, double initStart, EyerAVStreamType type = EyerAVStreamType::STREAM_TYPE_VIDEO);
-        ~EyerVideoDecoderLine();
-
-        int GetFrame(EyerAVFrame & frame, double ts);
-
-        double GetStartTime();
-
-        int GetCacheFrameCount();
-    private:
-        int ReadFrame();
-        int SelectFrameInList(EyerAVFrame & frame, double ts);
-
-        int fileEndFlag = 0;
-
-        double initStart = 0.0;
-        EyerString resPath;
-
-        EyerAVReader * reader = nullptr;
-        EyerAVDecoder * decoder = nullptr;
-        int videoStreamIndex = -1;
-
-        EyerLinkedList<EyerAVFrame *> frameList;
-    };
-
-    class EyerWandVideoResource : public EyerWandResource {
-    public:
-        EyerWandVideoResource();
-        ~EyerWandVideoResource();
-
-        int GetVideoDuration(double & duration);
-        int GetVideoFrame(EyerAVFrame & avFrame, double ts);
-
-        int GetW();
-        int GetH();
-    private:
-        EyerLinkedList<EyerVideoDecoderLine *> decoderLineList;
-
-        int w = -1;
-        int h = -1;
-
-        std::mutex mut;
     };
 
     class EyerWandAudioResource : public EyerWandResource {
