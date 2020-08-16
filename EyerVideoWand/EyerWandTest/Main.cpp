@@ -3,20 +3,21 @@
 #include <EyerWand/EyerWand.hpp>
 
 TEST(EyerWandContext, EyerWandContextTest){
+    int screenW = 1920;
+    int screenH = 1080;
+
     Eyer::EyerGLContextThread glCtx;
+    glCtx.SetWH(screenW, screenH);
+
     glCtx.Start();
 
     Eyer::EyerWandContext context(1920, 1080, 30);
-
     context.SetGLCtx(&glCtx);
 
-    int fps = context.GetFPS();
-    printf("Fps: %d\n", fps);
-
-    context.UpdateScreenWH(1920, 1080);
-
-    for(int i=0;i<1000;i++){
-        Eyer::EyerTime::EyerSleep(1000 * 1000);
+    context.RenderFrameByIndex(100);
+    for(int i=0;i<50;i++){
+        context.RenderFrameByIndex(i);
+        Eyer::EyerTime::EyerSleep(1000);
     }
 
     glCtx.Stop();

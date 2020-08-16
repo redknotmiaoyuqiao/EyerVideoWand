@@ -124,7 +124,6 @@ namespace Eyer
     {
         VideoTrackRenderTask * videoTrackRenderTask = new VideoTrackRenderTask(this, frameIndex, fps);
         videoTrackRenderTask->SetScreenWH(glCtx->GetW(), glCtx->GetH());
-        // glCtx->AddTaskToRenderAndFreeQueue(videoTrackRenderTask);
         glCtx->AddRenderTask(videoTrackRenderTask);
         
         return 0;

@@ -12,8 +12,10 @@ target_link_libraries (EyerWandTest EyerLib)
 
 target_link_libraries (EyerWandTest avcodec)
 target_link_libraries (EyerWandTest avformat)
-target_link_libraries (EyerWandTest avutil)
+target_link_libraries (EyerWandTest avdevice)
+target_link_libraries (EyerWandTest avfilter)
 target_link_libraries (EyerWandTest swscale)
+target_link_libraries (EyerWandTest avutil)
 
 target_link_libraries (EyerWandTest freetype)
 target_link_libraries (EyerWandTest glfw3)

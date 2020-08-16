@@ -14,21 +14,18 @@ namespace Eyer
         
         
         {
-            /*
             EyerVideoFragmentVideo fragmentVideo1;
-            fragmentVideo1.LoadVideoFile("/storage/emulated/0/ST/time_clock_1min_720x1280_30fps.mp4");
+            fragmentVideo1.LoadVideoFile("C:/Test/M_1280_720.mp4");
 
             EyerVideoFragmentVideo fragmentVideo2;
-            fragmentVideo2.LoadVideoFile("/storage/emulated/0/ST/fashi.mp4");
+            fragmentVideo2.LoadVideoFile("C:/Test/M_1280_720.mp4");
 
             EyerVideoFragmentVideo fragmentVideo3;
-            fragmentVideo3.LoadVideoFile("/storage/emulated/0/ST/ads.mp4");
+            fragmentVideo3.LoadVideoFile("C:/Test/M_1280_720.mp4");
 
-            videoTrack.VideoLayer_AddVideoFragment(fragmentVideo3);
             videoTrack.VideoLayer_AddVideoFragment(fragmentVideo1);
             videoTrack.VideoLayer_AddVideoFragment(fragmentVideo2);
-            */
-            
+            videoTrack.VideoLayer_AddVideoFragment(fragmentVideo3);
         }
         /*
         {
@@ -104,13 +101,6 @@ namespace Eyer
     int EyerWandContext::RenderFrameByIndex(int frameIndex)
     {
         return videoTrack.RenderFrame2(frameIndex, fps, glCtx);
-    }
-
-    int EyerWandContext::UpdateScreenWH(int _screenW, int _screenH)
-    {
-        screenW = _screenW;
-        screenH = _screenH;
-        return 0;
     }
 
     int EyerWandContext::GetVideoTrack(EyerVideoTrack & _videoTrack)

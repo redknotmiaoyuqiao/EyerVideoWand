@@ -13,9 +13,7 @@ add_library(
     EyerVideoLayout.cpp
 
     EyerVideoPanel.cpp
-    InterfaceC.cpp
-    InterfaceCSharp.cpp
-    EyerAudioTrack.cpp
+        EyerAudioTrack.cpp
     EyerAudioLayer.cpp
     EyerAudioFragment.cpp
     EyerWandDebug.cpp
@@ -37,8 +35,8 @@ add_library(
     UIView/WandTimeLineDrawEvent_BitmapSnapshot.cpp
 
     UIView/WandTimeLineDrawEventList.cpp
-    
-    )
+
+)
 
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")

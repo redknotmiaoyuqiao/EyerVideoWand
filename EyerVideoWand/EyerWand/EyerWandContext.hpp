@@ -13,10 +13,8 @@ namespace Eyer
         ~EyerWandContext();
 
         int SetGLCtx(EyerGLContextThread * glCtx);
-        
-        int RenderFrameByIndex(int frameIndex);
 
-        int UpdateScreenWH(int screenW, int screenH);
+        int RenderFrameByIndex(int frameIndex);
 
         int GetVideoTrack(EyerVideoTrack & videoTrack);
 
@@ -28,9 +26,6 @@ namespace Eyer
         int width = 0;
         int height = 0;
         int fps = 25;
-
-        int screenW = 0;
-        int screenH = 0;
 
         EyerVideoTrack videoTrack;
         EyerAudioTrack audioTrack;

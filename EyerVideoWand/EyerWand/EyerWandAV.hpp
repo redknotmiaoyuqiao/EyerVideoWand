@@ -380,11 +380,6 @@ namespace Eyer {
         float fps = 10;
     };
 
-
-
-    /**
-     * 视频轨
-     */
     class EyerVideoTrack : public EyerTrack {
     public:
         EyerVideoTrack();
@@ -431,36 +426,6 @@ namespace Eyer {
         int fps = 30;
 
         EyerVideoLayer videoLayer;
-    };
-
-
-    class EyerWandBuilder
-    {
-    public:
-        EyerWandBuilder(EyerString path);
-        ~EyerWandBuilder();
-
-        int SetVideoWH(int w, int h);
-        int SetVideoFPS(int fps);
-
-        int AddVideoTrack(const EyerVideoTrack & videoTrack);
-        int AddAudioTrack(const EyerAudioTrack & audioTrack);
-
-        int Process();
-
-    private:
-        int VideoProcess(EyerAVWriter * writer, EyerAVEncoder * encoder, int streamIndex, int debug = 0);
-        int VideoTrackProcess(EyerAVWriter * writer, EyerAVEncoder * encoder, int streamIndex, int debug = 0);
-        int AudioTrackProcess(EyerAVWriter * writer, EyerAVEncoder * encoder, int streamIndex, int debug = 0);
-    private:
-        EyerString path;
-
-        int videoWidth = 0;
-        int videoHeight = 0;
-        int videoFps = 25;
-
-        EyerVideoTrack videoTrack;
-        EyerAudioTrack audioTrack;
     };
 
     class EyerWandDebug

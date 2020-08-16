@@ -26,12 +26,16 @@ namespace Eyer
     {
         // 长宽应该为 surfaceview 大小
         EyerGLFrameBuffer screenFrameBuffer(screenW, screenH);
-
         screenFrameBuffer.Clear(0.5, 0.5, 0.5, 1.0);
 
-        // 
         int videoW = videoTrack->GetVideoW();
         int videoH = videoTrack->GetVideoH();
+
+        // EyerLog("Screen W: %d\n", screenW);
+        // EyerLog("Screen H: %d\n", screenH);
+
+        // EyerLog("Render Task Video W: %d\n", videoW);
+        // EyerLog("Render Task Video H: %d\n", videoH);
 
         EyerGLTexture frameTargetTexture;
         EyerGLFrameBuffer frameTargetBuffer(videoW, videoH, &frameTargetTexture);
@@ -44,12 +48,9 @@ namespace Eyer
         int layerCount = 1;
         for(int layerIndex=0;layerIndex<layerCount;layerIndex++){
             EyerVideoLayer * layer = nullptr;
-            // videoTrack->GetLayer(layer, layerIndex);
             if(layerIndex == 0){
                 layer = videoTrack->GetVideoLayer_Ptr();
             }
-
-            // EyerLog("Layer %d-%d\n", layer->GetStartFrameIndex(), layer->GetEndFrameIndex());
 
             if(layer == nullptr){
                 continue;
