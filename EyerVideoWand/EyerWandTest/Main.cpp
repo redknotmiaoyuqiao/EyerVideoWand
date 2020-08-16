@@ -2,6 +2,26 @@
 #include <gtest/gtest.h>
 #include <EyerWand/EyerWand.hpp>
 
+TEST(EyerWandContext, EyerWandContextTest){
+    Eyer::EyerGLContextThread glCtx;
+    glCtx.Start();
+
+    Eyer::EyerWandContext context(1920, 1080, 30);
+
+    context.SetGLCtx(&glCtx);
+
+    int fps = context.GetFPS();
+    printf("Fps: %d\n", fps);
+
+    context.UpdateScreenWH(1920, 1080);
+
+    for(int i=0;i<1000;i++){
+        Eyer::EyerTime::EyerSleep(1000 * 1000);
+    }
+
+    glCtx.Stop();
+}
+
 TEST(EyerVideoFragment, whiteBG){
     /*
     int fps = 30;
@@ -315,6 +335,7 @@ TEST(EyerVideoBuild, EyerVideoBuild_Test){
 }
 
 TEST(EyerBuilder, EyerBuilder){
+    /*
     int fps = 30;
 
     Eyer::EyerWandBuilder builder("./yao_test.mp4");
@@ -345,7 +366,7 @@ TEST(EyerBuilder, EyerBuilder){
     builder.AddAudioTrack(audioTrack);
     builder.Process();
 
-    /*Eyer::EyerWandBuilder builder("./builder_mp4.mp4");
+    Eyer::EyerWandBuilder builder("./builder_mp4.mp4");
     builder.SetVideoWH(1280, 720);
     builder.SetVideoFPS(25);
 

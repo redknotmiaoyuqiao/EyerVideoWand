@@ -12,6 +12,7 @@ include_directories (googletest/googletest/include)
 include_directories (${CMAKE_SOURCE_DIR}/../../Lib/EyerLib/include)
 include_directories (${CMAKE_SOURCE_DIR}/../../Lib/EyerLib/include/EyerAV)
 include_directories (${CMAKE_SOURCE_DIR}/../../Lib/EyerLib/include/EyerGL)
+include_directories (${CMAKE_SOURCE_DIR}/../../Lib/glfw_install/include)
 
 link_directories (${CMAKE_SOURCE_DIR}/../../Lib/EyerLib/lib)
 link_directories (${CMAKE_SOURCE_DIR}/../../Lib/ffmpeg_install/lib)

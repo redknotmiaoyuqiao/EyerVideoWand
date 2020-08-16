@@ -14,6 +14,7 @@ namespace Eyer
         
         
         {
+            /*
             EyerVideoFragmentVideo fragmentVideo1;
             fragmentVideo1.LoadVideoFile("/storage/emulated/0/ST/time_clock_1min_720x1280_30fps.mp4");
 
@@ -26,6 +27,7 @@ namespace Eyer
             videoTrack.VideoLayer_AddVideoFragment(fragmentVideo3);
             videoTrack.VideoLayer_AddVideoFragment(fragmentVideo1);
             videoTrack.VideoLayer_AddVideoFragment(fragmentVideo2);
+            */
             
         }
         /*

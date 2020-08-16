@@ -8,6 +8,15 @@ add_executable(
 
 target_link_libraries (EyerWandTest gtest)
 target_link_libraries (EyerWandTest EyerWand)
+target_link_libraries (EyerWandTest EyerLib)
+
+target_link_libraries (EyerWandTest avcodec)
+target_link_libraries (EyerWandTest avformat)
+target_link_libraries (EyerWandTest avutil)
+target_link_libraries (EyerWandTest swscale)
+
+target_link_libraries (EyerWandTest freetype)
+target_link_libraries (EyerWandTest glfw3)
 
 file(COPY
         ${CMAKE_CURRENT_SOURCE_DIR}/Manjari-Bold.otf
