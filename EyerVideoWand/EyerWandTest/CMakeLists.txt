@@ -15,26 +15,47 @@ target_link_libraries (EyerWandTest avformat)
 target_link_libraries (EyerWandTest avdevice)
 target_link_libraries (EyerWandTest avfilter)
 target_link_libraries (EyerWandTest swscale)
+target_link_libraries (EyerWandTest swresample)
 target_link_libraries (EyerWandTest avutil)
 
 target_link_libraries (EyerWandTest freetype)
 target_link_libraries (EyerWandTest glfw3)
+target_link_libraries (EyerWandTest x264)
+
+IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
+        MESSAGE(STATUS "current platform: Linux ")
+ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
+        MESSAGE(STATUS "current platform: Windows")
+ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Android")
+        MESSAGE(STATUS "current platform: Android")
+ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
+        MESSAGE(STATUS "current platform: Darwin")
+        target_link_libraries (EyerWandTest bz2)
+        target_link_libraries (EyerWandTest z)
+        target_link_libraries (EyerWandTest iconv)
+        target_link_libraries (EyerWandTest lzma)
+ELSE ()
+        MESSAGE(STATUS "other platform: ${CMAKE_SYSTEM_NAME}")
+ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 
 file(COPY
         ${CMAKE_CURRENT_SOURCE_DIR}/Manjari-Bold.otf
         DESTINATION
         ${CMAKE_CURRENT_BINARY_DIR}/
         )
+
 file(COPY
         ${CMAKE_CURRENT_SOURCE_DIR}/M_1280_720.mp4
         DESTINATION
         ${CMAKE_CURRENT_BINARY_DIR}/
         )
+
 file(COPY
         ${CMAKE_CURRENT_SOURCE_DIR}/xiao_xiao_yuan_pin_ying.ttf
         DESTINATION
         ${CMAKE_CURRENT_BINARY_DIR}/
         )
+
 file(COPY
         ${CMAKE_CURRENT_SOURCE_DIR}/han_yi_xing_kai_jian.ttf
         DESTINATION
@@ -84,7 +105,6 @@ file(COPY
         DESTINATION
         ${CMAKE_CURRENT_BINARY_DIR}/
         )
-
 
 file(COPY
         ${CMAKE_CURRENT_SOURCE_DIR}/4.jpg

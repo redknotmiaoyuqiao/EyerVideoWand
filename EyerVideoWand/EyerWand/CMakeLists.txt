@@ -3,52 +3,51 @@ include_directories (./)
 
 
 add_library(
-    EyerWand
-    # SHARED
+        EyerWand
+        # SHARED
 
-    EyerWand.cpp
-    EyerWandAudioResource.cpp
-    EyerWandContext.cpp
-    EyerVideoTrack.cpp
-    EyerVideoLayout.cpp
+        EyerWand.cpp
+        EyerWandAudioResource.cpp
+        EyerWandContext.cpp
+        EyerVideoTrack.cpp
+        EyerVideoLayout.cpp
 
-    EyerVideoPanel.cpp
+        EyerVideoPanel.cpp
         EyerAudioTrack.cpp
-    EyerAudioLayer.cpp
-    EyerAudioFragment.cpp
-    EyerWandDebug.cpp
-    EyerVideoFragmentText.cpp
-    EyerVideoFragmentVideo.cpp
-    EyerVideoFragment.cpp
-    EyerTransKey.cpp
-    EyerVideoFragmentFrameSequential.cpp
+        EyerAudioLayer.cpp
+        EyerAudioFragment.cpp
+        EyerWandDebug.cpp
+        EyerVideoFragmentText.cpp
+        EyerVideoFragmentVideo.cpp
+        EyerVideoFragment.cpp
+        EyerTransKey.cpp
+        EyerVideoFragmentFrameSequential.cpp
 
-    WandRenderTask/LayerRenderTask.cpp
-    WandRenderTask/VideoTrackRenderTask.cpp
+        WandRenderTask/LayerRenderTask.cpp
+        WandRenderTask/VideoTrackRenderTask.cpp
 
-    UIView/WandTimeLine.cpp
-    UIView/WandTimeLineDrawEvent.cpp
-    UIView/WandTimeLineDrawEvent_Rect.cpp
-    UIView/WandTimeLineDrawEvent_Line.cpp
-    UIView/WandTimeLineDrawEvent_Bitmap.cpp
-    UIView/WandTimeLineDrawEvent_Text.cpp
-    UIView/WandTimeLineDrawEvent_BitmapSnapshot.cpp
+        UIView/WandTimeLine.cpp
+        UIView/WandTimeLineDrawEvent.cpp
+        UIView/WandTimeLineDrawEvent_Rect.cpp
+        UIView/WandTimeLineDrawEvent_Line.cpp
+        UIView/WandTimeLineDrawEvent_Bitmap.cpp
+        UIView/WandTimeLineDrawEvent_Text.cpp
+        UIView/WandTimeLineDrawEvent_BitmapSnapshot.cpp
 
-    UIView/WandTimeLineDrawEventList.cpp
-
+        UIView/WandTimeLineDrawEventList.cpp
 )
 
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
-    MESSAGE(STATUS "current platform: Linux ")
+        MESSAGE(STATUS "current platform: Linux ")
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
-    MESSAGE(STATUS "current platform: Windows")
+        MESSAGE(STATUS "current platform: Windows")
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Android")
-    MESSAGE(STATUS "current platform: Android")
+        MESSAGE(STATUS "current platform: Android")
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
-    MESSAGE(STATUS "current platform: Darwin")
+        MESSAGE(STATUS "current platform: Darwin")
 ELSE ()
-    MESSAGE(STATUS "other platform: ${CMAKE_SYSTEM_NAME}")
+        MESSAGE(STATUS "other platform: ${CMAKE_SYSTEM_NAME}")
 ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 
 

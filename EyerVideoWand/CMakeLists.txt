@@ -59,12 +59,12 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Android")
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     MESSAGE(STATUS "current platform: Darwin")
     set(CMAKE_EXE_LINKER_FLAGS
-        "-framework AudioToolbox -framework CoreGraphics -framework CoreMedia -framework Cocoa -framework VideoToolbox -framework AVFoundation -framework Security -framework CoreFoundation -framework CoreVideo -framework OpenGL -framework AppKit -framework CoreImage -framework VideoDecodeAcceleration"
+        "-framework AudioToolbox -framework CoreGraphics -framework CoreMedia -framework Cocoa -framework VideoToolbox -framework AVFoundation -framework Security -framework CoreFoundation -framework CoreVideo -framework OpenGL -framework AppKit -framework CoreImage -framework VideoDecodeAcceleration -framework IOKit"
     )
-    
+
     ADD_SUBDIRECTORY(EyerWand)
-    # ADD_SUBDIRECTORY(EyerWandTest)
-    # ADD_SUBDIRECTORY(EyerWandTest_C)
+    ADD_SUBDIRECTORY(EyerWandTest)
+    ADD_SUBDIRECTORY(EyerWandTest_C)
 
     ADD_SUBDIRECTORY(googletest)
 
