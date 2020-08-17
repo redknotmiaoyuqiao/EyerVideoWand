@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <gtest/gtest.h>
 #include <EyerWand/EyerWand.hpp>
+#include "EyerCore/EyerCore.hpp"
 
 TEST(EyerWandContext, EyerWandContextTest){
     int screenW = 1920;
@@ -11,6 +12,12 @@ TEST(EyerWandContext, EyerWandContextTest){
 
     Eyer::EyerWandContext context(1920, 1080, 30);
     context.SetGLCtx(&glCtx);
+
+    Eyer::EyerVideoFragmentVideo videoFragmentVideo;
+    videoFragmentVideo.Load("./M_1280_720.mp4");
+    context.AddFragment2Layer(Eyer::EyerString("video_layer"), videoFragmentVideo);
+    context.AddFragment2Layer(Eyer::EyerString("video_layer"), videoFragmentVideo);
+    context.AddFragment2Layer(Eyer::EyerString("video_layer"), videoFragmentVideo);
 
     for(int i=0;i<1;i++){
         Eyer::EyerTime::EyerSleepMilliseconds(1000);

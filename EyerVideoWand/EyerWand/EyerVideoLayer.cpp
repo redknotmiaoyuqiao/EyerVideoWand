@@ -12,7 +12,16 @@ namespace Eyer {
 
     EyerVideoLayer::~EyerVideoLayer()
     {
-
+        int fragmentLength = videoFragmentList.getLength();
+        for(int i=0;i<fragmentLength;i++){
+            EyerVideoFragment * fsrc = nullptr;
+            videoFragmentList.find(i, fsrc);
+            if(fsrc == nullptr){
+                continue;
+            }
+            delete fsrc;
+        }
+        videoFragmentList.clear();
     }
 
     EyerVideoLayer::EyerVideoLayer(const EyerVideoLayer & videoLayer) : EyerVideoLayer()
