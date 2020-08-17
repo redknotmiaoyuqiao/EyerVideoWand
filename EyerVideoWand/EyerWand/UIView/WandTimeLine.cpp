@@ -50,14 +50,15 @@ namespace Eyer {
 
         int fps = ctx->GetFPS();
 
-        EyerVideoTrack videoTrack;
-        ctx->GetVideoTrack(videoTrack);
+        // EyerVideoTrack videoTrack;
+        // ctx->GetVideoTrack(videoTrack);
 
 
 
         
         time = 0.0;
         // 统计 Layer 总时间
+        /***
         int videoFragmentCount = videoTrack.VideoLayer_GetFragmentCount();
         for(int videoFragmentIndex = 0; videoFragmentIndex < videoFragmentCount; videoFragmentIndex++){
             EyerVideoFragment * fragment = nullptr;
@@ -71,6 +72,7 @@ namespace Eyer {
             EyerVideoFragmentVideo * vf = (EyerVideoFragmentVideo *)fragment;
             time += vf->GetDuration();
         }
+         */
 
         
 
@@ -110,6 +112,7 @@ namespace Eyer {
 
         double offsetTime = 0.0;
         // 绘制 Video Fragment Layer
+        /*
         for(int videoFragmentIndex = 0; videoFragmentIndex < videoFragmentCount; videoFragmentIndex++){
             EyerVideoFragment * fragment = nullptr;
             videoTrack.VideoLayer_GetFragment(fragment, videoFragmentIndex);
@@ -122,8 +125,8 @@ namespace Eyer {
 
             EyerVideoFragmentVideo * vf = (EyerVideoFragmentVideo *)fragment;
 
-            double layerStartTime       = vf->GetStartIndex()       *       1.0  /  fps;
-            double layerEndTime         = vf->GetEndIndex()         *       1.0  /  fps;
+            double layerStartTime = 0;      /////// = vf->GetStartIndex()       *       1.0  /  fps;
+            double layerEndTime = 0;        ///////= vf->GetEndIndex()         *       1.0  /  fps;
 
             int layerHeight = canvasH * 0.2;
 
@@ -135,10 +138,10 @@ namespace Eyer {
             float layerStartY   = canvasH * 0.5 - layerHeight * 0.5;
             float layerEndY     = canvasH * 0.5 + layerHeight * 0.5;
 
-            /*
+
             layerStartX         = layerStartX   +   25;
             layerEndX           = layerEndX     -   25;
-            */
+
 
             layerRect.SetRect(layerStartX, layerStartY, layerEndX, layerEndY);
             layerRect.SetColor(layerColor);
@@ -230,7 +233,7 @@ namespace Eyer {
         }
         
         DrawTimePointer(eventList, canvasW, canvasH, timePointerColor);
-
+    */
         return 0;
     }
 
@@ -247,7 +250,7 @@ namespace Eyer {
         eventList.AddEvent(&timePointer);
 
         if(lastRenderFrameIndex != nowTime * fps){
-            ctx->RenderFrameByIndex(nowTime * fps);
+            ////// ctx->RenderFrameByIndex(nowTime * fps);
             lastRenderFrameIndex = nowTime * fps;
         }
         

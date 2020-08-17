@@ -29,7 +29,6 @@ IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 
     ADD_SUBDIRECTORY(EyerWand)
     ADD_SUBDIRECTORY(EyerWandTest)
-    ADD_SUBDIRECTORY(EyerWandTest_C)
 
     ADD_SUBDIRECTORY(googletest)
 
@@ -44,7 +43,6 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
 
     ADD_SUBDIRECTORY(EyerWand)
     ADD_SUBDIRECTORY(EyerWandTest)
-    ADD_SUBDIRECTORY(EyerWandTest_C)
 
     ADD_SUBDIRECTORY(googletest)
 
@@ -64,7 +62,6 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
 
     ADD_SUBDIRECTORY(EyerWand)
     ADD_SUBDIRECTORY(EyerWandTest)
-    ADD_SUBDIRECTORY(EyerWandTest_C)
 
     ADD_SUBDIRECTORY(googletest)
 
@@ -73,7 +70,6 @@ ELSE ()
 
     ADD_SUBDIRECTORY(EyerWand)
     ADD_SUBDIRECTORY(EyerWandTest)
-    ADD_SUBDIRECTORY(EyerWandTest_C)
 
     ADD_SUBDIRECTORY(googletest)
 

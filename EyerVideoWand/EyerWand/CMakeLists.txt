@@ -6,25 +6,11 @@ add_library(
         EyerWand
         # SHARED
 
-        EyerWand.cpp
-        EyerWandAudioResource.cpp
         EyerWandContext.cpp
-        EyerVideoTrack.cpp
-        EyerVideoLayout.cpp
 
-        EyerVideoPanel.cpp
-        EyerAudioTrack.cpp
-        EyerAudioLayer.cpp
-        EyerAudioFragment.cpp
         EyerWandDebug.cpp
-        EyerVideoFragmentText.cpp
         EyerVideoFragmentVideo.cpp
         EyerVideoFragment.cpp
-        EyerTransKey.cpp
-        EyerVideoFragmentFrameSequential.cpp
-
-        WandRenderTask/LayerRenderTask.cpp
-        WandRenderTask/VideoTrackRenderTask.cpp
 
         UIView/WandTimeLine.cpp
         UIView/WandTimeLineDrawEvent.cpp
@@ -35,7 +21,7 @@ add_library(
         UIView/WandTimeLineDrawEvent_BitmapSnapshot.cpp
 
         UIView/WandTimeLineDrawEventList.cpp
-)
+        EyerVideoLayer.cpp EyerVideoLayer.hpp EyerVideoFragment.hpp)
 
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")

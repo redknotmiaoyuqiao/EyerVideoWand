@@ -9,16 +9,14 @@ TEST(EyerWandContext, EyerWandContextTest){
     Eyer::EyerGLContextThread glCtx;
     glCtx.SetWH(screenW, screenH);
 
-    glCtx.Start();
-
     Eyer::EyerWandContext context(1920, 1080, 30);
     context.SetGLCtx(&glCtx);
 
-    context.RenderFrameByIndex(100);
-    for(int i=0;i<50;i++){
-        context.RenderFrameByIndex(i);
-        Eyer::EyerTime::EyerSleep(1000);
+    for(int i=0;i<1;i++){
+        Eyer::EyerTime::EyerSleepMilliseconds(1000);
     }
+
+    glCtx.Run();
 
     glCtx.Stop();
 }
