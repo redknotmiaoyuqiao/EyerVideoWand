@@ -8,84 +8,11 @@ namespace Eyer
         width = w;
         height = h;
         fps = _fps;
-
-        videoTrack.SetTargetVideoWH(width, height);
-        videoTrack.SetTargetVideoFPS(fps);
-        
-        
-        {
-            EyerVideoFragmentVideo fragmentVideo1;
-            fragmentVideo1.LoadVideoFile("/storage/emulated/0/ST/time_clock_1min_720x1280_30fps.mp4");
-
-            EyerVideoFragmentVideo fragmentVideo2;
-            fragmentVideo2.LoadVideoFile("/storage/emulated/0/ST/fashi.mp4");
-
-            EyerVideoFragmentVideo fragmentVideo3;
-            fragmentVideo3.LoadVideoFile("/storage/emulated/0/ST/ads.mp4");
-
-            videoTrack.VideoLayer_AddVideoFragment(fragmentVideo3);
-            videoTrack.VideoLayer_AddVideoFragment(fragmentVideo1);
-            videoTrack.VideoLayer_AddVideoFragment(fragmentVideo2);
-            
-        }
-        /*
-        {
-            EyerVideoFragmentVideo fragmentVideo1;
-            fragmentVideo1.LoadVideoFile("/Users/lichi/Desktop/time_clock_1min_1280x720_30fps.mp4");
-
-            EyerVideoFragmentVideo fragmentVideo2;
-            fragmentVideo2.LoadVideoFile("/Users/lichi/Desktop/time_clock_1min_720x1280_30fps.mp4");
-
-            EyerVideoFragmentVideo fragmentVideo3;
-            fragmentVideo3.LoadVideoFile("/Users/lichi/Desktop/time_clock_1min_720x1280_30fps.mp4");
-
-            videoTrack.VideoLayer_AddVideoFragment(fragmentVideo3);
-            videoTrack.VideoLayer_AddVideoFragment(fragmentVideo1);
-            videoTrack.VideoLayer_AddVideoFragment(fragmentVideo2);
-            
-        }
-        */
-
-        /*
-        {
-            EyerVideoFragmentVideo fragmentVideo;
-            fragmentVideo.LoadVideoFile("/storage/emulated/0/ST/time_clock_1min_1280x720_30fps.mp4");
-        
-            EyerVideoLayer layer;
-            layer.SetFrame(200, 800);
-            layer.AddVideoFragment(&fragmentVideo);
-
-            videoTrack.AddLayer(layer);
-        }
-
-        {
-            EyerVideoFragmentVideo fragmentVideo;
-            fragmentVideo.LoadVideoFile("/storage/emulated/0/ST/ads.mp4");
-        
-            EyerVideoLayer layer;
-            layer.SetFrame(800, 1000);
-            layer.AddVideoFragment(&fragmentVideo);
-
-            videoTrack.AddLayer(layer);
-        }
-
-
-        {
-            EyerVideoFragmentVideo fragmentVideo;
-            fragmentVideo.LoadVideoFile("/storage/emulated/0/ST/fashi.mp4");
-        
-            EyerVideoLayer layer;
-            layer.SetFrame(1000, 2000);
-            layer.AddVideoFragment(&fragmentVideo);
-
-            videoTrack.AddLayer(layer);
-        }
-        */
-        
     }
 
     EyerWandContext::~EyerWandContext()
     {
+        // TODO 清空 layer map
     }
 
     int EyerWandContext::GetFPS()
@@ -99,21 +26,24 @@ namespace Eyer
         return 0;
     }
 
-    int EyerWandContext::RenderFrameByIndex(int frameIndex)
+    int EyerWandContext::AddFragment2Layer(EyerString layerName, EyerVideoFragment & fragment)
     {
-        return videoTrack.RenderFrame2(frameIndex, fps, glCtx);
-    }
+        EyerVideoLayer * layer = nullptr;
+        int ret = layerMap.Find(layerName, layer);
+        if(layer == nullptr){
+            layer = new EyerVideoLayer();
+            layerMap.Insert(layerName, layer);
+        }
 
-    int EyerWandContext::UpdateScreenWH(int _screenW, int _screenH)
-    {
-        screenW = _screenW;
-        screenH = _screenH;
+        EyerLog("Layer Map Size: %d\n", layerMap.Size());
+
+        layer->AddVideoFragment(&fragment);
+
         return 0;
     }
 
-    int EyerWandContext::GetVideoTrack(EyerVideoTrack & _videoTrack)
+    int EyerWandContext::AddFragment2Layer(EyerString layerName, EyerVideoFragment & fragment, int startFrameIndex, int endFrameIndex)
     {
-        _videoTrack = videoTrack;
         return 0;
     }
 }

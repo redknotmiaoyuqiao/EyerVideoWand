@@ -13,15 +13,10 @@ namespace Eyer
         ~EyerWandContext();
 
         int SetGLCtx(EyerGLContextThread * glCtx);
-        
-        int RenderFrameByIndex(int frameIndex);
-
-        int UpdateScreenWH(int screenW, int screenH);
-
-        int GetVideoTrack(EyerVideoTrack & videoTrack);
-
         int GetFPS();
 
+        int AddFragment2Layer(EyerString layerName, EyerVideoFragment & fragment);
+        int AddFragment2Layer(EyerString layerName, EyerVideoFragment & fragment, int startFrameIndex, int endFrameIndex);
     private:
         EyerGLContextThread * glCtx = nullptr;
 
@@ -29,11 +24,7 @@ namespace Eyer
         int height = 0;
         int fps = 25;
 
-        int screenW = 0;
-        int screenH = 0;
-
-        EyerVideoTrack videoTrack;
-        EyerAudioTrack audioTrack;
+        EyerMap<Eyer::EyerString, Eyer::EyerVideoLayer *> layerMap;
     };
 }
 
